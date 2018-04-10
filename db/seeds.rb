@@ -1,4 +1,4 @@
-teams = Team.create(
+Team.create(
   [
     {
       title: 'Ruby',
