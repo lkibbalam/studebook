@@ -5,12 +5,11 @@ module Api
       before_action :set_user, only: :show
 
       def show
-        render json: @user
+        respond_with(@user)
       end
 
       def index
-        @users = @team.users
-        render json: @users
+        respond_with(@users = @team.users)
       end
 
       private

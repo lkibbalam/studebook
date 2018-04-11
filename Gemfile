@@ -11,6 +11,8 @@ gem 'rails', '~> 5.1.5'
 gem 'pg'
 # Use Puma as the app server
 gem 'devise'
+gem 'oj'
+gem 'oj_mimic_json'
 gem 'puma', '~> 3.7'
 gem 'rack-cors', require: 'rack/cors'
 gem 'responders'
@@ -32,6 +34,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'json-spec'
+  gem 'json_spec', '~> 1.1', '>= 1.1.5'
   gem 'pry'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
