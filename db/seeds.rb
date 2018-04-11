@@ -105,3 +105,36 @@ CoursesUser.create(
     }
   ]
 )
+
+Lesson.create(
+  [
+    {
+      course_id: 1,
+      description: 'MyDescr',
+      task: 'MyTask',
+      video: 'MyVideo',
+      material: 'MyMaterial'
+    },
+    {
+      course_id: 1,
+      description: 'MyDescr',
+      task: 'MyTask',
+      video: 'MyVideo',
+      material: 'MyMaterial'
+    },
+    {
+      course_id: 2,
+      description: 'MyDescr',
+      task: 'MyTask',
+      video: 'MyVideo',
+      material: 'MyMaterial'
+    },
+    {
+      course_id: 3,
+      description: 'MyDescr',
+      task: 'MyTask',
+      video: 'MyVideo',
+      material: 'MyMaterial'
+    }
+  ]
+)
