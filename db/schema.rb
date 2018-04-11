@@ -10,9 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_410_134_416) do
+ActiveRecord::Schema.define(version: 20_180_410_151_730) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
+
+  create_table 'courses', force: :cascade do |t|
+    t.bigint 'team_id'
+    t.bigint 'author_id'
+    t.text 'description'
+    t.string 'title'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['team_id'], name: 'index_courses_on_team_id'
+  end
+
+  create_table 'courses_users', force: :cascade do |t|
+    t.bigint 'student_id'
+    t.bigint 'course_id'
+    t.text 'opinion'
+    t.string 'chat'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[course_id student_id], name: 'index_courses_users_on_course_id_and_student_id'
+    t.index ['course_id'], name: 'index_courses_users_on_course_id'
+    t.index ['student_id'], name: 'index_courses_users_on_student_id'
+  end
 
   create_table 'teams', force: :cascade do |t|
     t.string 'title'
@@ -23,12 +45,14 @@ ActiveRecord::Schema.define(version: 20_180_410_134_416) do
 
   create_table 'users', force: :cascade do |t|
     t.bigint 'team_id'
+    t.bigint 'mentor_id'
     t.string 'first_name'
     t.string 'last_name'
     t.integer 'role'
     t.integer 'phone'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['mentor_id'], name: 'index_users_on_mentor_id'
     t.index ['team_id'], name: 'index_users_on_team_id'
   end
 end
