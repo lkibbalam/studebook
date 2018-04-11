@@ -18,16 +18,15 @@ describe 'lesson' do
   end
 
   describe 'GET #show' do
-
     before { get "/api/v1/lessons/#{lesson.id}" }
     it 'returns status 200 success' do
       expect(response).to be_success
     end
 
     %w[id course_id description material video task created_at updated_at].each do |attr|
-    it "check contains lesson, #{attr}" do
-      expect(response.body).to be_json_eql(lesson.send(attr.to_sym).to_json).at_path(attr)
-    end
+      it "check contains lesson, #{attr}" do
+        expect(response.body).to be_json_eql(lesson.send(attr.to_sym).to_json).at_path(attr)
+      end
     end
   end
 end

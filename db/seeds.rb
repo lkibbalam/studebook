@@ -138,3 +138,32 @@ Lesson.create(
     }
   ]
 )
+
+LessonsUser.create(
+  [
+    {
+      lesson_id: 1,
+      student_id: 1,
+      status: 0,
+      mark: 10
+    },
+    {
+      lesson_id: 1,
+      student_id: 1,
+      status: 0,
+      mark: 10
+    },
+    {
+      lesson_id: 1,
+      student_id: 2,
+      status: 0,
+      mark: 99
+    },
+    {
+      lesson_id: 1,
+      student_id: 3,
+      status: 0,
+      mark: 100
+    }
+  ]
+)

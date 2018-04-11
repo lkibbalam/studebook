@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_many :wards, class_name: 'User', foreign_key: :id
   has_many :courses_users, dependent: :destroy, foreign_key: :student_id
   has_many :courses, through: :courses_users
+  has_many :lessons_users, dependent: :destroy, foreign_key: :student_id
+  has_many :lessons, through: :lessons_users
 
   enum role: { admin: 5, leader: 4, moder: 3, staff: 2, student: 1 }
 end
