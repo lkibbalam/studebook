@@ -1,5 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CourseUser, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe CoursesUser, type: :model do
+  it { should belong_to(:course) }
+  it { should belong_to(:student).class_name('User').with_foreign_key('student_id') }
 end
