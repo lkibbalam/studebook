@@ -1,6 +1,7 @@
 module Api
   module V1
     class CoursesController < ApplicationController
+      include Commentable
       before_action :set_course, only: :show
 
       def index

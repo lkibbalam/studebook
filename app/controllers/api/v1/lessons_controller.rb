@@ -1,6 +1,7 @@
 module Api
   module V1
     class LessonsController < ApplicationController
+      include Commentable
       before_action :set_lesson, only: :show
       before_action :set_course, only: :index
 

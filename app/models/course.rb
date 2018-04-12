@@ -4,4 +4,5 @@ class Course < ApplicationRecord
   has_many :courses_users, dependent: :destroy
   has_many :students, through: :courses_users
   has_many :lessons
+  has_many :comments, as: :commentable, dependent: :destroy
 end
