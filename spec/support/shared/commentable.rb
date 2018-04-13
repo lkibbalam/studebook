@@ -11,7 +11,7 @@ end
 shared_examples_for 'Commentable_create' do
   let(:create_comment) do
     post "/api/v1/#{subject.class.name.downcase.pluralize}/#{subject.id}/create_comment",
-         params: { id: subject.id, comment: attributes_for(:comment) }
+         params: { id: subject, comment: attributes_for(:comment) }
   end
 
   it 'save new comment to commentable' do

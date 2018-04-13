@@ -24,6 +24,31 @@ describe 'course' do
     end
   end
 
+  describe 'POST #create' do
+    let!(:team) { create(:team) }
+    let(:create_course) { post "/api/v1/teams/#{team.id}/courses", params: { course: attributes_for(:course) } }
+    it 'when attributes is valid' do
+      expect { create_course }.to change(Course, :count).by(1)
+    end
+  end
+
+  describe 'PATCH #update' do
+    let!(:course) { create(:course) }
+    before do
+      patch "/api/v1/courses/#{course.id}", params: { course: { title: 'NewTitle', description: 'NewDes' } }
+      course.reload
+    end
+
+    it { expect(course.title).to eql('NewTitle') }
+    it { expect(course.description).to eql('NewDes') }
+  end
+
+  describe 'DELETE #destory' do
+    let!(:course) { create(:course) }
+
+    it { expect { delete "/api/v1/courses/#{course.id}" }.to change(Course, :count).by(-1) }
+  end
+
   describe 'Nested comments' do
     let!(:subject) { create(:course) }
 

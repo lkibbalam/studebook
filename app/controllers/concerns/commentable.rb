@@ -8,14 +8,14 @@ module Commentable
 
   def create_comment
     @commentable = set_commentable
-    @comment = @commentable.comments.new(set_params)
+    @comment = @commentable.comments.new(set_comment_params)
     @comment.parent_id = @commentable.id if @commentable.class.name == 'Comment'
     render json: @comment if @comment.save
   end
 
   def update_comment
     @comment = Comment.find(params[:comment_id])
-    @comment.update(set_params)
+    @comment.update(set_comment_params)
     respond_with(@comment)
   end
 
@@ -31,7 +31,7 @@ module Commentable
     controller_path.classify.tr('Api::V1::', '').constantize.find(params[:id])
   end
 
-  def set_params
+  def set_comment_params
     params.require(:comment).permit(:body)
   end
 end
