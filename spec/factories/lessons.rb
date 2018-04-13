@@ -4,5 +4,6 @@ FactoryBot.define do
     video 'MyString'
     material 'MyText'
     task 'MyText'
+    course
   end
 end

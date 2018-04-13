@@ -4,5 +4,6 @@ FactoryBot.define do
     commentable_id ''
     body 'MyText'
     user
+    parent_id nil
   end
 end

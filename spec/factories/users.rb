@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :user do
+  factory :user, aliases: %i[author mentor student] do
     first_name 'MyFirst_name'
     last_name 'MyLast_name'
     phone 9999

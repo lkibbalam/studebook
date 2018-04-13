@@ -6,4 +6,5 @@ RSpec.describe Course, type: :model do
   it { should have_many(:courses_users).dependent(:destroy) }
   it { should have_many(:students).through(:courses_users) }
   it { should have_many(:lessons) }
+  it { should have_many(:comments).dependent(:destroy) }
 end

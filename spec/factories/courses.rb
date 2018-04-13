@@ -3,5 +3,6 @@ FactoryBot.define do
     description 'MyText'
     title 'MyString'
     team
+    author
   end
 end
