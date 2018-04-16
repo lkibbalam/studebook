@@ -24,6 +24,35 @@ describe 'lesson' do
     end
   end
 
+  describe 'POST #create' do
+    let!(:course) { create(:course) }
+    let(:create_lesson) { post "/api/v1/courses/#{course.id}/lessons", params: { lesson: attributes_for(:lesson) } }
+
+    it 'when lesson with valid params' do
+      expect { create_lesson }.to change(Lesson, :count).by(1)
+    end
+  end
+
+  describe 'PATCH #update' do
+    let!(:lesson) { create(:lesson) }
+    before do
+      patch "/api/v1/lessons/#{lesson.id}", params: { lesson: { task: 'NewTask', material: 'NewMaterial',
+                                                                video: 'NewVideo', description: 'NewDesc' } }
+      lesson.reload
+    end
+
+    it { expect(lesson.task).to eql('NewTask') }
+    it { expect(lesson.video).to eql('NewVideo') }
+    it { expect(lesson.description).to eql('NewDesc') }
+    it { expect(lesson.material).to eql('NewMaterial') }
+  end
+
+  describe 'DELETE #delete' do
+    let!(:lesson) { create(:lesson) }
+
+    it { expect { delete "/api/v1/lessons/#{lesson.id}" }.to change(Lesson, :count).by(-1) }
+  end
+
   describe 'Nested comments' do
     let!(:subject) { create(:lesson) }
 

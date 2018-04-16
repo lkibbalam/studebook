@@ -2,7 +2,7 @@ module Api
   module V1
     class LessonsController < ApplicationController
       include Commentable
-      before_action :set_lesson, only: :show
+      before_action :set_lesson, only: %i[show destroy update]
       before_action :set_course, only: %i[index create]
 
       def index
@@ -15,7 +15,16 @@ module Api
 
       def create
         @lesson = @course.lessons.create(set_params)
-        respond_with @lesson
+        render json: @lesson
+      end
+
+      def update
+        @lesson.update(set_params)
+        render json: @lesson
+      end
+
+      def destroy
+        @lesson.delete
       end
 
       private
@@ -29,7 +38,7 @@ module Api
       end
 
       def set_params
-        params.require(:lesson).permit(:video, :description, :material, :tasks)
+        params.require(:lesson).permit(:video, :description, :material, :task)
       end
     end
   end
