@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'get all teams route' do
+describe 'users' do
   let!(:team) { create(:team) }
   let!(:team2) { create(:team) }
   let!(:users) { create_list(:user, 10, team: team) }
@@ -35,5 +35,29 @@ describe 'get all teams route' do
         expect(response.body).to be_json_eql(user.send(attr.to_sym).to_json).at_path(attr)
       end
     end
+  end
+
+  describe 'POST #create' do
+    let(:create_user) { post "/api/v1/teams/#{team.id}/users", params: { user: attributes_for(:user) } }
+    it { expect { create_user }.to change(User, :count).by(1) }
+  end
+
+  describe 'PATCH #update' do
+    let!(:user) { create(:user) }
+
+    before do
+      patch "/api/v1/users/#{user.id}", params: { user: { first_name: 'NewFirst', last_name: 'NewLast', phone: 0 } }
+      user.reload
+    end
+
+    it { expect(user.first_name).to eql('NewFirst') }
+    it { expect(user.last_name).to eql('NewLast') }
+    it { expect(user.phone).to eql(0) }
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:user) { create(:user) }
+
+    it { expect { delete "/api/v1/users/#{user.id}" }.to change(User, :count).by(-1) }
   end
 end

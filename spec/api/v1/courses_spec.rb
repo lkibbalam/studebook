@@ -18,7 +18,7 @@ describe 'course' do
     it_behaves_like 'request'
 
     %w[id team_id author_id description title created_at updated_at].each do |attr|
-      it "user object contains #{attr}" do
+      it "course object contains #{attr}" do
         expect(response.body).to be_json_eql(course.send(attr.to_sym).to_json).at_path(attr)
       end
     end
