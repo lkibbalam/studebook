@@ -4,6 +4,10 @@ module Api
       before_action :set_team, only: %i[index create]
       before_action :set_user, only: %i[show update destroy]
 
+      def current
+        render json: current_user.as_json(only: %i[id email])
+      end
+
       def show
         respond_with(@user)
       end

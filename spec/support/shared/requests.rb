@@ -1,6 +1,12 @@
-shared_examples_for 'request' do
+shared_examples_for 'authenticate request' do
   it 'when request' do
     expect(response).to have_http_status(:success)
+  end
+end
+
+shared_examples_for 'non authenticate request' do
+  it 'when request' do
+    expect(response).to have_http_status(:unauthorized)
   end
 end
 

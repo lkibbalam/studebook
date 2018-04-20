@@ -2,6 +2,7 @@
 require 'spec_helper'
 require 'support/shared/commentable.rb'
 require 'support/shared/requests.rb'
+require 'support/authenticate_header.rb'
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :users
   concern :commentable do
     member do
       get :comments
@@ -11,6 +10,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
+      post 'user/token' => 'user_token#create'
+      get 'users/current' => 'users#current'
       resources :teams, shallow: true do
         resources :courses, concerns: %i[commentable] do
           resources :lessons, concerns: %i[commentable]

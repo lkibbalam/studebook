@@ -22,28 +22,36 @@ User.create(
       last_name: 'first',
       team_id: 1,
       phone: 1111,
-      mentor_id: 2
+      mentor_id: 2,
+      email: 'seed1@mail.com',
+      password: '12345678'
     },
     {
       first_name: 'Rubyfirst',
       last_name: 'Rubyfirst',
       team_id: 1,
       phone: 9999,
-      mentor_id: 2
+      mentor_id: 2,
+      email: 'seed2@mail.com',
+      password: '12345678'
     },
     {
       first_name: 'second',
       last_name: 'third',
       team_id: 2,
       phone: 2222,
-      mentor_id: 1
+      mentor_id: 1,
+      email: 'seed3@mail.com',
+      password: '12_345_678'
     },
     {
       first_name: 'second',
       last_name: 'third',
       team_id: 3,
       phone: 2222,
-      mentor_id: 2
+      mentor_id: 2,
+      email: 'seed4@mail.com',
+      password: '12345678'
     }
   ]
 )

@@ -11,7 +11,6 @@ gem 'rails', '~> 5.1.5'
 gem 'pg'
 # Use Puma as the app server
 gem 'ancestry'
-gem 'devise'
 gem 'oj'
 gem 'oj_mimic_json'
 gem 'puma', '~> 3.7'
@@ -19,6 +18,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'responders'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'devise_token_auth'
+gem 'knock'
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
