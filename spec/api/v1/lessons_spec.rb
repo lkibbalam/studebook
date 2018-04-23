@@ -1,56 +1,99 @@
 require 'rails_helper'
 
-describe 'lesson' do
+describe 'lessons_controller_spec' do
   let!(:course) { create(:course) }
   let!(:lessons) { create_list(:lesson, 10, course_id: course.id) }
-  let!(:lesson) { lessons.first }
+  let!(:user) { create(:user) }
 
   describe 'GET #index' do
-    before { get "/api/v1/courses/#{course.id}/lessons" }
+    context 'when non-authenticate' do
+      before { get "/api/v1/courses/#{course.id}/lessons" }
 
-    it_behaves_like 'request'
-    it_behaves_like 'resource contain'
+      it_behaves_like 'non authenticate request'
+    end
+
+    context 'when authenticate' do
+      before { get "/api/v1/courses/#{course.id}/lessons", headers: authenticated_header(user) }
+
+      it_behaves_like 'authenticate request'
+      it_behaves_like 'resource contain'
+    end
   end
 
   describe 'GET #show' do
-    before { get "/api/v1/lessons/#{lessons.first.id}" }
+    context 'when non-authenticate' do
+      before { get "/api/v1/lessons/#{lessons.first.id}" }
 
-    it_behaves_like 'request'
+      it_behaves_like 'non authenticate request'
+    end
 
-    %w[id course_id description material video task created_at updated_at].each do |attr|
-      it "user object contains #{attr}" do
-        expect(response.body).to be_json_eql(lesson.send(attr.to_sym).to_json).at_path(attr)
+    context 'when authenticate' do
+      before { get "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(user) }
+
+      it_behaves_like 'authenticate request'
+
+      %w[id course_id description material video task created_at updated_at].each do |attr|
+        it "user object contains #{attr}" do
+          expect(response.body).to be_json_eql(lessons.first.send(attr.to_sym).to_json).at_path(attr)
+        end
       end
     end
   end
 
   describe 'POST #create' do
-    let!(:course) { create(:course) }
-    let(:create_lesson) { post "/api/v1/courses/#{course.id}/lessons", params: { lesson: attributes_for(:lesson) } }
+    context 'when non-authenticate' do
+      before { post "/api/v1/courses/#{course.id}/lessons", params: { lesson: attributes_for(:lesson) } }
 
-    it 'when lesson with valid params' do
-      expect { create_lesson }.to change(Lesson, :count).by(1)
+      it_behaves_like 'non authenticate request'
+    end
+    context 'when authenticate' do
+      let(:create_lesson) do
+        post "/api/v1/courses/#{course.id}/lessons", params: { lesson: attributes_for(:lesson) },
+                                                     headers: authenticated_header(user)
+      end
+
+      it 'when lesson with valid params' do
+        expect { create_lesson }.to change(Lesson, :count).by(1)
+      end
     end
   end
 
   describe 'PATCH #update' do
-    let!(:lesson) { create(:lesson) }
-    before do
-      patch "/api/v1/lessons/#{lesson.id}", params: { lesson: { task: 'NewTask', material: 'NewMaterial',
-                                                                video: 'NewVideo', description: 'NewDesc' } }
-      lesson.reload
+    context 'when non-authenticate' do
+      before do
+        patch "/api/v1/lessons/#{lessons.first.id}", params: { lesson: { task: 'NewTask', material: 'NewMaterial',
+                                                                         video: 'NewVideo', description: 'NewDesc' } }
+      end
+
+      it_behaves_like 'non authenticate request'
     end
 
-    it { expect(lesson.task).to eql('NewTask') }
-    it { expect(lesson.video).to eql('NewVideo') }
-    it { expect(lesson.description).to eql('NewDesc') }
-    it { expect(lesson.material).to eql('NewMaterial') }
+    context 'when authenticate' do
+      before do
+        patch "/api/v1/lessons/#{lessons.first.id}", params: { lesson: { task: 'NewTask', material: 'NewMaterial',
+                                                                         video: 'NewVideo', description: 'NewDesc' } },
+                                                     headers: authenticated_header(user)
+        lessons.first.reload
+      end
+
+      it { expect(lessons.first.task).to eql('NewTask') }
+      it { expect(lessons.first.video).to eql('NewVideo') }
+      it { expect(lessons.first.description).to eql('NewDesc') }
+      it { expect(lessons.first.material).to eql('NewMaterial') }
+    end
   end
 
   describe 'DELETE #delete' do
-    let!(:lesson) { create(:lesson) }
+    context 'when non-authenticate' do
+      before { delete "/api/v1/lessons/#{lessons.first.id}" }
 
-    it { expect { delete "/api/v1/lessons/#{lesson.id}" }.to change(Lesson, :count).by(-1) }
+      it_behaves_like 'non authenticate request'
+    end
+
+    context 'when authenticate' do
+      let(:delete_lesson) { delete "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(user) }
+      it { expect { delete_lesson }.to change(Lesson, :count).by(-1) }
+    end
   end
 
   describe 'Nested comments' do
