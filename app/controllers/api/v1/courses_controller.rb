@@ -3,10 +3,10 @@ module Api
     class CoursesController < ApplicationController
       include Commentable
       before_action :set_course, only: %i[show update destroy]
-      before_action :set_team, only: :create
+      before_action :set_team, only: %i[create index]
 
       def index
-        respond_with(@courses = Course.all)
+        respond_with(@courses = @team.courses.all)
       end
 
       def show

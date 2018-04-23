@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'courses_controller_spec' do
   let!(:user) { create(:user) }
-  let!(:courses) { create_list(:course, 10, author: user) }
-  let!(:course) { courses.first }
+  let!(:team) { create(:team) }
+  let!(:courses) { create_list(:course, 10, author: user, team: team) }
 
   describe 'GET #index' do
     context 'when non authenticate' do
@@ -13,7 +13,9 @@ describe 'courses_controller_spec' do
     end
 
     context 'when authenticate' do
-      before { get "/api/v1/teams/#{courses.first.team_id}/courses", headers: authenticated_header(user) }
+      before do
+        get "/api/v1/teams/#{courses.first.team_id}/courses", headers: authenticated_header(user)
+      end
 
       it_behaves_like 'authenticate request'
       it_behaves_like 'resource contain'
@@ -34,7 +36,7 @@ describe 'courses_controller_spec' do
 
       %w[id team_id author_id description title created_at updated_at].each do |attr|
         it "course object contains #{attr}" do
-          expect(response.body).to be_json_eql(course.send(attr.to_sym).to_json).at_path(attr)
+          expect(response.body).to be_json_eql(courses.first.send(attr.to_sym).to_json).at_path(attr)
         end
       end
     end
