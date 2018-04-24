@@ -5,6 +5,7 @@ module Api
       before_action :set_user, only: %i[show update destroy]
 
       def current
+        binding.pry
         render json: current_user.as_json(only: %i[id email])
       end
 
