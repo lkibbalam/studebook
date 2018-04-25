@@ -9,6 +9,10 @@ module Api
         respond_with(@courses = @team.courses.all)
       end
 
+      def all
+        respond_with(@courses = Course.all)
+      end
+
       def show
         respond_with(@course)
       end

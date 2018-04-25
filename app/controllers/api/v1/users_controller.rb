@@ -6,7 +6,11 @@ module Api
 
       def current
         binding.pry
-        render json: current_user.as_json(only: %i[id email])
+        render json: current_user.as_json(only: %i[id email first_name last_name phone])
+      end
+
+      def all
+        respond_with(@users = User.all)
       end
 
       def show
