@@ -10,7 +10,7 @@ module Api
       end
 
       def show
-        respond_with(@lesson)
+        respond_with(@lesson.to_json(include: :comments))
       end
 
       def create

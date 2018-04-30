@@ -3,7 +3,7 @@ module Commentable
 
   def comments
     @commentable = set_commentable
-    respond_with(@comments = @commentable.comments.order(created_at: :desc))
+    respond_with(@comments = @commentable.comments)
   end
 
   def create_comment
