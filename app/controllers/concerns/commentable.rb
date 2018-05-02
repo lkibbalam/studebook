@@ -14,13 +14,13 @@ module Commentable
   end
 
   def update_comment
-    @comment = Comment.find(params[:comment_id])
+    @comment = Comment.find(params[:id])
     @comment.update(set_comment_params)
     respond_with(@comment)
   end
 
   def destroy_comment
-    @comment = Comment.find(params[:comment_id])
+    @comment = Comment.find(params[:id])
     @comment.destroy
     respond_with(@comment)
   end
