@@ -197,11 +197,11 @@ PLATFORMS
 DEPENDENCIES
   ancestry
   byebug
-  devise
   devise_token_auth
   factory_bot_rails
   json-spec
   json_spec (~> 1.1, >= 1.1.5)
+  jwt
   knock
   listen (>= 3.0.5, < 3.2)
   oj

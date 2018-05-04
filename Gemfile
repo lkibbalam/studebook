@@ -18,6 +18,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'responders'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'devise_token_auth'
+gem 'jwt'
 gem 'knock'
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
