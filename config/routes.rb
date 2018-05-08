@@ -16,7 +16,10 @@ Rails.application.routes.draw do
       get 'users' => 'users#all'
       resources :teams, shallow: true do
         resources :courses, concerns: %i[commentable] do
-          resources :lessons, concerns: %i[commentable]
+          resources :lessons, concerns: %i[commentable] do
+            patch :done
+            get :watch
+          end
         end
         resources :users
         resources :comments, concerns: %i[commentable], shallow: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_420_121_508) do
+ActiveRecord::Schema.define(version: 20_180_507_092_142) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20_180_420_121_508) do
     t.datetime 'updated_at', null: false
     t.string 'ancestry'
     t.index ['ancestry'], name: 'index_comments_on_ancestry'
+    t.index %w[commentable_type commentable_id], name: 'index_comments_on_commentable_type_and_commentable_id'
     t.index ['user_id'], name: 'index_comments_on_user_id'
   end
 
@@ -52,7 +53,6 @@ ActiveRecord::Schema.define(version: 20_180_420_121_508) do
   create_table 'lessons', force: :cascade do |t|
     t.bigint 'course_id'
     t.text 'description'
-    t.string 'video'
     t.text 'material'
     t.text 'task'
     t.datetime 'created_at', null: false
@@ -89,5 +89,14 @@ ActiveRecord::Schema.define(version: 20_180_420_121_508) do
     t.string 'password_digest'
     t.index ['mentor_id'], name: 'index_users_on_mentor_id'
     t.index ['team_id'], name: 'index_users_on_team_id'
+  end
+
+  create_table 'videos', force: :cascade do |t|
+    t.bigint 'lesson_id'
+    t.string 'title'
+    t.string 'src'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['lesson_id'], name: 'index_videos_on_lesson_id'
   end
 end

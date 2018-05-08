@@ -2,15 +2,16 @@ module Api
   module V1
     class LessonsController < ApplicationController
       include Commentable
-      before_action :set_lesson, only: %i[show destroy update]
+      before_action :set_lesson, only: %i[show destroy update done watch]
       before_action :set_course, only: %i[index create]
+      before_action :authenticate_user, only: :done
 
       def index
         respond_with(@lessons = @course.lessons)
       end
 
       def show
-        respond_with(@lesson.to_json(include: [:comments, course: { methods: :lessons }]))
+        respond_with(@lesson.to_json(include: [:videos, :comments, course: { methods: :lessons }]))
       end
 
       def create
@@ -26,6 +27,16 @@ module Api
       def destroy
         @lesson.delete
       end
+
+      def done
+        @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
+        @lesson_user.update(status: 1)
+      end
+
+      #  def watch
+      #    @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
+      #    respond_with(@lesson_user.as_json(include: { lesson: { methods: { course: { methods: :lessons } } } } ))
+      #  end
 
       private
 
