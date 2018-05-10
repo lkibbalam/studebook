@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :video do
-    lesson_id ''
     title 'MyString'
     src 'MyString'
+    lesson
   end
 end

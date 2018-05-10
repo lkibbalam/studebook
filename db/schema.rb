@@ -46,8 +46,6 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[course_id student_id], name: 'index_courses_users_on_course_id_and_student_id'
-    t.index ['course_id'], name: 'index_courses_users_on_course_id'
-    t.index ['student_id'], name: 'index_courses_users_on_student_id'
   end
 
   create_table 'lessons', force: :cascade do |t|
@@ -63,10 +61,11 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
   create_table 'lessons_users', force: :cascade do |t|
     t.bigint 'student_id'
     t.bigint 'lesson_id'
-    t.integer 'status'
-    t.integer 'mark'
+    t.integer 'status', default: 0
+    t.integer 'mark', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index %w[student_id lesson_id], name: 'index_lessons_users_on_student_id_and_lesson_id'
   end
 
   create_table 'teams', force: :cascade do |t|
@@ -81,7 +80,7 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
     t.bigint 'mentor_id'
     t.string 'first_name'
     t.string 'last_name'
-    t.integer 'role'
+    t.integer 'role', default: 1
     t.integer 'phone'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false

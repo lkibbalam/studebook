@@ -9,6 +9,5 @@ class CreateVideos < ActiveRecord::Migration[5.1]
     end
 
     add_index :comments, %i[commentable_type commentable_id]
-    remove_column :lessons, :video
   end
 end

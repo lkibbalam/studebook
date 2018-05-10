@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe 'lessons_controller_spec' do
+  let(:videos) { create_list(:video, 3) }
   let!(:course) { create(:course) }
-  let!(:lessons) { create_list(:lesson, 10, course_id: course.id) }
+  let!(:lessons) { create_list(:lesson, 10, course_id: course.id, videos: videos) }
   let!(:user) { create(:user) }
 
   describe 'GET #index' do
@@ -32,7 +33,7 @@ describe 'lessons_controller_spec' do
 
       it_behaves_like 'authenticate request'
 
-      %w[id course_id description material video task created_at updated_at].each do |attr|
+      %w[id course_id description material task created_at updated_at].each do |attr|
         it "user object contains #{attr}" do
           expect(response.body).to be_json_eql(lessons.first.send(attr.to_sym).to_json).at_path(attr)
         end
@@ -62,7 +63,7 @@ describe 'lessons_controller_spec' do
     context 'when non-authenticate' do
       before do
         patch "/api/v1/lessons/#{lessons.first.id}", params: { lesson: { task: 'NewTask', material: 'NewMaterial',
-                                                                         video: 'NewVideo', description: 'NewDesc' } }
+                                                                         description: 'NewDesc' } }
       end
 
       it_behaves_like 'non authenticate request'
@@ -71,13 +72,12 @@ describe 'lessons_controller_spec' do
     context 'when authenticate' do
       before do
         patch "/api/v1/lessons/#{lessons.first.id}", params: { lesson: { task: 'NewTask', material: 'NewMaterial',
-                                                                         video: 'NewVideo', description: 'NewDesc' } },
+                                                                         description: 'NewDesc' } },
                                                      headers: authenticated_header(user)
         lessons.first.reload
       end
 
       it { expect(lessons.first.task).to eql('NewTask') }
-      it { expect(lessons.first.video).to eql('NewVideo') }
       it { expect(lessons.first.description).to eql('NewDesc') }
       it { expect(lessons.first.material).to eql('NewMaterial') }
     end

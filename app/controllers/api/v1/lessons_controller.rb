@@ -4,7 +4,6 @@ module Api
       include Commentable
       before_action :set_lesson, only: %i[show destroy update done watch]
       before_action :set_course, only: %i[index create]
-      before_action :authenticate_user, only: :done
 
       def index
         respond_with(@lessons = @course.lessons)
