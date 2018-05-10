@@ -2,7 +2,7 @@ module Api
   module V1
     class CoursesController < ApplicationController
       include Commentable
-      before_action :set_course, only: %i[show update destroy]
+      before_action :set_course, only: %i[show update destroy start_course]
       before_action :set_team, only: %i[create index]
 
       def index
@@ -29,6 +29,12 @@ module Api
 
       def destroy
         @course.delete
+      end
+
+      def start_course
+        # TODO: wright test
+        @course_user = @course.courses_users.create(student_id: current_user.id)
+        render json: @course.lessons
       end
 
       private
