@@ -11,7 +11,8 @@ module Api
 
       def show
         @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
-        respond_with(@lesson.as_json(include: [:videos, :comments, course: { methods: :lessons }]).merge(@lesson_user.as_json))
+        respond_with(lesson: @lesson.as_json(include: [:videos, course:
+            { methods: :lessons }]), lesson_user: @lesson_user.as_json(include: :comments))
         # TODO: update tests
       end
 

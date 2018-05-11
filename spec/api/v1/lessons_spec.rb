@@ -5,6 +5,7 @@ describe 'lessons_controller_spec' do
   let!(:course) { create(:course) }
   let!(:lessons) { create_list(:lesson, 10, course_id: course.id, videos: videos) }
   let!(:user) { create(:user) }
+  let!(:lessons_user) { create(:lessons_user, student: user, lesson: lessons.first) }
 
   describe 'GET #index' do
     context 'when non-authenticate' do
