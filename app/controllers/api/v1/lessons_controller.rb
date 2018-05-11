@@ -10,7 +10,9 @@ module Api
       end
 
       def show
-        respond_with(@lesson.to_json(include: [:videos, :comments, course: { methods: :lessons }]))
+        @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
+        respond_with(@lesson.as_json(include: [:videos, :comments, course: { methods: :lessons }]).merge(@lesson_user.as_json))
+        # TODO: update tests
       end
 
       def create
@@ -30,6 +32,8 @@ module Api
       def done
         @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
         @lesson_user.update(status: 1)
+        render json: @lesson_user
+        # TODO: Test
       end
 
       #  def watch

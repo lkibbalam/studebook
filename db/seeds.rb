@@ -150,7 +150,7 @@ Video.create(
     },
     {
       lesson_id: 1,
-      title: 'Video2',
+      title: 'Video3',
       src: 'https://www.youtube.com/embed/Qs8c6FCwkbk'
     },
     {
