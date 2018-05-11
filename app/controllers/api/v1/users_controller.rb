@@ -5,7 +5,7 @@ module Api
       before_action :set_user, only: %i[show update destroy]
 
       def current
-        render json: current_user.as_json(only: %i[id email first_name last_name phone], methods: :courses)
+        render json: current_user.as_json(only: %i[id email first_name last_name phone])
       end
 
       def all
@@ -13,7 +13,7 @@ module Api
       end
 
       def show
-        respond_with(@user)
+        respond_with(@user.as_json(only: %i[id email first_name last_name phone], methods: :courses))
       end
 
       def index

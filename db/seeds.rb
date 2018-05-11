@@ -5,7 +5,7 @@ Team.create(
       description: 'some funny men and one girl'
     },
     {
-      title: 'C+',
+      title: 'C++',
       description: 'very smart men'
     },
     {
