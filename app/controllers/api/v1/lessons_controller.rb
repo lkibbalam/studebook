@@ -6,7 +6,9 @@ module Api
       before_action :set_course, only: %i[index create]
 
       def index
-        respond_with(@lessons = @course.lessons)
+        @lessons = @course.lessons
+        respond_with(lessons: @lessons.as_json(include: :videos),
+                     course: @course, video: @lessons.first.videos.first)
       end
 
       def show

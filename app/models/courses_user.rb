@@ -3,6 +3,8 @@ class CoursesUser < ApplicationRecord
   belongs_to :student, class_name: 'User', foreign_key: :student_id
   has_many :comments, as: :commentable, dependent: :destroy
 
+  validates :student, uniqueness: { scope: :course }
+
   after_create :create_course_lessons
 
   def create_course_lessons
