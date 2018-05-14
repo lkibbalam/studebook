@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :last_name
       t.integer :role, default: 1
       t.integer :phone
+      t.string :img
 
       t.timestamps
     end

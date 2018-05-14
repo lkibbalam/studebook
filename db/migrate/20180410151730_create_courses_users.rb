@@ -4,7 +4,6 @@ class CreateCoursesUsers < ActiveRecord::Migration[5.1]
       t.bigint :student_id
       t.bigint :course_id
       t.text :opinion
-      t.string :chat
 
       t.timestamps
     end

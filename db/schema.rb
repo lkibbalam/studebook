@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
     t.bigint 'author_id'
     t.text 'description'
     t.string 'title'
+    t.string 'img'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['author_id'], name: 'index_courses_on_author_id'
@@ -42,7 +43,6 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
     t.bigint 'student_id'
     t.bigint 'course_id'
     t.text 'opinion'
-    t.string 'chat'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[course_id student_id], name: 'index_courses_users_on_course_id_and_student_id'
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
     t.text 'description'
     t.text 'material'
     t.text 'task'
+    t.string 'img'
+    t.string 'title'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['course_id'], name: 'index_lessons_on_course_id'
@@ -70,6 +72,7 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
 
   create_table 'teams', force: :cascade do |t|
     t.string 'title'
+    t.string 'img'
     t.text 'description'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
@@ -82,6 +85,7 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
     t.string 'last_name'
     t.integer 'role', default: 1
     t.integer 'phone'
+    t.string 'img'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'email'
@@ -92,10 +96,13 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
 
   create_table 'videos', force: :cascade do |t|
     t.bigint 'lesson_id'
+    t.bigint 'course_id'
     t.string 'title'
     t.string 'src'
+    t.string 'duration'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['course_id'], name: 'index_videos_on_course_id'
     t.index ['lesson_id'], name: 'index_videos_on_lesson_id'
   end
 end

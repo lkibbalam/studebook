@@ -8,12 +8,16 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :teams
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       post 'user/token' => 'user_token#create'
       get 'users/current' => 'users#current'
       get 'courses' => 'courses#all'
       get 'users' => 'users#all'
+      namespace :admin do
+        resources :teams
+      end
       resources :teams, shallow: true do
         resources :courses, concerns: %i[commentable] do
           resources :lessons_users, concerns: %i[commentable], shallow: true

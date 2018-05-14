@@ -5,6 +5,8 @@ class CreateLessons < ActiveRecord::Migration[5.1]
       t.text :description
       t.text :material
       t.text :task
+      t.string :img
+      t.string :title
 
       t.timestamps
     end

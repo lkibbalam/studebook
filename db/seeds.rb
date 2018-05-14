@@ -95,142 +95,83 @@ Lesson.create(
       course_id: 1,
       description: 'MyDescr1',
       task: 'MyTask1',
-      material: 'MyMaterial1'
+      material: 'MyMaterial1',
+      title: 'Lesson 1'
     },
     {
       course_id: 1,
       description: 'MyDescr2',
       task: 'MyTask2',
-      material: 'MyMaterial2'
+      material: 'MyMaterial2',
+      title: 'Lesson 3'
     },
     {
       course_id: 1,
       description: 'MyDescr3',
       task: 'MyTask3',
-      material: 'MyMaterial3'
+      material: 'MyMaterial3',
+      title: 'Lesson 3'
     },
     {
       course_id: 2,
       description: 'MyDescr1',
       task: 'MyTask1',
-      material: 'MyMaterial1'
+      material: 'MyMaterial1',
+      title: 'Lesson 1'
     },
     {
       course_id: 2,
       description: 'MyDescr2',
       task: 'MyTask2',
-      material: 'MyMaterial2'
+      material: 'MyMaterial2',
+      title: 'Lesson 2'
     },
     {
       course_id: 3,
       description: 'MyDescr1',
       task: 'MyTask1',
-      material: 'MyMaterial1'
+      material: 'MyMaterial1',
+      title: 'Lesson 1'
     },
     {
       course_id: 3,
       description: 'MyDescr2',
       task: 'MyTask2',
-      material: 'MyMaterial2'
+      material: 'MyMaterial2',
+      title: 'Lesson 2'
     }
   ]
 )
 
 Video.create(
   [
-    {
+    { course_id: 1,
       lesson_id: 1,
       title: 'Video1',
-      src: 'https://www.youtube.com/embed/t5KR9oAmq6A?start=33'
-    },
-    {
+      src: 'https://www.youtube.com/embed/t5KR9oAmq6A?start=33' },
+    { course_id: 1,
       lesson_id: 1,
       title: 'Video2',
-      src: 'https://www.youtube.com/embed/UGoCSMr0k6U'
-    },
-    {
+      src: 'https://www.youtube.com/embed/UGoCSMr0k6U' },
+    { course_id: 1,
       lesson_id: 1,
       title: 'Video3',
-      src: 'https://www.youtube.com/embed/Qs8c6FCwkbk'
-    },
-    {
+      src: 'https://www.youtube.com/embed/Qs8c6FCwkbk' },
+    { course_id: 1,
       lesson_id: 2,
       title: 'Video1',
-      src: 'https://www.youtube.com/embed/t5KR9oAmq6A?start=33'
-    },
-    {
+      src: 'https://www.youtube.com/embed/UGoCSMr0k6U' },
+    { course_id: 1,
       lesson_id: 2,
       title: 'Video2',
-      src: 'https://www.youtube.com/embed/UGoCSMr0k6U'
-    },
-    {
+      src: 'https://www.youtube.com/embed/t5KR9oAmq6A?start=33' },
+    { course_id: 1,
       lesson_id: 3,
       title: 'Video1',
-      src: 'https://www.youtube.com/embed/Qs8c6FCwkbk'
-    },
-    {
+      src: 'https://www.youtube.com/embed/Qs8c6FCwkbk' },
+    { course_id: 1,
       lesson_id: 3,
       title: 'Video2',
-      src: 'https://www.youtube.com/embed/Qs8c6FCwkbk'
-    }
+      src: 'https://www.youtube.com/embed/UGoCSMr0k6U' }
   ]
 )
-
-#
-# LessonsUser.create(
-#   [
-#     {
-#       lesson_id: 1,
-#       student_id: 1,
-#       status: 0,
-#       mark: 10
-#     },
-#     {
-#       lesson_id: 1,
-#       student_id: 1,
-#       status: 0,
-#       mark: 10
-#     },
-#     {
-#       lesson_id: 1,
-#       student_id: 2,
-#       status: 0,
-#       mark: 99
-#     },
-#     {
-#       lesson_id: 1,
-#       student_id: 3,
-#       status: 0,
-#       mark: 100
-#     }
-#   ]
-# )
-
-# CoursesUser.create(
-#   [
-#     {
-#       student_id: 1,
-#       course_id: 1,
-#       opinion: 'lalaland',
-#       chat: 'some chat link'
-#     },
-#     {
-#       student_id: 2,
-#       course_id: 1,
-#       opinion: 'lalaland',
-#       chat: 'some chat link'
-#     },
-#     {
-#       student_id: 1,
-#       course_id: 2,
-#       opinion: 'lalaland',
-#       chat: 'some chat link'
-#     },
-#     {
-#       student_id: 1,
-#       course_id: 3,
-#       opinion: 'lalaland',
-#       chat: 'some chat link'
-#     }
-#   ]
-# )
