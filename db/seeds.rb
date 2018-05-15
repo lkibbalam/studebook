@@ -2,15 +2,21 @@ Team.create(
   [
     {
       title: 'Ruby',
-      description: 'some funny men and one girl'
+      description: 'some funny men and one girl',
+      img: 'https://t00.deviantart.net/l4YO2b97n-a86-ZYM9QfIvaZ6EM=/300x200/filters:fixed_height(100,100):origin()
+              /pre00/af07/th/pre/f/2016/192/c/3/rubyrubyruby2_by_likeabaka-da9mdzr.png'
     },
     {
       title: 'C++',
-      description: 'very smart men'
+      description: 'very smart men',
+      img: 'https://t00.deviantart.net/l4YO2b97n-a86-ZYM9QfIvaZ6EM=/300x200/filters:fixed_height(100,100):origin()
+              /pre00/af07/th/pre/f/2016/192/c/3/rubyrubyruby2_by_likeabaka-da9mdzr.png'
     },
     {
       title: 'C#',
-      description: 'very strange men'
+      description: 'very strange men',
+      img: 'https://t00.deviantart.net/l4YO2b97n-a86-ZYM9QfIvaZ6EM=/300x200/filters:fixed_height(100,100):origin()
+              /pre00/af07/th/pre/f/2016/192/c/3/rubyrubyruby2_by_likeabaka-da9mdzr.png'
     }
   ]
 )
