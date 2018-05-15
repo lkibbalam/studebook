@@ -4,7 +4,9 @@ module Api
       before_action :set_team, only: %i[show update destroy]
 
       def index
-        respond_with(@teams = Team.all)
+        @teams = Team.all
+        authorize @teams
+        respond_with(@teams)
       end
 
       def show

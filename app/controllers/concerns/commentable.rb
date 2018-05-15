@@ -3,24 +3,24 @@ module Commentable
 
   def comments
     @commentable = set_commentable
-    respond_with(@comments = @commentable.comments)
+    respond_with(@comments = @commentable.comments.as_json(include: :user))
   end
 
   def create_comment
     @commentable = set_commentable
-    @comment = @commentable.comments.new(set_comment_params)
+    @comment = @commentable.comments.new(set_comment_params.merge(user_id: current_user.id))
     @comment.parent_id = @commentable.id if @commentable.class.name == 'Comment'
-    render json: @comment if @comment.save
+    render json: @comment.as_json(include: :user) if @comment.save
   end
 
   def update_comment
-    @comment = Comment.find(params[:comment_id])
+    @comment = Comment.find(params[:id])
     @comment.update(set_comment_params)
-    respond_with(@comment)
+    render json: @comment.as_json(include: :user)
   end
 
   def destroy_comment
-    @comment = Comment.find(params[:comment_id])
+    @comment = Comment.find(params[:id])
     @comment.destroy
     respond_with(@comment)
   end

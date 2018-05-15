@@ -15,9 +15,6 @@ Rails.application.routes.draw do
       get 'users/current' => 'users#current'
       get 'courses' => 'courses#all'
       get 'users' => 'users#all'
-      namespace :admin do
-        resources :teams
-      end
       resources :teams, shallow: true do
         resources :courses, concerns: %i[commentable] do
           resources :lessons_users, concerns: %i[commentable], shallow: true
