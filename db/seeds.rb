@@ -181,3 +181,32 @@ Video.create(
       src: 'https://www.youtube.com/embed/UGoCSMr0k6U' }
   ]
 )
+
+Task.create(
+  [
+    { lesson_id: 1,
+      title: 'Задача 1-1',
+      description: 'Вы можете проверять работу своих программ руками. Но раз вы уже умеете программировать,
+                       почему бы не написать отдельную программу, которая бы проверяла вашу программу. Логично?
+                        Эта гениальная идея давно пришла в голову программистам и хороший программист всегда пишет еще и
+                         тесты. Это убивает сразу кучу зайцев.' },
+    { lesson_id: 1,
+      title: 'Задача 1-2',
+      description: 'An Idea board frontend app built using Create React App, based on the Rails 5 API and React.js
+                       tutorial - How to make an Idea board app.
+                      The app talks to an API which has endpoints for adding, editing and deleting ideas.
+                        See this Rails 5.1 API app code for the backend API.' },
+    { lesson_id: 1,
+      title: 'Задача 1-3',
+      description: 'We’re going to build an idea board as a single page app (SPA), which displays ideas in the form of
+                       square tiles.' },
+    { lesson_id: 1,
+      title: 'Задача 1-4',
+      description: 'You can add new ideas, edit them and delete them. Ideas get auto-saved when the user focuses out of
+                       the editing form.' },
+    { lesson_id: 1,
+      title: 'Задача 1-5',
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+                     such as animations, sorting and search in a future tutorial.' }
+  ]
+)

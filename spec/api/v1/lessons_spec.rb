@@ -34,7 +34,7 @@ describe 'lessons_controller_spec' do
 
       it_behaves_like 'authenticate request'
 
-      %w[id course_id description material task created_at updated_at].each do |attr|
+      %w[id course_id description material task].each do |attr|
         it "user object contains #{attr}" do
           expect(response.body).to be_json_eql(lessons.first.send(attr.to_sym).to_json).at_path(attr)
         end

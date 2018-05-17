@@ -13,7 +13,7 @@ end
 shared_examples_for 'Commentable_create' do
   let(:create_comment) do
     post "/api/v1/#{subject.class.name.downcase.pluralize}/#{subject.id}/create_comment",
-         params: { id: subject, comment: attributes_for(:comment) }, headers: authenticated_header(user)
+         params: { comment: attributes_for(:comment) }, headers: authenticated_header(user)
   end
 
   it 'save new comment to commentable' do
@@ -24,8 +24,8 @@ end
 shared_examples_for 'Commentable_update' do
   let!(:comment) { create(:comment, commentable: subject) }
   before do
-    patch "/api/v1/#{subject.class.name.downcase.pluralize}/#{subject.id}/update_comment",
-          params: { comment_id: comment.id, comment: { body: 'NewBody' } }, headers: authenticated_header(user)
+    patch "/api/v1/#{subject.class.name.downcase.pluralize}/#{comment.id}/update_comment",
+          params: { comment: { body: 'NewBody' } }, headers: authenticated_header(user)
   end
 
   it 'should to update a comment' do
@@ -36,8 +36,8 @@ end
 shared_examples_for 'Commentable_destroy' do
   let!(:comment) { create(:comment, commentable: subject) }
   let(:destroy_comment) do
-    delete "/api/v1/#{subject.class.name.downcase.pluralize}/#{subject.id}/destroy_comment",
-           params: { comment_id: comment.id }, headers: authenticated_header(user)
+    delete "/api/v1/#{subject.class.name.downcase.pluralize}/#{comment.id}/destroy_comment",
+           headers: authenticated_header(user)
   end
 
   it 'should to delete a comment' do

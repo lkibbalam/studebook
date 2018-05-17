@@ -4,4 +4,5 @@ class Lesson < ApplicationRecord
   has_many :students, through: :lessons_users
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :videos, dependent: :destroy
+  has_many :tasks, dependent: :destroy
 end

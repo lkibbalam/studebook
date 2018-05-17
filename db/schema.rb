@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_507_092_142) do
+ActiveRecord::Schema.define(version: 20_180_517_092_808) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -68,6 +68,15 @@ ActiveRecord::Schema.define(version: 20_180_507_092_142) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[student_id lesson_id], name: 'index_lessons_users_on_student_id_and_lesson_id'
+  end
+
+  create_table 'tasks', force: :cascade do |t|
+    t.bigint 'lesson_id'
+    t.string 'title'
+    t.text 'description'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['lesson_id'], name: 'index_tasks_on_lesson_id'
   end
 
   create_table 'teams', force: :cascade do |t|

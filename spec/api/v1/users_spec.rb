@@ -42,7 +42,7 @@ describe 'users_controller_spec' do
 
       it_behaves_like 'authenticate request'
 
-      %w[id team_id mentor_id role first_name last_name phone created_at updated_at].each do |attr|
+      %w[id role first_name last_name phone].each do |attr|
         it "user object contains #{attr}" do
           expect(response.body).to be_json_eql(users.first.send(attr.to_sym).to_json).at_path(attr)
         end

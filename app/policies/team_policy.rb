@@ -6,6 +6,6 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin?
+    true
   end
 end

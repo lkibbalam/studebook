@@ -3,5 +3,6 @@ FactoryBot.define do
     title 'MyString'
     src 'MyString'
     lesson
+    course
   end
 end
