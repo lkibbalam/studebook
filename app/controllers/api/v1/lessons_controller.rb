@@ -9,6 +9,7 @@ module Api
         @lessons = @course.lessons
         respond_with(lessons: @lessons.as_json(include: :videos),
                      course: @course, video: @lessons.first.videos.first)
+        # TODO: update tests
       end
 
       def show
@@ -19,12 +20,12 @@ module Api
       end
 
       def create
-        @lesson = @course.lessons.create(set_params)
+        @lesson = @course.lessons.create(set_lesson_params)
         render json: @lesson
       end
 
       def update
-        @lesson.update(set_params)
+        @lesson.update(set_lesson_params)
         render json: @lesson
       end
 
@@ -39,10 +40,13 @@ module Api
         # TODO: Test
       end
 
-      #  def watch
-      #    @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
-      #    respond_with(@lesson_user.as_json(include: { lesson: { methods: { course: { methods: :lessons } } } } ))
-      #  end
+      def change_task_status
+        task = Task.find(params[:id])
+        @task_user = TasksUser.find_by(user: current_user, task: task)
+        @task_user.update(set_task_verify_params)
+        render json: @task_user
+        # TODO: Test
+      end
 
       private
 
@@ -54,8 +58,12 @@ module Api
         @course = Course.find(params[:course_id])
       end
 
-      def set_params
-        params.require(:lesson).permit(:video, :description, :material, :task)
+      def set_lesson_params
+        params.require(:lesson).permit(:video, :description, :material)
+      end
+
+      def set_task_verify_params
+        params.require(:task).permit(:status, :github_url)
       end
     end
   end

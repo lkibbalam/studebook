@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_517_092_808) do
+ActiveRecord::Schema.define(version: 20_180_517_115_803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 20_180_517_092_808) do
     t.bigint 'course_id'
     t.text 'description'
     t.text 'material'
-    t.text 'task'
     t.string 'img'
     t.string 'title'
     t.datetime 'created_at', null: false
@@ -79,6 +78,17 @@ ActiveRecord::Schema.define(version: 20_180_517_092_808) do
     t.index ['lesson_id'], name: 'index_tasks_on_lesson_id'
   end
 
+  create_table 'tasks_users', force: :cascade do |t|
+    t.bigint 'task_id'
+    t.bigint 'user_id'
+    t.string 'github_url'
+    t.integer 'mark', default: 0
+    t.integer 'status', default: 0
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[user_id task_id], name: 'index_tasks_users_on_user_id_and_task_id'
+  end
+
   create_table 'teams', force: :cascade do |t|
     t.string 'title'
     t.string 'img'
@@ -95,6 +105,7 @@ ActiveRecord::Schema.define(version: 20_180_517_092_808) do
     t.integer 'role', default: 1
     t.integer 'phone'
     t.string 'img'
+    t.string 'github_url'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'email'
@@ -108,7 +119,7 @@ ActiveRecord::Schema.define(version: 20_180_517_092_808) do
     t.bigint 'course_id'
     t.string 'title'
     t.string 'src'
-    t.string 'duration'
+    t.integer 'duration'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['course_id'], name: 'index_videos_on_course_id'

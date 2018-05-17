@@ -5,7 +5,7 @@ class CreateVideos < ActiveRecord::Migration[5.1]
       t.bigint :course_id, index: true
       t.string :title
       t.string :src
-      t.string :duration
+      t.integer :duration
 
       t.timestamps
     end

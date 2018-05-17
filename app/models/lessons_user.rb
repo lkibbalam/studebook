@@ -6,4 +6,11 @@ class LessonsUser < ApplicationRecord
   validates :student, uniqueness: { scope: :lesson }
 
   enum status: { done: 1, undone: 0 }
+
+  after_create :create_tasks_users
+
+  def create_tasks_users
+    lesson.tasks.each { |task| TasksUser.create(user: student, task: task) }
+    # TODO: test
+  end
 end

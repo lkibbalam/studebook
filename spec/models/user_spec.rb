@@ -9,4 +9,6 @@ RSpec.describe User, type: :model do
   it { should have_many(:courses).through(:courses_users) }
   it { should have_many(:lessons_users).dependent(:destroy).with_foreign_key('student_id') }
   it { should have_many(:lessons).through(:lessons_users) }
+  it { should have_many(:tasks_users).dependent(:destroy) }
+  it { should have_many(:tasks).through(:tasks_users) }
 end

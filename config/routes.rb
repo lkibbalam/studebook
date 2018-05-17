@@ -21,7 +21,7 @@ Rails.application.routes.draw do
           post :start_course
           resources :lessons, concerns: %i[commentable] do
             patch :done
-            get :watch
+            patch :change_task_status
           end
         end
         resources :users

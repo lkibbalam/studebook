@@ -100,49 +100,42 @@ Lesson.create(
     {
       course_id: 1,
       description: 'MyDescr1',
-      task: 'MyTask1',
       material: 'MyMaterial1',
       title: 'Lesson 1'
     },
     {
       course_id: 1,
       description: 'MyDescr2',
-      task: 'MyTask2',
       material: 'MyMaterial2',
-      title: 'Lesson 3'
+      title: 'Lesson 2'
     },
     {
       course_id: 1,
       description: 'MyDescr3',
-      task: 'MyTask3',
       material: 'MyMaterial3',
       title: 'Lesson 3'
     },
     {
       course_id: 2,
       description: 'MyDescr1',
-      task: 'MyTask1',
       material: 'MyMaterial1',
       title: 'Lesson 1'
     },
     {
       course_id: 2,
       description: 'MyDescr2',
-      task: 'MyTask2',
       material: 'MyMaterial2',
       title: 'Lesson 2'
     },
     {
       course_id: 3,
       description: 'MyDescr1',
-      task: 'MyTask1',
       material: 'MyMaterial1',
       title: 'Lesson 1'
     },
     {
       course_id: 3,
       description: 'MyDescr2',
-      task: 'MyTask2',
       material: 'MyMaterial2',
       title: 'Lesson 2'
     }
