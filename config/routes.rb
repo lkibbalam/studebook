@@ -8,20 +8,19 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :teams
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       post 'user/token' => 'user_token#create'
       get 'users/current' => 'users#current'
       get 'courses' => 'courses#all'
       get 'users' => 'users#all'
+      patch 'tasks/:id/task_to_verify' => 'tasks#task_to_verify'
       resources :teams, shallow: true do
         resources :courses, concerns: %i[commentable] do
           resources :lessons_users, concerns: %i[commentable], shallow: true
           post :start_course
           resources :lessons, concerns: %i[commentable] do
             patch :done
-            patch :change_task_status
           end
         end
         resources :users

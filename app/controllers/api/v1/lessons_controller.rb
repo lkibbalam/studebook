@@ -14,7 +14,8 @@ module Api
 
       def show
         @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
-        respond_with(lesson: @lesson.as_json(include: [:tasks, :videos, course:
+        @lesson_tasks_user = current_user.tasks_users.where(task: @lesson.tasks)
+        respond_with(lesson_tasks_user: @lesson_tasks_user.as_json, lesson: @lesson.as_json(include: [:tasks, :videos, course:
             { methods: :lessons }]), lesson_user: @lesson_user.as_json(include: [comments: { methods: :user }]))
         # TODO: update tests
       end
@@ -40,14 +41,6 @@ module Api
         # TODO: Test
       end
 
-      def change_task_status
-        task = Task.find(params[:id])
-        @task_user = TasksUser.find_by(user: current_user, task: task)
-        @task_user.update(set_task_verify_params)
-        render json: @task_user
-        # TODO: Test
-      end
-
       private
 
       def set_lesson
@@ -60,10 +53,6 @@ module Api
 
       def set_lesson_params
         params.require(:lesson).permit(:video, :description, :material)
-      end
-
-      def set_task_verify_params
-        params.require(:task).permit(:status, :github_url)
       end
     end
   end
