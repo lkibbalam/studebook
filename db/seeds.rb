@@ -200,6 +200,34 @@ Task.create(
     { lesson_id: 1,
       title: 'Задача 1-5',
       description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+                     such as animations, sorting and search in a future tutorial.' },
+    { lesson_id: 2,
+      title: 'Задача 2-1',
+      description: 'An Idea board frontend app built using Create React App, based on the Rails 5 API and React.js
+                       tutorial - How to make an Idea board app.
+                      The app talks to an API which has endpoints for adding, editing and deleting ideas.
+                        See this Rails 5.1 API app code for the backend API.' },
+    { lesson_id: 2,
+      title: 'Задача 2-2',
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+                     such as animations, sorting and search in a future tutorial.' },
+    { lesson_id: 2,
+      title: 'Задача 2-3',
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+                     such as animations, sorting and search in a future tutorial.' },
+    { lesson_id: 3,
+      title: 'Задача 3-1',
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+                     such as animations, sorting and search in a future tutorial.' },
+    { lesson_id: 3,
+      title: 'Задача 3-2',
+      description: 'An Idea board frontend app built using Create React App, based on the Rails 5 API and React.js
+                       tutorial - How to make an Idea board app.
+                      The app talks to an API which has endpoints for adding, editing and deleting ideas.
+                        See this Rails 5.1 API app code for the backend API.' },
+    { lesson_id: 3,
+      title: 'Задача 3-3',
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
                      such as animations, sorting and search in a future tutorial.' }
   ]
 )

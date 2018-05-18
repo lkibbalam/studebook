@@ -1,4 +1,4 @@
 FactoryBot.define do
-  factory :course_user do
+  factory :courses_user do
   end
 end

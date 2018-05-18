@@ -5,6 +5,8 @@ class CoursesUser < ApplicationRecord
 
   validates :student, uniqueness: { scope: :course }
 
+  enum status: { current: 0, archived: 1 }
+
   after_create :create_course_lessons
 
   def create_course_lessons

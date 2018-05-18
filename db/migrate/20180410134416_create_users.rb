@@ -9,6 +9,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.integer :phone
       t.string :img
       t.string :github_url
+      t.integer :status, default: 0
 
       t.timestamps
     end

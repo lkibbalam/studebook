@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get 'users/current' => 'users#current'
       get 'courses' => 'courses#all'
       get 'users' => 'users#all'
+      get '/' => 'courses_users#show'
       patch 'tasks/:id/task_to_verify' => 'tasks#task_to_verify'
       resources :teams, shallow: true do
         resources :courses, concerns: %i[commentable] do

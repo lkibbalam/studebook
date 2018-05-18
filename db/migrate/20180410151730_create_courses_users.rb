@@ -3,7 +3,9 @@ class CreateCoursesUsers < ActiveRecord::Migration[5.1]
     create_table :courses_users do |t|
       t.bigint :student_id
       t.bigint :course_id
-      t.text :opinion
+      t.integer :status, default: 0
+      t.integer :mark, default: 0
+      t.integer :progress, default: 0
 
       t.timestamps
     end

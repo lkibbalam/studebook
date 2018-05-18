@@ -42,7 +42,9 @@ ActiveRecord::Schema.define(version: 20_180_517_115_803) do
   create_table 'courses_users', force: :cascade do |t|
     t.bigint 'student_id'
     t.bigint 'course_id'
-    t.text 'opinion'
+    t.integer 'status', default: 0
+    t.integer 'mark', default: 0
+    t.integer 'progress', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[course_id student_id], name: 'index_courses_users_on_course_id_and_student_id'
@@ -106,6 +108,7 @@ ActiveRecord::Schema.define(version: 20_180_517_115_803) do
     t.integer 'phone'
     t.string 'img'
     t.string 'github_url'
+    t.integer 'status', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'email'
