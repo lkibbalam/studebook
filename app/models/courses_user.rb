@@ -11,6 +11,7 @@ class CoursesUser < ApplicationRecord
 
   def create_course_lessons
     course.lessons.each { |lesson| LessonsUser.create(lesson_id: lesson.id, student_id: student.id) }
+    LessonsUser.find_by(student_id: student.id).update(status: 2)
     # TODO: wright test
   end
 end
