@@ -9,7 +9,7 @@ module Api
       end
 
       def all
-        respond_with(@users = User.all)
+        respond_with(@users = User.where(mentor_id: current_user.id))
       end
 
       def show
@@ -45,7 +45,7 @@ module Api
       end
 
       def set_params
-        params.require(:user).permit(:first_name, :last_name, :phone, :email, :password)
+        params.require(:user).permit(:first_name, :last_name, :phone, :email, :password, :status, :role)
       end
     end
   end
