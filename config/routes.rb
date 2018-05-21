@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       get '/' => 'courses_users#show'
       get 'padawans/:id' => 'courses_users#padawan'
       get 'padawans/:id/tasks' => 'tasks#padawan_tasks'
+      get 'notifications' => 'notifications#index'
+      patch 'notifications/:id/seen' => 'notifications#seen'
       patch 'tasks/:id/task_to_verify' => 'tasks#task_to_verify'
       get 'lesson_user/:id' => 'lessons_users#show'
       patch 'lesson_user/:id/approve' => 'lessons_users#approve'

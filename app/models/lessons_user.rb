@@ -16,12 +16,11 @@ class LessonsUser < ApplicationRecord
   end
 
   def unlock_next_lesson
-    if saved_change_to_attribute?('status', from: 'unlocked', to: 'done')
-      course_lessons = lesson.course.lessons
-      lesson_index = course_lessons.index { |lesson| lesson_id == lesson.id }
-      next_lesson = course_lessons[lesson_index + 1]
-      LessonsUser.find_by(lesson: next_lesson).update(status: :unlocked) unless next_lesson.nil?
-      # TODO: tests, maybe refactor faster simpler way!
-    end
+    return unless saved_change_to_attribute?('status', from: 'unlocked', to: 'done')
+    course_lessons = lesson.course.lessons
+    lesson_index = course_lessons.index { |lesson| lesson_id == lesson.id }
+    next_lesson = course_lessons[lesson_index + 1]
+    LessonsUser.find_by(lesson: next_lesson).update(status: :unlocked) unless next_lesson.nil?
+    # TODO: tests, maybe refactor faster simpler way!
   end
 end

@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :lessons, through: :lessons_users
   has_many :tasks_users, dependent: :destroy
   has_many :tasks, through: :tasks_users
+  has_many :notifications
 
   enum role: { admin: 5, leader: 4, moder: 3, staff: 2, student: 1 }
   enum status: { active: 0, inactive: 1 }
