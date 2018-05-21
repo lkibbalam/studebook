@@ -9,6 +9,11 @@ module Api
         # TODO: Test
       end
 
+      def padawan_tasks
+        user = User.find(params[:id])
+        respond_with(@tasks_user = user.tasks_users.as_json(include: [task: { include: [lesson: { include: :course }] }]))
+      end
+
       private
 
       def set_task_verify_params
