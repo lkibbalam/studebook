@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 describe 'lessons_controller_spec' do
+  let(:tasks) { create_list(:task, 3) }
   let(:videos) { create_list(:video, 3) }
   let!(:course) { create(:course) }
-  let!(:lessons) { create_list(:lesson, 10, course_id: course.id, videos: videos) }
+  let!(:lessons) { create_list(:lesson, 10, course_id: course.id, videos: videos, tasks: tasks) }
   let!(:user) { create(:user) }
   let!(:lessons_user) { create(:lessons_user, student: user, lesson: lessons.first) }
 

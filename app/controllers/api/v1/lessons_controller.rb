@@ -12,13 +12,13 @@ module Api
         # TODO: update tests
       end
 
-      #       def show
-      #         @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
-      #         @lesson_tasks_user = current_user.tasks_users.where(task: @lesson.tasks)
-      #         respond_with(lesson_tasks_user: @lesson_tasks_user.as_json, lesson: @lesson.as_json(include: [:tasks, :videos, course:
-      #             { methods: :lessons }]), lesson_user: @lesson_user.as_json(include: [comments: { include: :user }]))
-      #         # TODO: update tests
-      #       end
+      # def show
+      #   @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
+      #   @lesson_tasks_user = current_user.tasks_users.where(task: @lesson.tasks)
+      #   respond_with(lesson_tasks_user: @lesson_tasks_user.as_json, lesson: @lesson.as_json(include: [:tasks, :videos, course:
+      #       { methods: :lessons }]), lesson_user: @lesson_user.as_json(include: [comments: { include: :user }]))
+      #   # TODO: update tests
+      # end
 
       def create
         @lesson = @course.lessons.create(set_lesson_params)
