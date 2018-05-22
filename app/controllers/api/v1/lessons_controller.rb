@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class LessonsController < ApplicationController
@@ -15,7 +17,8 @@ module Api
       # def show
       #   @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
       #   @lesson_tasks_user = current_user.tasks_users.where(task: @lesson.tasks)
-      #   respond_with(lesson_tasks_user: @lesson_tasks_user.as_json, lesson: @lesson.as_json(include: [:tasks, :videos, course:
+      #   respond_with(lesson_tasks_user: @lesson_tasks_user.as_json,
+      #                                                 lesson: @lesson.as_json(include: [:tasks, :videos, course:
       #       { methods: :lessons }]), lesson_user: @lesson_user.as_json(include: [comments: { include: :user }]))
       #   # TODO: update tests
       # end

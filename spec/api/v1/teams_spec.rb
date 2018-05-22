@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 describe 'teams_controller_spec' do
   let!(:teams) { create_list(:team, 10) }
@@ -55,7 +57,9 @@ describe 'teams_controller_spec' do
 
   describe 'PATCH #update' do
     context 'when non authenticate' do
-      before { patch "/api/v1/teams/#{teams.first.id}", params: { team: { title: 'NewTitle', description: 'NewDesc' } } }
+      before do
+        patch "/api/v1/teams/#{teams.first.id}", params: { team: { title: 'NewTitle', description: 'NewDesc' } }
+      end
 
       it_behaves_like 'non authenticate request'
     end

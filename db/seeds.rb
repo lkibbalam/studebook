@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Team.create(
   [
     {
@@ -199,7 +201,7 @@ Task.create(
                        the editing form.' },
     { lesson_id: 1,
       title: 'Задача 1-5',
-      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancemets,
                      such as animations, sorting and search in a future tutorial.' },
     { lesson_id: 2,
       title: 'Задача 2-1',
@@ -209,15 +211,15 @@ Task.create(
                         See this Rails 5.1 API app code for the backend API.' },
     { lesson_id: 2,
       title: 'Задача 2-2',
-      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancemnts,
                      such as animations, sorting and search in a future tutorial.' },
     { lesson_id: 2,
       title: 'Задача 2-3',
-      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhanceents,
                      such as animations, sorting and search in a future tutorial.' },
     { lesson_id: 3,
       title: 'Задача 3-1',
-      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancments,
                      such as animations, sorting and search in a future tutorial.' },
     { lesson_id: 3,
       title: 'Задача 3-2',
@@ -227,7 +229,7 @@ Task.create(
                         See this Rails 5.1 API app code for the backend API.' },
     { lesson_id: 3,
       title: 'Задача 3-3',
-      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhancements,
+      description: 'At the end of this tutorial, we’ll have a functional CRUD app, to which we can add some enhanements,
                      such as animations, sorting and search in a future tutorial.' }
   ]
 )

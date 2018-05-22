@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # require 'rails-helper'
 #
 # describe 'tasks_controller_spec' do

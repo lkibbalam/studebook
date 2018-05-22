@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 shared_examples_for 'authenticate request' do
   it 'when request' do
-    expect(response).to have_http_status(:success)
+    expect(response).to have_http_status(200)
   end
 end
 

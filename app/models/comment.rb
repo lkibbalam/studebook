@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Comment < ApplicationRecord
   has_ancestry
   belongs_to :user, optional: true

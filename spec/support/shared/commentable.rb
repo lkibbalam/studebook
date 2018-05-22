@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'Commentable_comment' do
   let(:ancestry) { subject.id if subject.class.name == 'Comment' }
   before do
