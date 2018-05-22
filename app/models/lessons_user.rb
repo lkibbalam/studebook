@@ -12,6 +12,8 @@ class LessonsUser < ApplicationRecord
   after_create :create_tasks_users
   after_update :unlock_next_lesson, on: :approve
 
+  private
+
   def create_tasks_users
     lesson.tasks.each { |task| TasksUser.create(user: student, task: task) }
     # TODO: test
