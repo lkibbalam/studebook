@@ -13,13 +13,16 @@ class TasksUser < ApplicationRecord
   private
 
   def create_notification
-    # return unless saved_change_to_attribute?('status', from: %w[undone change], to: 'verifying')
-    # i cant to pass few words to from: **option, only one string 'undone' or 'change' but i want
+    return unless %w[change undone].include?(status_before_last_save) && verifying?
     notifications.create(user: user.mentor)
   end
 
   def open_next_lesson
-    return unless TasksUser.where(user: user).all? { |task| task.status.accept? }
-    # finish method
+    return unless %w[change verifying].include?(status_before_last_save) && accept?
+    return unless user.tasks_users.where(task: task.lesson.tasks).all?(&:accept?)
+    course_lessons = task.lesson.course.lessons
+    lesson_index = course_lessons.index { |course_lesson| task.lesson == course_lesson }
+    next_lesson = course_lessons[lesson_index + 1]
+    user.lessons_users.find_by(lesson: next_lesson).update(status: :unlocked) if next_lesson
   end
 end

@@ -15,9 +15,10 @@ module Api
         # TODO: refactor this action for faster, simpler!
       end
 
-      def approve
-        lesson_user = LessonsUser.find(params[:id])
-        lesson_user.update(status: :done)
+      def approve_lesson
+        @lesson_user = LessonsUser.find(params[:id])
+        @lesson_user.update(status: :done)
+        render json: @lesson_user
         # TODO: test, and write some response;)
       end
     end

@@ -10,7 +10,7 @@ class LessonsUser < ApplicationRecord
   enum status: { unlocked: 2, done: 1, locked: 0 }
 
   after_create :create_tasks_users
-  after_update :unlock_next_lesson, on: :approve
+  after_update :unlock_next_lesson, on: %i[approve_lesson]
 
   private
 
@@ -22,9 +22,9 @@ class LessonsUser < ApplicationRecord
   def unlock_next_lesson
     return unless saved_change_to_attribute?('status', from: 'unlocked', to: 'done')
     course_lessons = lesson.course.lessons
-    lesson_index = course_lessons.index { |lesson| lesson_id == lesson.id }
+    lesson_index = course_lessons.index { |course_lesson| lesson == course_lesson }
     next_lesson = course_lessons[lesson_index + 1]
-    LessonsUser.find_by(lesson: next_lesson).update(status: :unlocked) unless next_lesson.nil?
+    student.lessons_users.find_by(lesson: next_lesson).lesson_user.update(status: :unlocked) if next_lesson
     # TODO: tests, maybe refactor faster simpler way!
   end
 end

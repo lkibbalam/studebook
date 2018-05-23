@@ -18,9 +18,8 @@ module Api
       end
 
       def approve_task
-        task = Task.find(params[:id])
-        @task_user = TasksUser.find_by(user: current_user, task: task)
-        @task_user.update(set_task_verify_params)
+        @task_user = TasksUser.find(params[:id])
+        @task_user.update(status: :accept)
         render json: @task_user
       end
 
