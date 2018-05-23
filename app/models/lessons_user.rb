@@ -11,7 +11,7 @@ class LessonsUser < ApplicationRecord
 
   after_create :create_tasks_users
   after_update :unlock_next_lesson, on: %i[approve_lesson]
-  after_update :change_progress_of_course
+  after_update :change_course_progress, on: %i[approve_lesson approve_task]
 
   private
 
@@ -29,10 +29,12 @@ class LessonsUser < ApplicationRecord
     # TODO: tests, maybe refactor faster simpler way!
   end
 
-  def change_progress_of_course
+  def change_course_progress
     return unless saved_change_to_attribute?('status', from: 'locked', to: 'unlocked')
-    course_user = student.courses_users.find_by(course: lesson.course)
-    current_progress = course_user.progress
-    course_user.update(progress: current_progress + 5) # 5 is 5% of course, have to change this to automatic value
+    course = lesson.course
+    course_user = student.courses_users.find_by(course: course)
+    course_lessons_count = course.size
+    lesson_value = (100 / course_lessons_count.to_f).round(2) # 100 mean 100%, full bar of progress
+    course_user.update(progress: course_user.progress + lesson_value)
   end
 end

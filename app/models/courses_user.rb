@@ -10,10 +10,18 @@ class CoursesUser < ApplicationRecord
   enum status: { current: 0, archived: 1 }
 
   after_create :create_course_lessons
+  after_update :full_progress_for_archived
+
+  private
 
   def create_course_lessons
     course.lessons.each { |lesson| LessonsUser.create(lesson_id: lesson.id, student_id: student.id) }
-    LessonsUser.find_by(student_id: student.id).update(status: 2)
+    LessonsUser.find_by(student: student).update(status: :unlocked)
     # TODO: wright test
+  end
+
+  def full_progress_for_archived
+    return unless saved_change_to_attribute?('status', from: 'current', to: 'archived')
+    update(progress: 100)
   end
 end
