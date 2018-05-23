@@ -99,6 +99,22 @@ describe 'courses_controller_spec' do
     end
   end
 
+  describe 'POST #start_course' do
+    context 'when non authenticate request' do
+      before { post "/api/v1/courses/#{courses.first.id}/start_course" }
+
+      it_behaves_like 'non authenticate request'
+    end
+
+    context 'when authenticate request' do
+      let(:start_course) do
+        post "/api/v1/courses/#{courses.first.id}/start_course", headers: authenticated_header(user)
+      end
+      # dont work now
+      it { expect { start_course }.to change(CoursesUser, :count).by(1) }
+    end
+  end
+
   describe 'Nested comments' do
     let!(:subject) { create(:course) }
 

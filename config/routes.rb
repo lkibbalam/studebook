@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'user/token' => 'user_token#create'
       get 'users/current' => 'users#current'
+
+      post 'courses/:id/start_course' => 'courses#start_course'
       get 'courses' => 'courses#all'
       get 'users' => 'users#all'
       get '/' => 'courses_users#show'
@@ -28,7 +30,6 @@ Rails.application.routes.draw do
       resources :teams, shallow: true do
         resources :courses, concerns: %i[commentable] do
           resources :lessons_users, concerns: %i[commentable], shallow: true
-          post :start_course
           resources :lessons, concerns: %i[commentable] do
             patch :done
           end

@@ -35,7 +35,7 @@ module Api
 
       def start_course
         # TODO: wright test
-        @course_user = @course.courses_users.create(student_id: current_user.id)
+        @course.courses_users.create(student: current_user)
         render json: @course.lessons
       end
 
@@ -50,7 +50,7 @@ module Api
       end
 
       def set_params
-        params.require(:course).permit(:title, :description).merge(author_id: current_user.id)
+        params.require(:course).permit(:title, :description).merge(author: current_user)
         # TODO: update test
       end
     end
