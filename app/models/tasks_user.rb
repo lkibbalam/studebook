@@ -8,7 +8,7 @@ class TasksUser < ApplicationRecord
   enum status: { undone: 0, verifying: 1, change: 2, accept: 3 }
 
   after_update :create_notification, on: %i[task_to_verify]
-  after_update :open_next_lesson, on: %i[approve_task]
+  after_update :unlock_next_lesson, on: %i[approve_task]
 
   private
 
@@ -17,7 +17,7 @@ class TasksUser < ApplicationRecord
     notifications.create(user: user.mentor)
   end
 
-  def open_next_lesson
+  def unlock_next_lesson
     return unless %w[change verifying].include?(status_before_last_save) && accept?
     return unless user.tasks_users.where(task: task.lesson.tasks).all?(&:accept?)
     course_lessons = task.lesson.course.lessons
