@@ -15,7 +15,7 @@ class CoursesUser < ApplicationRecord
   private
 
   def create_course_lessons
-    course.lessons.each { |lesson| LessonsUser.create(lesson_id: lesson.id, student_id: student.id) }
+    course.lessons.each { |lesson| LessonsUser.create(lesson: lesson, student: student) }
     LessonsUser.find_by(student: student).update(status: :unlocked)
     # TODO: wright test
   end

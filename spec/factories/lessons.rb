@@ -4,7 +4,10 @@ FactoryBot.define do
   factory :lesson do
     description 'MyText'
     material 'MyText'
-    task 'MyText'
     course
+
+    trait :foo do
+      description 'Trait'
+    end
   end
 end

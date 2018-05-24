@@ -4,24 +4,21 @@ require 'rails_helper'
 
 describe 'courses_users_spec' do
   let!(:user) { create(:user) }
-  let!(:course) { create(:course) }
+  let(:lessons) { create_list(:lesson, 3, tasks: create_list(:task, 3)) }
+  let!(:course) { create(:course, lessons: lessons) }
   let!(:course_user) { create(:courses_user, student: user, course: course) }
 
   describe 'GET #show' do
     context 'non-authenticate request' do
-      before { get "/api/v1/course_user/#{course.id}" }
+      before { get '/api/v1/' }
 
-      it 'when request' do
-        expect(response).to have_http_status(:unauthorized)
-      end
+      it_behaves_like 'non authenticate request'
     end
 
     context 'authenticate request' do
-      before { get "/api/v1/course_user/#{course.id}", headers: authenticated_header(user) }
+      before { get '/api/v1/', headers: authenticated_header(user) }
 
-      it 'when request' do
-        expect(response).to have_http_status(:success)
-      end
+      it_behaves_like 'authenticate request'
     end
   end
 end

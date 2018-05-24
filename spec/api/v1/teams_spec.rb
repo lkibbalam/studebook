@@ -2,10 +2,12 @@
 
 require 'rails_helper'
 describe 'teams_controller_spec' do
-  let!(:teams) { create_list(:team, 10) }
-  let!(:user) { create(:user, team: teams.second) }
+  let!(:team) { create(:team) }
+  let!(:user) { create(:user, team: team) }
 
   describe 'GET #index' do
+    let!(:teams) { create_list(:team, 9) }
+
     context 'when non authenticate' do
       before { get '/api/v1/teams' }
 
@@ -22,17 +24,17 @@ describe 'teams_controller_spec' do
 
   describe 'GET #show' do
     context 'when non authenticate' do
-      before { get "/api/v1/teams/#{teams.first.id}" }
+      before { get "/api/v1/teams/#{team.id}" }
 
       it_behaves_like 'non authenticate request'
     end
 
     context 'when authenticate' do
-      before { get "/api/v1/teams/#{teams.first.id}", headers: authenticated_header(user) }
+      before { get "/api/v1/teams/#{team.id}", headers: authenticated_header(user) }
 
       %w[id title description created_at updated_at].each do |attr|
         it "team object contains, #{attr}" do
-          expect(response.body).to be_json_eql(teams.first.send(attr.to_sym).to_json).at_path(attr)
+          expect(response.body).to be_json_eql(team.send(attr.to_sym).to_json).at_path(attr)
         end
       end
     end
@@ -58,31 +60,30 @@ describe 'teams_controller_spec' do
   describe 'PATCH #update' do
     context 'when non authenticate' do
       before do
-        patch "/api/v1/teams/#{teams.first.id}", params: { team: { title: 'NewTitle', description: 'NewDesc' } }
+        patch "/api/v1/teams/#{team.id}", params: { team: { title: 'NewTitle', description: 'NewDesc' } }
       end
 
       it_behaves_like 'non authenticate request'
     end
 
     before do
-      patch "/api/v1/teams/#{teams.first.id}", params: { team: { title: 'NewTitle', description: 'NewDesc' } },
-                                               headers: authenticated_header(user)
-      teams.first.reload
+      patch "/api/v1/teams/#{team.id}", params: { team: { title: 'NewTitle', description: 'NewDesc' } },
+                                        headers: authenticated_header(user)
     end
 
-    it { expect(teams.first.title).to eql('NewTitle') }
-    it { expect(teams.first.description).to eql('NewDesc') }
+    it { expect(team.reload.title).to eql('NewTitle') }
+    it { expect(team.reload.description).to eql('NewDesc') }
   end
 
   describe 'DELETE #destroy' do
     context 'when non authenticate' do
-      before { delete "/api/v1/teams/#{teams.first.id}" }
+      before { delete "/api/v1/teams/#{team.id}" }
 
       it_behaves_like 'non authenticate request'
     end
 
     context 'when authenticate' do
-      let(:delete_team) { delete "/api/v1/teams/#{teams.first.id}", headers: authenticated_header(user) }
+      let(:delete_team) { delete "/api/v1/teams/#{team.id}", headers: authenticated_header(user) }
 
       it { expect { delete_team }.to change(Team, :count).by(-1) }
     end

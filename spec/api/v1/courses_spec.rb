@@ -5,9 +5,12 @@ require 'rails_helper'
 describe 'courses_controller_spec' do
   let!(:user) { create(:user) }
   let!(:team) { create(:team) }
-  let!(:courses) { create_list(:course, 10, author: user, team: team) }
+  let(:course) { create(:course, author: user, team: team) }
+  let!(:lessons) { create_list(:lesson, 3, tasks: create_list(:task, 3), course: course) }
 
   describe 'GET #index' do
+    let!(:courses) { create_list(:course, 10, team: create(:team)) }
+
     context 'when non authenticate' do
       before { get "/api/v1/teams/#{courses.first.team_id}/courses" }
 
@@ -26,19 +29,19 @@ describe 'courses_controller_spec' do
 
   describe 'GET #show' do
     context 'when non authenticate' do
-      before { get "/api/v1/courses/#{courses.first.id}" }
+      before { get "/api/v1/courses/#{course.id}" }
 
       it_behaves_like 'non authenticate request'
     end
 
     context 'when authenticate' do
-      before { get "/api/v1/courses/#{courses.first.id}", headers: authenticated_header(user) }
+      before { get "/api/v1/courses/#{course.id}", headers: authenticated_header(user) }
 
       it_behaves_like 'authenticate request'
 
       %w[id team_id author_id description title created_at updated_at].each do |attr|
         it "course object contains #{attr}" do
-          expect(response.body).to be_json_eql(courses.first.send(attr.to_sym).to_json).at_path(attr)
+          expect(response.body).to be_json_eql(course.send(attr.to_sym).to_json).at_path(attr)
         end
       end
     end
@@ -67,7 +70,7 @@ describe 'courses_controller_spec' do
   describe 'PATCH #update' do
     context 'when non authenticate' do
       before do
-        patch "/api/v1/courses/#{courses.first.id}", params: { course: { title: 'NewTitle', description: 'NewDes' } }
+        patch "/api/v1/courses/#{course.id}", params: { course: { title: 'NewTitle', description: 'NewDes' } }
       end
 
       it_behaves_like 'non authenticate request'
@@ -75,25 +78,25 @@ describe 'courses_controller_spec' do
 
     context 'when authenticate' do
       before do
-        patch "/api/v1/courses/#{courses.first.id}", params: { course: { title: 'NewTitle', description: 'NewDes' } },
-                                                     headers: authenticated_header(user)
-        courses.first.reload
+        patch "/api/v1/courses/#{course.id}", params: { course: { title: 'NewTitle', description: 'NewDes' } },
+                                              headers: authenticated_header(user)
+        course.reload
       end
 
-      it { expect(courses.first.title).to eql('NewTitle') }
-      it { expect(courses.first.description).to eql('NewDes') }
+      it { expect(course.title).to eql('NewTitle') }
+      it { expect(course.description).to eql('NewDes') }
     end
   end
 
   describe 'DELETE #destory' do
     context 'when non authenticate' do
-      before { delete "/api/v1/courses/#{courses.first.id}" }
+      before { delete "/api/v1/courses/#{course.id}" }
 
       it_behaves_like 'non authenticate request'
     end
 
     context 'when authenticate' do
-      let(:delete_course) { delete "/api/v1/courses/#{courses.first.id}", headers: authenticated_header(user) }
+      let(:delete_course) { delete "/api/v1/courses/#{course.id}", headers: authenticated_header(user) }
 
       it { expect { delete_course }.to change(Course, :count).by(-1) }
     end
@@ -101,16 +104,16 @@ describe 'courses_controller_spec' do
 
   describe 'POST #start_course' do
     context 'when non authenticate request' do
-      before { post "/api/v1/courses/#{courses.first.id}/start_course" }
+      before { post "/api/v1/courses/#{course.id}/start_course" }
 
       it_behaves_like 'non authenticate request'
     end
 
     context 'when authenticate request' do
       let(:start_course) do
-        post "/api/v1/courses/#{courses.first.id}/start_course", headers: authenticated_header(user)
+        post "/api/v1/courses/#{course.id}/start_course", headers: authenticated_header(user)
       end
-      # dont work now
+
       it { expect { start_course }.to change(CoursesUser, :count).by(1) }
     end
   end

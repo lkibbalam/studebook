@@ -33,7 +33,7 @@ class LessonsUser < ApplicationRecord
     return unless saved_change_to_attribute?('status', from: 'locked', to: 'unlocked')
     course = lesson.course
     course_user = student.courses_users.find_by(course: course)
-    course_lessons_count = course.size
+    course_lessons_count = course.lessons.size
     lesson_value = (100 / course_lessons_count.to_f).round(2) # 100 mean 100%, full bar of progress
     course_user.update(progress: course_user.progress + lesson_value)
   end

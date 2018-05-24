@@ -11,10 +11,15 @@ module Api
         # TODO: Test
       end
 
-      def padawan_tasks
+      def index_padawan_tasks
         user = User.find(params[:id])
         respond_with(@tasks_user = user.tasks_users.as_json(include:
                                                                 [task: { include: [lesson: { include: :course }] }]))
+      end
+
+      def show_padawan_task
+        @task_user = TasksUser.find(params[:id])
+        respond_with(@task_user)
       end
 
       def approve_task
