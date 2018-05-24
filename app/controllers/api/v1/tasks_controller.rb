@@ -19,12 +19,12 @@ module Api
 
       def show_padawan_task
         @task_user = TasksUser.find(params[:id])
-        respond_with(@task_user)
+        respond_with(@task_user.as_json(include: :task))
       end
 
-      def approve_task
+      def set_task_status
         @task_user = TasksUser.find(params[:id])
-        @task_user.update(status: :accept)
+        @task_user.update(set_task_verify_params)
         render json: @task_user
       end
 
