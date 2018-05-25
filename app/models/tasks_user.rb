@@ -7,14 +7,20 @@ class TasksUser < ApplicationRecord
 
   enum status: { undone: 0, verifying: 1, change: 2, accept: 3 }
 
-  after_update :create_notification, on: %i[task_to_verify]
+  after_update :create_notification_mentor, on: %i[task_to_verify]
   after_update :unlock_next_lesson, on: %i[approve_task]
+  after_update :create_notification_student, on: %i[set_task_status]
 
   private
 
-  def create_notification
+  def create_notification_mentor
     return unless %w[change undone].include?(status_before_last_save) && verifying?
     notifications.create(user: user.mentor)
+  end
+
+  def create_notification_student
+    return unless (change? || accept?) && status_before_last_save == 'verifying'
+    notifications.create(user: user)
   end
 
   def unlock_next_lesson
