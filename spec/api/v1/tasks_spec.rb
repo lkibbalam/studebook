@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'tasks_controller_spec' do
   let(:mentor) { create(:user) }
   let(:padawan) { create(:user, mentor: mentor) }
-  let(:task_user) { create(:tasks_user, user: padawan, task: create(:task)) }
+  let(:task_user) { create(:tasks_user, user: padawan) }
 
   describe 'GET #index_padawan_tasks' do
     context 'non authenticate request' do
@@ -15,7 +15,7 @@ describe 'tasks_controller_spec' do
     end
 
     context 'authenticate request' do
-      let!(:task_user) { create_list(:tasks_user, 10, user: padawan, task: create(:task)) }
+      let!(:task_user) { create_list(:tasks_user, 10, user: padawan) }
 
       before { get "/api/v1/padawans/#{padawan.id}/tasks", headers: authenticated_header(mentor) }
 
@@ -68,7 +68,7 @@ describe 'tasks_controller_spec' do
   end
 
   describe 'PATCH #approve_or_change_task' do
-    let(:padawan_task) { create(:tasks_user, user: padawan, task: create(:task), status: :verifying) }
+    let(:padawan_task) { create(:tasks_user, user: padawan, status: :verifying) }
 
     context 'non authenticate request' do
       before { patch "/api/v1/padawans/#{padawan_task.id}/task" }

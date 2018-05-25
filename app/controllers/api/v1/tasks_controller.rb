@@ -15,11 +15,11 @@ module Api
       end
 
       def task_to_verify
+        # TODO: change better will to user TaskUser.find(params[:id])
         task = Task.find(params[:id])
         @task_user = TasksUser.find_by(user: current_user, task: task)
         @task_user.update(set_task_verify_params.merge(status: :verifying))
         render json: @task_user
-        # TODO: Test
       end
 
       def approve_or_change_task
