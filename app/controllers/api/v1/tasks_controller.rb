@@ -22,7 +22,7 @@ module Api
         # TODO: Test
       end
 
-      def set_task_status
+      def approve_or_change_task
         @task_user = TasksUser.find(params[:id])
         @task_user.update(set_task_verify_params)
         render json: @task_user
