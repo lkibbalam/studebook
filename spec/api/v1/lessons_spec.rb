@@ -5,9 +5,7 @@ require 'rails_helper'
 describe 'lessons_controller_spec' do
   let!(:user) { create(:user) }
   let!(:course) { create(:course) }
-  let(:videos) { create_list(:video, 3) }
-  let(:tasks) { create_list(:task, 3) }
-  let!(:lessons) { create_list(:lesson, 10, videos: videos, tasks: tasks) }
+  let!(:lessons) { create_list(:lesson, 10, videos: create_list(:video, 3), tasks: create_list(:task, 3)) }
   let!(:lessons_user) { create(:lessons_user, student: user, lesson: lessons.first) }
 
   describe 'GET #index' do
@@ -22,7 +20,10 @@ describe 'lessons_controller_spec' do
       before { get "/api/v1/courses/#{course.id}/lessons", headers: authenticated_header(user) }
 
       it_behaves_like 'authenticate request'
-      it_behaves_like 'resource contain'
+
+      it 'return 10 of resource objects' do
+        expect(JSON.parse(response.body)['lessons'].size).to eq 10
+      end
     end
   end
 
@@ -97,6 +98,22 @@ describe 'lessons_controller_spec' do
     context 'when authenticate' do
       let(:delete_lesson) { delete "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(user) }
       it { expect { delete_lesson }.to change(Lesson, :count).by(-1) }
+    end
+  end
+
+  describe 'PATCH #done' do
+    context 'when non authenticate' do
+      before { patch "/api/v1/lessons/#{lessons.first.id}/done", params: { id: lessons.first.id } }
+
+      it_behaves_like 'non authenticate request'
+    end
+
+    context 'when authenticate request' do
+      before do
+        patch "/api/v1/lessons/#{lessons.first.id}/done",
+              params: { id: lessons.first.id }, headers: authenticated_header(user)
+      end
+      it { expect(lessons_user.status).to eql('done') }
     end
   end
 

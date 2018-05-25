@@ -27,7 +27,7 @@ Rails.application.routes.draw do
       get 'lesson_user/:id' => 'lessons_users#show'
       patch 'notifications/:id/seen' => 'notifications#seen'
       patch 'tasks/:id/task_to_verify' => 'tasks#task_to_verify'
-      patch 'lesson_user/:id/approve' => 'lessons_users#approve'
+      patch 'lesson_user/:id/approve' => 'lessons_users#approve_lesson'
       resources :teams, shallow: true do
         resources :courses, concerns: %i[commentable] do
           resources :lessons_users, concerns: %i[commentable], shallow: true

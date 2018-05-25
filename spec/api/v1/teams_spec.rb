@@ -18,7 +18,7 @@ describe 'teams_controller_spec' do
       before { get '/api/v1/teams', headers: authenticated_header(user) }
 
       it_behaves_like 'authenticate request'
-      it_behaves_like 'resource contain'
+      it_behaves_like 'response body with 10 objects'
     end
   end
 

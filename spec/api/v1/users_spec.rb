@@ -18,7 +18,7 @@ describe 'users_controller_spec' do
         before { get "/api/v1/teams/#{teams.first.id}/users", headers: authenticated_header(users.first) }
 
         it_behaves_like 'authenticate request'
-        it_behaves_like 'resource contain'
+        it_behaves_like 'response body with 10 objects'
       end
 
       context 'when resource don`t have a users' do

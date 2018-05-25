@@ -23,7 +23,7 @@ describe 'courses_controller_spec' do
       end
 
       it_behaves_like 'authenticate request'
-      it_behaves_like 'resource contain'
+      it_behaves_like 'response body with 10 objects'
     end
   end
 

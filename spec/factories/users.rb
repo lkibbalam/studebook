@@ -12,7 +12,7 @@ FactoryBot.define do
     password '12345678'
     password_confirmation '12345678'
     phone 9999
-    role 1
+    role 'student'
     team
   end
 end

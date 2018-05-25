@@ -34,9 +34,8 @@ module Api
       end
 
       def start_course
-        # TODO: wright test
-        @course.courses_users.create(student: current_user)
-        render json: @course.lessons
+        @course_user = @course.courses_users.new(student: current_user)
+        render json: @course_user.as_json(only: :status) if @course_user.save
       end
 
       private

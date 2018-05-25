@@ -9,8 +9,9 @@ module Api
 
       def index
         @lessons = @course.lessons
-        respond_with(lessons: @lessons.as_json(include: :videos),
-                     course: @course, video: @lessons.first.videos.first)
+        course_user = @course.courses_users.find_by(student: current_user)
+        status = course_user.status if course_user
+        respond_with(lessons: @lessons.as_json(include: :videos), course: @course, status: status)
         # TODO: update tests
       end
 
@@ -39,9 +40,8 @@ module Api
 
       def done
         @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
-        @lesson_user.update(status: 1)
+        @lesson_user.update(status: :done)
         render json: @lesson_user
-        # TODO: Test
       end
 
       private

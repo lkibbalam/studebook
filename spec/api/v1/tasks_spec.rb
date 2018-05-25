@@ -19,7 +19,7 @@ describe 'tasks_controller_spec' do
       before { get "/api/v1/padawans/#{user.id}/tasks", headers: authenticated_header(user) }
 
       it_behaves_like 'authenticate request'
-      it_behaves_like 'resource contain'
+      it_behaves_like 'response body with 10 objects'
     end
   end
 
