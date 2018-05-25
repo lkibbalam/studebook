@@ -5,7 +5,7 @@ FactoryBot.define do
     "user#{n}@test.com"
   end
 
-  factory :user, aliases: %i[author mentor student] do
+  factory :user, aliases: %i[student mentor author] do
     first_name 'MyFirst_name'
     last_name 'MyLast_name'
     email

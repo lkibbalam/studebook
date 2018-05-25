@@ -10,7 +10,8 @@ module Api
 
       def seen
         @notification = Notification.find(params[:id])
-        @notification.update(status: :seen)
+        @notification.assign_attributes(status: :seen)
+        render json: @notification.as_json(only: :status) if @notification.save
       end
     end
   end

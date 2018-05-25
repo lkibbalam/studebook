@@ -5,5 +5,7 @@ FactoryBot.define do
     github_url 'my url'
     mark 0
     status 0
+    user
+    task
   end
 end

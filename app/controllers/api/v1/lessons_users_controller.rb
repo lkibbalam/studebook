@@ -17,9 +17,8 @@ module Api
 
       def approve_lesson
         @lesson_user = LessonsUser.find(params[:id])
-        @lesson_user.update(status: :done)
-        render json: @lesson_user
-        # TODO: test, and write some response;)
+        @lesson_user.assign_attributes(status: :done)
+        render json: @lesson_user.as_json(only: :status) if @lesson_user.save
       end
     end
   end
