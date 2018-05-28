@@ -17,7 +17,6 @@ class LessonsUser < ApplicationRecord
 
   def create_tasks_users
     lesson.tasks.each { |task| TasksUser.create(user: student, task: task) }
-    # TODO: test
   end
 
   def unlock_next_lesson
