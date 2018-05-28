@@ -17,7 +17,6 @@ class CoursesUser < ApplicationRecord
   def create_course_lessons
     course.lessons.each { |lesson| LessonsUser.create(lesson: lesson, student: student) }
     LessonsUser.find_by(student: student).update(status: :unlocked) # unlocked first lesson of course for student
-    # TODO: wright test
   end
 
   def full_progress_for_archived
