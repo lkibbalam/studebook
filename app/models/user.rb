@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   has_secure_password
+  has_one_attached :avatar
   belongs_to :team
   belongs_to :mentor, class_name: 'User', foreign_key: :mentor_id, optional: true
   has_many :own_courses, class_name: 'Course', foreign_key: :author_id

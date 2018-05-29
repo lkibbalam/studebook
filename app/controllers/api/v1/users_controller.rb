@@ -11,7 +11,7 @@ module Api
       end
 
       def all
-        respond_with(@users = User.where(mentor_id: current_user.id))
+        respond_with(@users = User.where(mentor: current_user))
       end
 
       def show
@@ -28,8 +28,8 @@ module Api
       end
 
       def update
-        @user.update(set_params)
-        render json: @user
+        binding.pry
+        @user.avatar.attach(params.dig(:user, :avatar))
       end
 
       def destroy
@@ -47,7 +47,12 @@ module Api
       end
 
       def set_params
-        params.require(:user).permit(:first_name, :last_name, :phone, :email, :password, :status, :role)
+        params.require(:user).permit(:first_name,
+                                     :last_name, :phone, :email, :password, :status, :role, :avatar, :github_url)
+      end
+
+      def set_update_params
+        params.require(:user).permit(:first_name, :last_name, :phone, :password, :avatar, :github_url)
       end
     end
   end
