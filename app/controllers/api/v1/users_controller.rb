@@ -15,7 +15,13 @@ module Api
       end
 
       def show
-        respond_with(@user.as_json(only: %i[id email first_name last_name phone role], methods: :courses))
+        respond_with(@user.as_json(only: %i[id email first_name last_name
+                                            phone role password github_url], methods: :courses))
+      end
+
+      def mentors
+        @users = User.select(&:staff?)
+        respond_with(@users.as_json(only: %i[id last_name first_name]))
       end
 
       def index
@@ -28,8 +34,10 @@ module Api
       end
 
       def update
-        binding.pry
-        @user.avatar.attach(params.dig(:user, :avatar))
+        if params.dig(:user, :password) == params.dig(:user, :password_confirmation)
+          @user.assign_attributes(set_update_params)
+          render json: @user.as_json(only: %i[id email first_name last_name phone role password github_url]) if @user.save
+        end
       end
 
       def destroy
@@ -47,8 +55,8 @@ module Api
       end
 
       def set_params
-        params.require(:user).permit(:first_name,
-                                     :last_name, :phone, :email, :password, :status, :role, :avatar, :github_url)
+        params.require(:user).permit(:first_name, :last_name, :phone, :email,
+                                     :password, :status, :role, :avatar, :github_url, :mentor_id)
       end
 
       def set_update_params
