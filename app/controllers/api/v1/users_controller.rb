@@ -4,7 +4,7 @@ module Api
   module V1
     class UsersController < ApplicationController
       before_action :set_team, only: %i[index create]
-      before_action :set_user, only: %i[show update destroy]
+      before_action :set_user, only: %i[show update destroy get_avatar]
 
       def current
         render json: current_user.as_json(only: %i[id email first_name last_name phone role], methods: :courses_users)
@@ -31,6 +31,18 @@ module Api
       def create
         @user = @team.users.create(set_params)
         render json: @user
+      end
+
+      def get_avatar
+        if @user.avatar.attached?
+          avatar_url = rails_blob_url(@user.avatar)
+          respond_with(avatar: avatar_url.as_json)
+        end
+      end
+
+      def update_avatar
+        current_user.avatar.attach(params['avatar'])
+        render json: rails_blob_url(current_user.avatar)
       end
 
       def update

@@ -49,7 +49,7 @@ module Api
       end
 
       def set_params
-        params.require(:course).permit(:title, :description).merge(author: current_user)
+        params.require(:course).permit(:title, :description, :poster).merge(author: current_user)
         # TODO: update test
       end
     end

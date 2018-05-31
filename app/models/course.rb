@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Course < ApplicationRecord
+  has_one_attached :poster
   belongs_to :team
   belongs_to :author, class_name: 'User', foreign_key: :author_id
   has_many :courses_users, dependent: :destroy

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Lesson < ApplicationRecord
+  has_one_attached :poster
   belongs_to :course
   has_many :lessons_users, dependent: :destroy
   has_many :students, through: :lessons_users
