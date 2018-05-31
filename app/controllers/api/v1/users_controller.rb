@@ -72,7 +72,7 @@ module Api
       end
 
       def set_update_params
-        params.require(:user).permit(:first_name, :last_name, :phone, :password, :avatar, :github_url)
+        params.require(:user).permit(:first_name, :last_name, :phone, :password, :github_url)
       end
     end
   end

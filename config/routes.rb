@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       post 'user/token' => 'user_token#create'
       get 'users/current' => 'users#current'
 
+      post 'courses/:id/poster' => 'courses#update_poster'
+      get 'courses/:id/poster' => 'courses#get_poster'
+      post 'courses/create' => 'courses#create'
       get 'users/:id/avatar' => 'users#get_avatar'
       post 'users/avatar' => 'users#update_avatar'
       get 'users/mentors' => 'users#mentors'
