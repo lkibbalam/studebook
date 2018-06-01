@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  default_url_options host: 'http://localhost:8001'
   concern :commentable do
     member do
       get :comments
@@ -17,6 +18,8 @@ Rails.application.routes.draw do
 
       post 'lessons/:id/poster' => 'lessons#update_poster'
       get 'lessons/:id/poster' => 'lessons#poster'
+      post 'lessons/:id/video' => 'lessons#update_video'
+      get 'lessons/:id/video' => 'lessons#video'
       post 'courses/:id/poster' => 'courses#update_poster'
       get 'courses/:id/poster' => 'courses#get_poster'
       post 'courses/create' => 'courses#create'

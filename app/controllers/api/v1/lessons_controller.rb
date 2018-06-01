@@ -4,7 +4,7 @@ module Api
   module V1
     class LessonsController < ApplicationController
       include Commentable
-      before_action :set_lesson, only: %i[show destroy update done watch poster update_poster]
+      before_action :set_lesson, only: %i[show destroy update done watch poster update_poster update_video video]
       before_action :set_course, only: %i[index create]
 
       def index
@@ -49,6 +49,15 @@ module Api
 
       def poster
         respond_with(rails_blob_url(@lesson.poster)) if @lesson.poster.attached?
+      end
+
+      def update_video
+        @lesson.video.attach(params[:video])
+        render json: rails_blob_url(@lesson.video)
+      end
+
+      def video
+        respond_with(rails_blob_url(@lesson.video)) if @lesson.video.attached?
       end
 
       def done

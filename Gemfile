@@ -20,10 +20,11 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'responders'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'bootsnap'
+gem 'fast_jsonapi'
 gem 'jwt'
 gem 'knock'
 gem 'pundit'
-# gem 'jbuilder', '~> 2.5'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
