@@ -16,7 +16,7 @@ module Api
       end
 
       def show
-        respond_with(@course)
+        respond_with(@course.as_json(include: :lessons))
       end
 
       def create

@@ -15,6 +15,8 @@ Rails.application.routes.draw do
       post 'user/token' => 'user_token#create'
       get 'users/current' => 'users#current'
 
+      post 'lessons/:id/poster' => 'lessons#update_poster'
+      get 'lessons/:id/poster' => 'lessons#poster'
       post 'courses/:id/poster' => 'courses#update_poster'
       get 'courses/:id/poster' => 'courses#get_poster'
       post 'courses/create' => 'courses#create'
@@ -38,6 +40,7 @@ Rails.application.routes.draw do
         resources :courses, concerns: %i[commentable] do
           resources :lessons_users, concerns: %i[commentable], shallow: true
           resources :lessons, concerns: %i[commentable] do
+            resources :tasks
             patch :done
           end
         end

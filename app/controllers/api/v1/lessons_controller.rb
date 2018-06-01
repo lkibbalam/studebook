@@ -4,7 +4,7 @@ module Api
   module V1
     class LessonsController < ApplicationController
       include Commentable
-      before_action :set_lesson, only: %i[show destroy update done watch]
+      before_action :set_lesson, only: %i[show destroy update done watch poster update_poster]
       before_action :set_course, only: %i[index create]
 
       def index
@@ -12,7 +12,7 @@ module Api
         course_user = @course.courses_users.find_by(student: current_user)
         status = course_user.status if course_user
         respond_with(lessons: @lessons.as_json(include: :videos), course: @course, status: status)
-        # TODO: update tests
+        # TODO: update tests, serializer!!!!
       end
 
       # def show
@@ -23,6 +23,10 @@ module Api
       #       { methods: :lessons }]), lesson_user: @lesson_user.as_json(include: [comments: { include: :user }]))
       #   # TODO: update tests
       # end
+
+      def show
+        respond_with(@lesson.as_json(include: :tasks))
+      end
 
       def create
         @lesson = @course.lessons.create(set_lesson_params)
@@ -36,6 +40,15 @@ module Api
 
       def destroy
         @lesson.delete
+      end
+
+      def update_poster
+        @lesson.poster.attach(params[:poster])
+        render json: rails_blob_url(@lesson.poster)
+      end
+
+      def poster
+        respond_with(rails_blob_url(@lesson.poster)) if @lesson.poster.attached?
       end
 
       def done
@@ -55,7 +68,7 @@ module Api
       end
 
       def set_lesson_params
-        params.require(:lesson).permit(:video, :description, :material)
+        params.require(:lesson).permit(:title, :description, :material)
       end
     end
   end

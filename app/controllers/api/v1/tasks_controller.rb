@@ -3,6 +3,28 @@
 module Api
   module V1
     class TasksController < ApplicationController
+      before_action :set_task, only: %i[show update destroy]
+
+      def show
+        respond_with(@task.as_json)
+      end
+
+      def create
+        binding.pry
+        @lesson = Lesson.find(params[:lesson_id])
+        @task = @lesson.tasks.build(set_params)
+        render json: @task.as_json if @task.save
+      end
+
+      def update
+        @task.assign_attributes(set_params)
+        render json: @task.as_json if @task.save
+      end
+
+      def destroy
+        @task.delete
+      end
+
       def index_padawan_tasks
         user = User.find(params[:id])
         respond_with(@tasks_user = user.tasks_users.as_json(include:
@@ -32,6 +54,14 @@ module Api
 
       def set_task_verify_params
         params.require(:task).permit(:github_url, :status)
+      end
+
+      def set_params
+        params.require(:task).permit(:title, :description)
+      end
+
+      def set_task
+        @task = Task.find(params[:id])
       end
     end
   end
