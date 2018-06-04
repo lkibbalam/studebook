@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       post 'courses/:id/start_course' => 'courses#start_course'
       get 'courses' => 'courses#all'
       get 'users' => 'users#all'
+      get 'users/all' => 'users#index'
       get '/' => 'courses_users#show'
       get 'padawans/:id' => 'courses_users#padawan'
       get 'padawans/:id/tasks' => 'tasks#index_padawan_tasks'

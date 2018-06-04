@@ -3,7 +3,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :set_team, only: %i[index create]
+      before_action :set_team, only: %i[create]
       before_action :set_user, only: %i[show update destroy get_avatar]
 
       def current
@@ -25,7 +25,8 @@ module Api
       end
 
       def index
-        respond_with(@users = @team.users)
+        users = UserSerializer.new(User.all).serialized_json
+        respond_with(users)
       end
 
       def create

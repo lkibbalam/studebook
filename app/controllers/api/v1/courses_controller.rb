@@ -12,7 +12,8 @@ module Api
       end
 
       def all
-        respond_with(@courses = Course.all)
+        courses = CoursesSerializer.new(Course.all).serialized_json
+        respond_with(courses)
       end
 
       def show

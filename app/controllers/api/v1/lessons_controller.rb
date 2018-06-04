@@ -8,10 +8,10 @@ module Api
       before_action :set_course, only: %i[index create]
 
       def index
-        @lessons = @course.lessons
+        lessons = LessonSerializer.new(@course.lessons).serializable_hash
         course_user = @course.courses_users.find_by(student: current_user)
         status = course_user.status if course_user
-        respond_with(lessons: @lessons.as_json(include: :videos), course: @course, status: status)
+        respond_with(lessons: lessons, status: status, course: @course)
         # TODO: update tests, serializer!!!!
       end
 
