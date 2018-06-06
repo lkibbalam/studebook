@@ -30,7 +30,7 @@ module Api
       end
 
       def create
-        @user = @team.users.create(set_params)
+        @user = @team.users.create(admin_permissions_params)
         render json: @user
       end
 
@@ -48,7 +48,7 @@ module Api
 
       def update
         if params.dig(:user, :password) == params.dig(:user, :password_confirmation)
-          @user.assign_attributes(set_update_params)
+          @user.assign_attributes(current_user.admin? ? admin_permissions_params : user_permissions_update_params)
           render json: @user.as_json(only: %i[id email first_name last_name phone role password github_url]) if @user.save
         end
       end
@@ -67,12 +67,12 @@ module Api
         @team = Team.find(params[:team_id])
       end
 
-      def set_params
+      def admin_permissions_params
         params.require(:user).permit(:first_name, :last_name, :phone, :email,
                                      :password, :status, :role, :avatar, :github_url, :mentor_id)
       end
 
-      def set_update_params
+      def user_permissions_update_params
         params.require(:user).permit(:first_name, :last_name, :phone, :password, :github_url)
       end
     end

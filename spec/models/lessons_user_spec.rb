@@ -17,19 +17,30 @@ RSpec.describe LessonsUser, type: :model do
     end
   end
 
-  describe '.unlocked_next_lesson' do
-    let(:lessons_user_count) { 3 }
-    let!(:lessons_user) { create_list(:lessons_user, lessons_user_count, status: :locked) }
-    let(:course) { lessons_user.first.lesson.course }
-    let(:student) { lessons_user.first.student }
+  describe 'when mentor approve lesson for user' do
+    let(:lessons_count) { 10 }
+    let(:student) { create(:user, :student) }
+    let(:course) { create(:course, lessons: create_list(:lesson, lessons_count)) }
     let!(:course_user) { create(:courses_user, student: student, course: course) }
-    let!(:unlock) { lessons_user.first.update(status: :unlocked) }
+    let(:lesson_user_first) { student.lessons_users.first }
+    let(:lesson_user_second) { student.lessons_users.second }
 
-    it 'should unlock next lesson in course for student when current are done' do
-      expect do
-        lessons_user.first.update(status: :done)
-      end.to change(lessons_user.second, :status).from('locked').to('unlocked')
-      # TODO: finish, course have only one lesson, that  why dont work
+    describe '.unlocked_next_lesson' do
+      it 'should unlock next lesson in course for student when current are done' do
+        expect do
+          lesson_user_first.update(status: :done)
+          lesson_user_second.reload
+        end.to change(lesson_user_second, :status).from('locked').to('unlocked')
+      end
+    end
+
+    describe '.change_course_progress' do
+      it 'should adds course user progress when lesson has been approve' do
+        expect do
+          lesson_user_first.update(status: :done)
+          course_user.reload
+        end.to change(course_user, :progress).from(0).to(100 / lessons_count)
+      end
     end
   end
 end

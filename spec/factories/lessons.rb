@@ -6,8 +6,10 @@ FactoryBot.define do
     material 'MyText'
     course
 
-    trait :foo do
-      description 'Trait'
+    factory :lesson_with_3_tasks do
+      after(:create) do |lesson|
+        create_list(:task, 3, lesson: lesson)
+      end
     end
   end
 end

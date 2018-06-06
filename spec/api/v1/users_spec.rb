@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 describe 'users_controller_spec' do
+  let!(:admin) { create(:user, :admin) }
   let!(:teams) { create_list(:team, 2) }
   let!(:users) { create_list(:user, 10, team: teams.first) }
 
@@ -76,7 +77,7 @@ describe 'users_controller_spec' do
       it_behaves_like 'non authenticate request'
     end
 
-    context 'authenticate' do
+    context 'authenticate request' do
       before do
         patch "/api/v1/users/#{users.first.id}",
               params: { user: { first_name: 'NewFirst', last_name: 'NewLast',
@@ -88,7 +89,18 @@ describe 'users_controller_spec' do
       it { expect(users.first.first_name).to eql('NewFirst') }
       it { expect(users.first.last_name).to eql('NewLast') }
       it { expect(users.first.phone).to eql(0) }
+      it { expect(users.first.email).to_not eql('NewEmail@mail.ru') }
+    end
+    context 'admin`s request' do
+      before do
+        patch "/api/v1/users/#{users.first.id}",
+              params: { user: { first_name: 'NewFirst', last_name: 'NewLast',
+                                phone: 0, email: 'NewEmail@mail.ru', role: :staff } },
+              headers: authenticated_header(admin)
+        users.first.reload
+      end
       it { expect(users.first.email).to eql('NewEmail@mail.ru') }
+      it { expect(users.first.role).to eql('staff') }
     end
   end
 

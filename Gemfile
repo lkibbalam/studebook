@@ -24,6 +24,7 @@ gem 'fast_jsonapi'
 gem 'jwt'
 gem 'knock'
 gem 'pundit'
+gem 'rstreamor', '~> 0.2.4'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -31,9 +32,6 @@ gem 'pundit'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

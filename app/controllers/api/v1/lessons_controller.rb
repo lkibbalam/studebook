@@ -3,8 +3,9 @@
 module Api
   module V1
     class LessonsController < ApplicationController
+      include Rstreamor
       include Commentable
-      before_action :set_lesson, only: %i[show destroy update done watch poster update_poster update_video video]
+      before_action :set_lesson, only: %i[show destroy update done watch poster update_poster update_video video watch]
       before_action :set_course, only: %i[index create]
 
       def index

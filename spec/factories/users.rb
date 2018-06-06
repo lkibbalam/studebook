@@ -14,5 +14,17 @@ FactoryBot.define do
     phone 9999
     role 'student'
     team
+
+    trait :admin do
+      role :admin
+    end
+
+    trait :student do
+      role :student
+    end
+
+    trait :staff do
+      role :staff
+    end
   end
 end
