@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-class UserSerializer
-  include FastJsonapi::ObjectSerializer
-  attributes :mentor_id, :team_id, :first_name, :last_name, :role, :phone, :github_url, :email
+class UserSerializer < ActiveModel::Serializer
+  attributes %i[mentor_id team_id first_name last_name role phone github_url email]
 
-  attribute :avatar_url do |object|
+  def avatar_url
     Rails.application.routes.url_helpers.rails_blob_url(object.avatar) if object.avatar.attached?
+  end
+
+  def courses
+    object.courses
   end
 end

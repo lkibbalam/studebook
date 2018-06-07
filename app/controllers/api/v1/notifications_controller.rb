@@ -4,14 +4,13 @@ module Api
   module V1
     class NotificationsController < ApplicationController
       def index
-        respond_with(@notifications = current_user.notifications.as_json(include:
-                                                                              [tasks_user: { include: %i[task user] }]))
+        respond_with(current_user.notifications)
       end
 
       def seen
         @notification = Notification.find(params[:id])
-        @notification.assign_attributes(status: :seen)
-        render json: @notification.as_json(only: :status) if @notification.save
+        @notification.update(status: :seen)
+        respond_with :api, :v1, @notification
       end
     end
   end

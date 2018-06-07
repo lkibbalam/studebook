@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-class LessonSerializer
-  include FastJsonapi::ObjectSerializer
-  attributes :poster_url, :video_url, :title, :description, :course_id, :material
+class LessonSerializer < ActiveModel::Serializer
+  attributes %i[poster_url video_url title description course_id material]
 
-  attribute :poster_url do |object|
+  def poster_url
     Rails.application.routes.url_helpers.rails_blob_url(object.poster) if object.poster.attached?
   end
 
-  attribute :video_url do |object|
+  def video_url
     Rails.application.routes.url_helpers.rails_blob_url(object.video) if object.video.attached?
   end
 end

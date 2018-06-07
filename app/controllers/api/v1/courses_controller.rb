@@ -8,44 +8,45 @@ module Api
       before_action :set_team, only: %i[index create]
 
       def index
-        respond_with(@courses = @team.courses.all)
+        respond_with(@team.courses.all)
       end
 
       def all
-        courses = CoursesSerializer.new(Course.all).serialized_json
-        respond_with(courses)
+        respond_with(Course.all)
       end
 
       def show
-        respond_with(@course.as_json(include: :lessons))
+        respond_with(@course)
       end
 
       def create
         @course = @team.courses.create(set_params)
-        render json: @course
+        respond_with :api, :v1, @course
       end
 
       def update
         @course.update(set_params)
-        render json: @course
+        respond_with :api, :v1, @course
       end
 
       def update_poster
         @course.poster.attach(params['poster'])
         render json: rails_blob_url(@course.poster)
+        # TODO: fix this shit
       end
 
-      def get_poster
+      def poster
         respond_with(poster: rails_blob_url(@course.poster)) if @course.poster.attached?
+        # TODO: fix this shit
       end
 
       def destroy
-        @course.delete
+        respond_with(@course.delete)
       end
 
       def start_course
-        @course_user = @course.courses_users.new(student: current_user)
-        render json: @course_user.as_json(only: :status) if @course_user.save
+        @course_user = @course.courses_users.create(student: current_user)
+        respond_with :api, :v1, @course_user
       end
 
       private

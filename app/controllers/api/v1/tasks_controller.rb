@@ -10,7 +10,6 @@ module Api
       end
 
       def create
-        binding.pry
         @lesson = Lesson.find(params[:lesson_id])
         @task = @lesson.tasks.build(set_params)
         render json: @task.as_json if @task.save

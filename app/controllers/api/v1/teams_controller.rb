@@ -17,16 +17,16 @@ module Api
 
       def create
         @team = Team.create(set_params)
-        render json: @team
+        respond_with :api, :v1, @team
       end
 
       def update
         @team.update(set_params)
-        render json: @team
+        respond_with :api, :v1, @team
       end
 
       def destroy
-        @team.delete
+        respond_with(@team.delete)
       end
 
       private

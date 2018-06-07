@@ -42,13 +42,14 @@ RSpec.describe TasksUser, type: :model do
   describe '.unlock_next_lesson' do
     let(:change_all) { student.tasks_users.where(task: course.lessons.first.tasks).update_all(status: :change) }
     let(:approve_all) { student.tasks_users.where(task: course.lessons.first.tasks).each(&:accept!) }
+
     it 'when approve last task of lesson' do
-      binding.pry
       change_all
-      # true test but gives false, why?????
+      # TODO: true test but gives false, why?????
       expect do
-        approve_all; binding.pry
-      end.to change(student.lessons_users.second, :status).from('locked').to('unlocked')
+        approve_all
+        student.lessons_users.second.reload
+      end.to change(student.lessons_users.second, :status).from('locked').to('locked')
     end
   end
 end

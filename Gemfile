@@ -12,6 +12,7 @@ gem 'rails', '~> 5.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
+gem 'active_model_serializers', '~> 0.10.7'
 gem 'ancestry'
 gem 'oj'
 gem 'oj_mimic_json'
@@ -20,11 +21,9 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'responders'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'bootsnap'
-gem 'fast_jsonapi'
 gem 'jwt'
 gem 'knock'
 gem 'pundit'
-gem 'rstreamor', '~> 0.2.4'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

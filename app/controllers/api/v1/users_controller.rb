@@ -7,38 +7,34 @@ module Api
       before_action :set_user, only: %i[show update destroy get_avatar]
 
       def current
-        render json: current_user.as_json(only: %i[id email first_name last_name phone role], methods: :courses_users)
+        respond_with(current_user)
       end
 
       def all
-        respond_with(@users = User.where(mentor: current_user))
+        respond_with(User.where(mentor: current_user))
       end
 
       def show
-        respond_with(@user.as_json(only: %i[id email first_name last_name
-                                            phone role password github_url], methods: :courses))
+        respond_with(@user)
       end
 
       def mentors
-        @users = User.select(&:staff?)
-        respond_with(@users.as_json(only: %i[id last_name first_name]))
+        respond_with(User.select(&:staff?))
       end
 
       def index
-        users = UserSerializer.new(User.all).serialized_json
-        respond_with(users)
+        respond_with(User.all)
       end
 
       def create
         @user = @team.users.create(admin_permissions_params)
-        render json: @user
+        respond_with :api, :v1, @user
       end
 
-      def get_avatar
-        if @user.avatar.attached?
-          avatar_url = rails_blob_url(@user.avatar)
-          respond_with(avatar: avatar_url.as_json)
-        end
+      def avatar
+        return unless @user.avatar.attached?
+        avatar_url = rails_blob_url(@user.avatar)
+        respond_with(avatar: avatar_url.as_json)
       end
 
       def update_avatar
@@ -47,14 +43,13 @@ module Api
       end
 
       def update
-        if params.dig(:user, :password) == params.dig(:user, :password_confirmation)
-          @user.assign_attributes(current_user.admin? ? admin_permissions_params : user_permissions_update_params)
-          render json: @user.as_json(only: %i[id email first_name last_name phone role password github_url]) if @user.save
-        end
+        return unless params.dig(:user, :password) == params.dig(:user, :password_confirmation)
+        @user.update(current_user.admin? ? admin_permissions_params : user_permissions_update_params)
+        respond_with :api, :v1, @user
       end
 
       def destroy
-        @user.delete
+        respond_with(@user.delete)
       end
 
       private

@@ -25,7 +25,7 @@ class TasksUser < ApplicationRecord
 
   def unlock_next_lesson
     return unless %w[change verifying].include?(status_before_last_save) && accept?
-    return unless user.tasks_users.where(task: task.lesson.tasks).all?(&:accept?)
+    return unless user.tasks_users.where(task: task.lesson.tasks).all?(&:accept?) # TODO: rewrite this string
     course_lessons = task.lesson.course.lessons
     lesson_index = course_lessons.index { |course_lesson| task.lesson == course_lesson }
     next_lesson = course_lessons[lesson_index + 1]

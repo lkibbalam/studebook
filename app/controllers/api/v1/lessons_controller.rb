@@ -3,44 +3,34 @@
 module Api
   module V1
     class LessonsController < ApplicationController
-      include Rstreamor
       include Commentable
       before_action :set_lesson, only: %i[show destroy update done watch poster update_poster update_video video watch]
       before_action :set_course, only: %i[index create]
 
       def index
-        lessons = LessonSerializer.new(@course.lessons).serializable_hash
+        @lessons = @course.lessons
         course_user = @course.courses_users.find_by(student: current_user)
         status = course_user.status if course_user
-        respond_with(lessons: lessons, status: status, course: @course)
+        respond_with(lessons: @lessons, status: status, course: @course)
         # TODO: update tests, serializer!!!!
       end
 
-      # def show
-      #   @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
-      #   @lesson_tasks_user = current_user.tasks_users.where(task: @lesson.tasks)
-      #   respond_with(lesson_tasks_user: @lesson_tasks_user.as_json,
-      #                                                 lesson: @lesson.as_json(include: [:tasks, :videos, course:
-      #       { methods: :lessons }]), lesson_user: @lesson_user.as_json(include: [comments: { include: :user }]))
-      #   # TODO: update tests
-      # end
-
       def show
-        respond_with(@lesson.as_json(include: :tasks))
+        respond_with(@lesson)
       end
 
       def create
         @lesson = @course.lessons.create(set_lesson_params)
-        render json: @lesson
+        respond_with(@lesson)
       end
 
       def update
         @lesson.update(set_lesson_params)
-        render json: @lesson
+        respond_with(@lesson)
       end
 
       def destroy
-        @lesson.delete
+        respond_with(@lesson.delete)
       end
 
       def update_poster
@@ -64,7 +54,7 @@ module Api
       def done
         @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
         @lesson_user.update(status: :done)
-        render json: @lesson_user
+        respond_with :api, :v1, @lesson_user
       end
 
       private
