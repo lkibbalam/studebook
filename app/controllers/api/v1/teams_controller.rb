@@ -12,20 +12,24 @@ module Api
       end
 
       def show
+        authorize @team
         respond_with(@team)
       end
 
       def create
         @team = Team.create(set_params)
+        authorize @team
         respond_with :api, :v1, @team
       end
 
       def update
         @team.update(set_params)
+        authorize @team
         respond_with :api, :v1, @team
       end
 
       def destroy
+        authorize @team
         respond_with(@team.delete)
       end
 
