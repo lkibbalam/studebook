@@ -32,9 +32,9 @@ describe 'teams_controller_spec' do
     context 'when authenticate' do
       before { get "/api/v1/teams/#{team.id}", headers: authenticated_header(user) }
 
-      %w[id title description created_at updated_at].each do |attr|
+      %w[title description].each do |attr|
         it "team object contains, #{attr}" do
-          expect(response.body).to be_json_eql(team.send(attr.to_sym).to_json).at_path(attr)
+          expect(response.body).to be_json_eql(team.send(attr.to_sym).to_json).at_path("data/attributes/#{attr}")
         end
       end
     end

@@ -14,6 +14,6 @@ end
 
 shared_examples_for 'response body with 10 objects' do
   it 'return 10 of resource objects' do
-    expect(JSON.parse(response.body).size).to eq 10
+    expect(JSON.parse(response.body)['data'].size).to eq 10
   end
 end

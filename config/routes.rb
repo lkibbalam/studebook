@@ -30,12 +30,15 @@ Rails.application.routes.draw do
       get 'courses' => 'courses#all'
       get 'users' => 'users#all'
       get 'users/all' => 'users#index'
-      get '/' => 'courses_users#show'
       get 'padawans/:id' => 'courses_users#padawan'
-      get 'padawans/:id/tasks' => 'tasks#index_padawan_tasks'
-      get 'padawans/:id/task' => 'tasks#show_padawan_task'
-      patch 'padawans/:id/task' => 'tasks#approve_or_change_task'
-      patch 'tasks/:id/task_to_verify' => 'tasks#task_to_verify'
+
+      get '/' => 'courses_users#index'
+
+      get 'padawans/:id/tasks' => 'tasks_users#padawan_tasks'
+      get 'padawans/:id/task' => 'tasks_users#padawan_task'
+      patch 'padawans/:id/task' => 'tasks_users#approve_or_change_task'
+      patch 'tasks/:id/task_to_verify' => 'tasks_users#task_to_verify'
+
       get 'notifications' => 'notifications#index'
       get 'lesson_user/:id' => 'lessons_users#show'
       patch 'notifications/:id/seen' => 'notifications#seen'

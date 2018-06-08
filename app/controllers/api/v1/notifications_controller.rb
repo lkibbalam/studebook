@@ -10,7 +10,7 @@ module Api
       def seen
         @notification = Notification.find(params[:id])
         @notification.update(status: :seen)
-        respond_with :api, :v1, @notification
+        render json: @notification
       end
     end
   end

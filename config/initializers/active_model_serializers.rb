@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ActiveModelSerializers.config.adapter = :json_api
+ActiveModelSerializers.config.key_transform = :unaltered
 
 api_mime_types = %w[
   application/vnd.api+json

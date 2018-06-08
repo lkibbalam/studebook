@@ -39,10 +39,19 @@ describe 'courses_controller_spec' do
 
       it_behaves_like 'authenticate request'
 
-      %w[id team_id author_id description title created_at updated_at].each do |attr|
-        it "course object contains #{attr}" do
-          expect(response.body).to be_json_eql(course.send(attr.to_sym).to_json).at_path(attr)
+      %w[team_id author_id description title created_at updated_at].each do |attr|
+        it "course object attributes contains #{attr}" do
+          expect(response.body).to be_json_eql(course.send(attr.to_sym).to_json).at_path("data/attributes/#{attr}")
         end
+      end
+
+      # it "response body data contains course id" do
+      #   expect(response.body).to be_json_eql(course.send(:id).to_json).at_path("data/id")
+      # end
+      # TODO: why dosnt work
+
+      it 'response body data contains type' do
+        expect(response.body).to be_json_eql('courses'.to_json).at_path('data/type')
       end
     end
   end

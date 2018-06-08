@@ -3,23 +3,31 @@
 module Api
   module V1
     class CoursesUsersController < ApplicationController
-      before_action :set_user, only: %i[padawan]
+      before_action :set_user, only: %i[padawan_courses]
+      before_action :set_course_user, only: %i[show]
 
-      def show
-        respond_with(current_user.courses_users.as_json(except: %i[course_id student_id], include: { course:
-                                                            { except: %i[author_id created_at updated_at team_id] } }))
-        # TODO: update tests
+      def index
+        @courses_user = current_user.courses_users
+        respond_with(@courses_user)
       end
 
-      def padawan
-        respond_with(@user.courses_users.as_json(except: %i[course_id student_id], include: { course:
-                                                  { except: %i[author_id created_at updated_at team_id] } }))
+      def show
+        respond_with(@course_user)
+      end
+
+      def padawan_courses
+        @courses_user = @user.courses_users
+        respond_with(@courses_user)
       end
 
       private
 
       def set_user
         @user = User.find(params[:id])
+      end
+
+      def set_course_user
+        @course_user = CoursesUser.find(params[:id])
       end
     end
   end

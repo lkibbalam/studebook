@@ -3,7 +3,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :set_team, only: %i[create]
+      before_action :set_team, only: %i[create mentors index]
       before_action :set_user, only: %i[show update destroy get_avatar]
 
       def current
@@ -19,27 +19,16 @@ module Api
       end
 
       def mentors
-        respond_with(User.select(&:staff?))
+        respond_with(@team.users.select(&:staff?))
       end
 
       def index
-        respond_with(User.all)
+        respond_with(@team.users)
       end
 
       def create
         @user = @team.users.create(admin_permissions_params)
         respond_with :api, :v1, @user
-      end
-
-      def avatar
-        return unless @user.avatar.attached?
-        avatar_url = rails_blob_url(@user.avatar)
-        respond_with(avatar: avatar_url.as_json)
-      end
-
-      def update_avatar
-        current_user.avatar.attach(params['avatar'])
-        render json: rails_blob_url(current_user.avatar)
       end
 
       def update
@@ -68,7 +57,7 @@ module Api
       end
 
       def user_permissions_update_params
-        params.require(:user).permit(:first_name, :last_name, :phone, :password, :github_url)
+        params.require(:user).permit(:first_name, :last_name, :phone, :password, :github_url, :avatar)
       end
     end
   end

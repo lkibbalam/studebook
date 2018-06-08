@@ -29,24 +29,13 @@ module Api
         respond_with :api, :v1, @course
       end
 
-      def update_poster
-        @course.poster.attach(params['poster'])
-        render json: rails_blob_url(@course.poster)
-        # TODO: fix this shit
-      end
-
-      def poster
-        respond_with(poster: rails_blob_url(@course.poster)) if @course.poster.attached?
-        # TODO: fix this shit
-      end
-
       def destroy
         respond_with(@course.delete)
       end
 
       def start_course
         @course_user = @course.courses_users.create(student: current_user)
-        respond_with :api, :v1, @course_user
+        respond_with @course_user, location: nil
       end
 
       private
@@ -60,8 +49,7 @@ module Api
       end
 
       def set_params
-        params.require(:course).permit(:title, :description).merge(author: current_user)
-        # TODO: update test
+        params.require(:course).permit(:title, :description, :poster).merge(author: current_user)
       end
     end
   end

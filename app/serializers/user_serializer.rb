@@ -6,8 +6,4 @@ class UserSerializer < ActiveModel::Serializer
   def avatar_url
     Rails.application.routes.url_helpers.rails_blob_url(object.avatar) if object.avatar.attached?
   end
-
-  def courses
-    object.courses
-  end
 end

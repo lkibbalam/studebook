@@ -8,7 +8,7 @@ describe 'courses_users_spec' do
   let!(:course) { create(:course, lessons: lessons) }
   let!(:course_user) { create(:courses_user, student: user, course: course) }
 
-  describe 'GET #show' do
+  describe 'GET #index' do
     context 'non-authenticate request' do
       before { get '/api/v1/' }
 
