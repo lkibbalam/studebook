@@ -7,19 +7,26 @@ module Api
       before_action :set_user, only: %i[show update destroy get_avatar]
 
       def current
-        respond_with(current_user)
+        @user = current_user
+        authorize @user
+        respond_with(@user)
       end
 
       def all
-        respond_with(User.where(mentor: current_user))
+        @users = User.where(mentor: current_user)
+        authorize @users
+        respond_with(@users)
       end
 
       def show
+        authorize @user
         respond_with(@user)
       end
 
       def mentors
-        respond_with(@team.users.select(&:staff?))
+        @users = @team.users.select(&:staff?)
+        authorize @users
+        respond_with(@users)
       end
 
       def index
@@ -28,16 +35,19 @@ module Api
 
       def create
         @user = @team.users.create(admin_permissions_params)
+        authorize @user
         respond_with :api, :v1, @user
       end
 
       def update
         return unless params.dig(:user, :password) == params.dig(:user, :password_confirmation)
         @user.update(current_user.admin? ? admin_permissions_params : user_permissions_update_params)
+        authorize @user
         respond_with :api, :v1, @user
       end
 
       def destroy
+        authorize @user
         respond_with(@user.delete)
       end
 

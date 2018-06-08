@@ -41,7 +41,7 @@ describe 'users_controller_spec' do
     end
 
     context 'authenticate request' do
-      before { get "/api/v1/users/#{users.first.id}", headers: authenticated_header(users.first) }
+      before { get "/api/v1/users/#{users.first.id}", headers: authenticated_header(admin) }
 
       it_behaves_like 'authenticate request'
 
@@ -61,7 +61,7 @@ describe 'users_controller_spec' do
 
     let(:create_user) do
       post "/api/v1/teams/#{teams.first.id}/users", params: { user: attributes_for(:user) },
-                                                    headers: authenticated_header(users.first)
+                                                    headers: authenticated_header(admin)
     end
 
     it { expect { create_user }.to change(User, :count).by(1) }
@@ -112,7 +112,7 @@ describe 'users_controller_spec' do
 
     it {
       expect do
-        delete "/api/v1/users/#{users.first.id}", headers: authenticated_header(users.first)
+        delete "/api/v1/users/#{users.first.id}", headers: authenticated_header(admin)
       end.to change(User, :count).by(-1)
     }
   end
