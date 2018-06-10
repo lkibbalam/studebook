@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe TaskPolicy do
-
   let(:user) { User.new }
   let(:admin) { User.new(role: :admin) }
 
