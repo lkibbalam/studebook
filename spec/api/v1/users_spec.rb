@@ -71,7 +71,7 @@ describe 'users_controller_spec' do
     context 'non authenticate request' do
       before do
         patch "/api/v1/users/#{users.first.id}",
-              params: { user: { first_name: 'NewFirst', last_name: 'NewLast', phone: 0 } }
+              params: { user: { first_name: 'NewFirst', last_name: 'NewLast', phone: '0' } }
       end
 
       it_behaves_like 'non authenticate request'
@@ -88,7 +88,7 @@ describe 'users_controller_spec' do
 
       it { expect(users.first.first_name).to eql('NewFirst') }
       it { expect(users.first.last_name).to eql('NewLast') }
-      it { expect(users.first.phone).to eql(0) }
+      it { expect(users.first.phone).to eql('0') }
       it { expect(users.first.email).to_not eql('NewEmail@mail.ru') }
     end
     context 'admin`s request' do

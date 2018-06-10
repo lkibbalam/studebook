@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'lessons_controller_spec' do
   let!(:user) { create(:user) }
   let!(:course) { create(:course) }
-  let!(:lessons) { create_list(:lesson, 10, videos: create_list(:video, 3), tasks: create_list(:task, 3)) }
+  let!(:lessons) { create_list(:lesson, 10, tasks: create_list(:task, 3)) }
   let!(:lessons_user) { create(:lessons_user, student: user, lesson: lessons.first) }
 
   describe 'GET #index' do

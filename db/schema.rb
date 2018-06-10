@@ -55,7 +55,6 @@ ActiveRecord::Schema.define(version: 20_180_529_090_403) do
     t.bigint 'author_id'
     t.text 'description'
     t.string 'title'
-    t.string 'img'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['author_id'], name: 'index_courses_on_author_id'
@@ -77,7 +76,6 @@ ActiveRecord::Schema.define(version: 20_180_529_090_403) do
     t.bigint 'course_id'
     t.text 'description'
     t.text 'material'
-    t.string 'img'
     t.string 'title'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
@@ -126,7 +124,6 @@ ActiveRecord::Schema.define(version: 20_180_529_090_403) do
 
   create_table 'teams', force: :cascade do |t|
     t.string 'title'
-    t.string 'img'
     t.text 'description'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
@@ -138,8 +135,7 @@ ActiveRecord::Schema.define(version: 20_180_529_090_403) do
     t.string 'first_name'
     t.string 'last_name'
     t.integer 'role', default: 1
-    t.integer 'phone'
-    t.string 'img'
+    t.string 'phone'
     t.string 'github_url'
     t.integer 'status', default: 0
     t.datetime 'created_at', null: false
@@ -148,17 +144,5 @@ ActiveRecord::Schema.define(version: 20_180_529_090_403) do
     t.string 'password_digest'
     t.index ['mentor_id'], name: 'index_users_on_mentor_id'
     t.index ['team_id'], name: 'index_users_on_team_id'
-  end
-
-  create_table 'videos', force: :cascade do |t|
-    t.bigint 'lesson_id'
-    t.bigint 'course_id'
-    t.string 'title'
-    t.string 'src'
-    t.integer 'duration'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['course_id'], name: 'index_videos_on_course_id'
-    t.index ['lesson_id'], name: 'index_videos_on_lesson_id'
   end
 end

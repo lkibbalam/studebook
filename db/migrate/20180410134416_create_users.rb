@@ -8,8 +8,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :first_name
       t.string :last_name
       t.integer :role, default: 1
-      t.integer :phone
-      t.string :img
+      t.string :phone
       t.string :github_url
       t.integer :status, default: 0
 

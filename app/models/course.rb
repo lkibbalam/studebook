@@ -8,7 +8,6 @@ class Course < ApplicationRecord
   has_many :students, through: :courses_users
   has_many :lessons
   has_many :comments, as: :commentable, dependent: :destroy
-  has_many :videos
 
   def lesson_value
     (100 / lessons.count.to_f).round(2) # 100 mean 100%, full bar of progress
