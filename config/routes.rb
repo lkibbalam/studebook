@@ -16,15 +16,7 @@ Rails.application.routes.draw do
       post 'user/token' => 'user_token#create'
       get 'users/current' => 'users#current'
 
-      post 'lessons/:id/poster' => 'lessons#update_poster'
-      get 'lessons/:id/poster' => 'lessons#poster'
-      post 'lessons/:id/video' => 'lessons#update_video'
-      get 'lessons/:id/video' => 'lessons#video'
-      post 'courses/:id/poster' => 'courses#update_poster'
-      get 'courses/:id/poster' => 'courses#poster'
       post 'courses/create' => 'courses#create'
-      get 'users/:id/avatar' => 'users#avatar'
-      post 'users/avatar' => 'users#update_avatar'
       get 'users/mentors' => 'users#mentors'
       post 'courses/:id/start_course' => 'courses#start_course'
       get 'courses' => 'courses#all'
@@ -34,10 +26,10 @@ Rails.application.routes.draw do
 
       get '/' => 'courses_users#index'
 
-      get 'padawans/:id/tasks' => 'tasks_users#padawan_tasks'
-      get 'padawans/:id/task' => 'tasks_users#padawan_task'
-      patch 'padawans/:id/task' => 'tasks_users#approve_or_change_task'
-      patch 'tasks/:id/task_to_verify' => 'tasks_users#task_to_verify'
+      get 'padawans/:id/tasks' => 'tasks_users#index'
+      get 'padawans/:id/task' => 'tasks_users#show'
+      patch 'padawans/:id/task' => 'tasks_users#update'
+      patch 'tasks/:id/task_to_verify' => 'tasks_users#update'
 
       get 'notifications' => 'notifications#index'
       get 'lesson_user/:id' => 'lessons_users#show'

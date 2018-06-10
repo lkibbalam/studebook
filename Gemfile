@@ -8,19 +8,19 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.0'
-gem 'pg'
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'ancestry'
-gem 'oj'
-gem 'oj_mimic_json'
-gem 'puma', '~> 3.7'
-gem 'rack-cors', require: 'rack/cors'
-gem 'responders'
 gem 'bootsnap'
 gem 'jwt'
 gem 'knock'
+gem 'oj'
+gem 'oj_mimic_json'
+gem 'pg'
+gem 'puma', '~> 3.7'
 gem 'pundit'
+gem 'rack-cors', require: 'rack/cors'
+gem 'rails', '~> 5.2.0'
+gem 'responders'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

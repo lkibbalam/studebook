@@ -3,25 +3,23 @@
 module Api
   module V1
     class TasksUsersController < ApplicationController
-      before_action :set_task_user, only: %i[approve_or_change_task task_to_verify padawan_task]
+      before_action :set_task_user, only: %i[show update]
 
-      def padawan_tasks
+      def index
         user = User.find(params[:id])
         @tasks_user = user.tasks_users
+        authorize @tasks_user
         respond_with(@tasks_user)
       end
 
-      def padawan_task
+      def show
+        authorize @task_user
         respond_with(@task_user)
       end
 
-      def task_to_verify
-        @task_user.update(set_task_verify_params.merge(status: :verifying))
-        render json: @task_user
-      end
-
-      def approve_or_change_task
-        @task_user.update(set_task_verify_params)
+      def update
+        @task_user.update(task_user_params)
+        authorize @task_user
         render json: @task_user
       end
 
@@ -31,7 +29,7 @@ module Api
         @task_user = TasksUser.find(params[:id])
       end
 
-      def set_task_verify_params
+      def task_user_params
         params.require(:task).permit(:github_url, :status)
       end
     end
