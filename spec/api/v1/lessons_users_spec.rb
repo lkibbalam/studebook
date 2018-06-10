@@ -5,8 +5,9 @@
 require 'rails_helper'
 
 describe 'lessons_users_spec' do
-  let(:mentor) { create(:user) }
-  let(:lessons_user) { create(:lessons_user, student: create(:user), lesson: create(:lesson)) }
+  let(:mentor) { create(:user, :staff) }
+  let(:student) { create(:user, :student, mentor: mentor) }
+  let(:lessons_user) { create(:lessons_user, student: student, lesson: create(:lesson)) }
 
   describe 'PATCH #approve_lesson' do
     context 'when non authenticate request' do

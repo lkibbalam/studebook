@@ -5,7 +5,7 @@
 require 'rails_helper'
 
 describe 'notifications_controller_spec' do
-  let(:mentor) { create(:user) }
+  let(:admin) { create(:user, :admin) }
   let(:notification) { create(:notification) }
 
   describe 'PATCH #seen' do
@@ -16,7 +16,7 @@ describe 'notifications_controller_spec' do
     end
 
     context 'when authenticate request' do
-      before { patch "/api/v1/notifications/#{notification.id}/seen", headers: authenticated_header(mentor) }
+      before { patch "/api/v1/notifications/#{notification.id}/seen", headers: authenticated_header(admin) }
 
       it_behaves_like 'authenticate request'
 
@@ -25,7 +25,7 @@ describe 'notifications_controller_spec' do
   end
 
   describe 'GET #index' do
-    let!(:notifications) { create_list(:notification, 10, user: mentor) }
+    let!(:notifications) { create_list(:notification, 10, user: admin) }
 
     context 'when non authenticate request' do
       before { get '/api/v1/notifications' }
@@ -34,7 +34,7 @@ describe 'notifications_controller_spec' do
     end
 
     context 'when authenticate request' do
-      before { get '/api/v1/notifications', headers: authenticated_header(mentor) }
+      before { get '/api/v1/notifications', headers: authenticated_header(admin) }
 
       it_behaves_like 'authenticate request'
       it_behaves_like 'response body with 10 objects'
