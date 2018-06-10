@@ -6,21 +6,25 @@ module Api
       before_action :set_task, only: %i[show update destroy]
 
       def show
+        authorize @task
         respond_with(@task)
       end
 
       def create
         @lesson = Lesson.find(params[:lesson_id])
         @task = @lesson.tasks.create(set_params)
+        authorize @task
         respond_with :api, :v1, @task
       end
 
       def update
         @task.update(set_params)
+        authorize @task
         respond_with :api, :v1, @task
       end
 
       def destroy
+        authorize @task
         respond_with(@task.delete)
       end
 
