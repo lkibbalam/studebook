@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CoursesUserPolicy do
-
   let(:admin) { User.new(role: :admin) }
   let(:lead) { User.new(role: :leader) }
   let(:moder) { User.new(role: :moder) }

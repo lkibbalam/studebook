@@ -8,28 +8,35 @@ module Api
       before_action :set_team, only: %i[index create]
 
       def index
-        respond_with(@team.courses.all)
+        @courses = @team.courses.all
+        authorize @courses
+        respond_with(@courses)
       end
 
       def all
-        respond_with(Course.all)
+        @courses = Course.all
+        respond_with(@courses)
       end
 
       def show
+        authorize @course
         respond_with(@course)
       end
 
       def create
         @course = @team.courses.create(set_params)
+        authorize @course
         respond_with :api, :v1, @course
       end
 
       def update
         @course.update(set_params)
+        authorize @course
         respond_with :api, :v1, @course
       end
 
       def destroy
+        authorize @course
         respond_with(@course.delete)
       end
 

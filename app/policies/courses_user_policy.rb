@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CoursesUserPolicy < ApplicationPolicy
   attr_reader :record, :user
 

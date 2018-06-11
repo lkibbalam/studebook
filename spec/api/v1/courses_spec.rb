@@ -4,6 +4,7 @@ require 'rails_helper'
 
 describe 'courses_controller_spec' do
   let!(:user) { create(:user) }
+  let!(:admin) { create(:user, :admin) }
   let!(:team) { create(:team) }
   let(:course) { create(:course, author: user, team: team) }
   let!(:lessons) { create_list(:lesson, 3, tasks: create_list(:task, 3), course: course) }
@@ -67,7 +68,7 @@ describe 'courses_controller_spec' do
     context 'when authenticate' do
       let(:create_course) do
         post "/api/v1/teams/#{team.id}/courses", params: { course: attributes_for(:course) },
-                                                 headers: authenticated_header(user)
+                                                 headers: authenticated_header(admin)
       end
 
       it 'when attributes is valid' do
@@ -88,7 +89,7 @@ describe 'courses_controller_spec' do
     context 'when authenticate' do
       before do
         patch "/api/v1/courses/#{course.id}", params: { course: { title: 'NewTitle', description: 'NewDes' } },
-                                              headers: authenticated_header(user)
+                                              headers: authenticated_header(admin)
         course.reload
       end
 
@@ -105,7 +106,7 @@ describe 'courses_controller_spec' do
     end
 
     context 'when authenticate' do
-      let(:delete_course) { delete "/api/v1/courses/#{course.id}", headers: authenticated_header(user) }
+      let(:delete_course) { delete "/api/v1/courses/#{course.id}", headers: authenticated_header(admin) }
 
       it { expect { delete_course }.to change(Course, :count).by(-1) }
     end
