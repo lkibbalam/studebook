@@ -8,15 +8,18 @@ module Api
 
       def index
         @courses_user = current_user.courses_users
+        authorize @courses_user
         respond_with(@courses_user)
       end
 
       def show
+        authorize @course_user
         respond_with(@course_user)
       end
 
       def padawan_courses
         @courses_user = @user.courses_users
+        authorize @courses_user
         respond_with(@courses_user)
       end
 

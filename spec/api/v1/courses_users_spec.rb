@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 describe 'courses_users_spec' do
+  let!(:admin) { create(:user, :admin) }
   let!(:user) { create(:user) }
   let(:lessons) { create_list(:lesson, 3, tasks: create_list(:task, 3)) }
   let!(:course) { create(:course, lessons: lessons) }
@@ -16,7 +17,7 @@ describe 'courses_users_spec' do
     end
 
     context 'authenticate request' do
-      before { get '/api/v1/', headers: authenticated_header(user) }
+      before { get '/api/v1/', headers: authenticated_header(admin) }
 
       it_behaves_like 'authenticate request'
     end
