@@ -4,21 +4,15 @@ Team.create(
   [
     {
       title: 'Ruby',
-      description: 'some funny men and one girl',
-      img: 'https://t00.deviantart.net/l4YO2b97n-a86-ZYM9QfIvaZ6EM=/300x200/filters:fixed_height(100,100):origin()
-              /pre00/af07/th/pre/f/2016/192/c/3/rubyrubyruby2_by_likeabaka-da9mdzr.png'
+      description: 'some funny men and one girl'
     },
     {
       title: 'C++',
-      description: 'very smart men',
-      img: 'https://t00.deviantart.net/l4YO2b97n-a86-ZYM9QfIvaZ6EM=/300x200/filters:fixed_height(100,100):origin()
-              /pre00/af07/th/pre/f/2016/192/c/3/rubyrubyruby2_by_likeabaka-da9mdzr.png'
+      description: 'very smart men'
     },
     {
       title: 'C#',
-      description: 'very strange men',
-      img: 'https://t00.deviantart.net/l4YO2b97n-a86-ZYM9QfIvaZ6EM=/300x200/filters:fixed_height(100,100):origin()
-              /pre00/af07/th/pre/f/2016/192/c/3/rubyrubyruby2_by_likeabaka-da9mdzr.png'
+      description: 'very strange men'
     }
   ]
 )
@@ -141,39 +135,6 @@ Lesson.create(
       material: 'MyMaterial2',
       title: 'Lesson 2'
     }
-  ]
-)
-
-Video.create(
-  [
-    { course_id: 1,
-      lesson_id: 1,
-      title: 'Video1',
-      src: 'https://www.youtube.com/embed/t5KR9oAmq6A?start=33' },
-    { course_id: 1,
-      lesson_id: 1,
-      title: 'Video2',
-      src: 'https://www.youtube.com/embed/UGoCSMr0k6U' },
-    { course_id: 1,
-      lesson_id: 1,
-      title: 'Video3',
-      src: 'https://www.youtube.com/embed/Qs8c6FCwkbk' },
-    { course_id: 1,
-      lesson_id: 2,
-      title: 'Video1',
-      src: 'https://www.youtube.com/embed/UGoCSMr0k6U' },
-    { course_id: 1,
-      lesson_id: 2,
-      title: 'Video2',
-      src: 'https://www.youtube.com/embed/t5KR9oAmq6A?start=33' },
-    { course_id: 1,
-      lesson_id: 3,
-      title: 'Video1',
-      src: 'https://www.youtube.com/embed/Qs8c6FCwkbk' },
-    { course_id: 1,
-      lesson_id: 3,
-      title: 'Video2',
-      src: 'https://www.youtube.com/embed/UGoCSMr0k6U' }
   ]
 )
 

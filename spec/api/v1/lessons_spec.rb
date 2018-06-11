@@ -4,6 +4,7 @@ require 'rails_helper'
 
 describe 'lessons_controller_spec' do
   let!(:user) { create(:user) }
+  let!(:admin) { create(:user, :admin) }
   let!(:course) { create(:course) }
   let!(:lessons) { create_list(:lesson, 10, tasks: create_list(:task, 3)) }
   let!(:lessons_user) { create(:lessons_user, student: user, lesson: lessons.first) }
@@ -56,7 +57,7 @@ describe 'lessons_controller_spec' do
     context 'when authenticate' do
       let(:create_lesson) do
         post "/api/v1/courses/#{course.id}/lessons", params: { lesson: attributes_for(:lesson) },
-                                                     headers: authenticated_header(user)
+                                                     headers: authenticated_header(admin)
       end
 
       it 'when lesson with valid params' do
@@ -79,7 +80,7 @@ describe 'lessons_controller_spec' do
       before do
         patch "/api/v1/lessons/#{lessons.first.id}", params: { lesson: { task: 'NewTask', material: 'NewMaterial',
                                                                          description: 'NewDesc' } },
-                                                     headers: authenticated_header(user)
+                                                     headers: authenticated_header(admin)
         lessons.first.reload
       end
 
@@ -96,7 +97,7 @@ describe 'lessons_controller_spec' do
     end
 
     context 'when authenticate' do
-      let(:delete_lesson) { delete "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(user) }
+      let(:delete_lesson) { delete "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(admin) }
       it { expect { delete_lesson }.to change(Lesson, :count).by(-1) }
     end
   end

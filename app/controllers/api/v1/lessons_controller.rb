@@ -16,20 +16,24 @@ module Api
       end
 
       def show
+        authorize @lesson
         respond_with(@lesson)
       end
 
       def create
         @lesson = @course.lessons.create(set_lesson_params)
+        authorize @lesson
         respond_with :api, :v1, @lesson
       end
 
       def update
         @lesson.update(set_lesson_params)
+        authorize @lesson
         respond_with(@lesson)
       end
 
       def destroy
+        authorize @lesson
         respond_with(@lesson.delete)
       end
 
@@ -37,6 +41,7 @@ module Api
         @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
         @lesson_user.update(status: :done)
         respond_with :api, :v1, @lesson_user
+        # TODO: what it do?
       end
 
       private
