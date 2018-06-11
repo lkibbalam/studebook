@@ -11,8 +11,8 @@ module Api
 
       def seen
         @notification = Notification.find(params[:id])
-        @notification.update(status: :seen)
         authorize @notification
+        @notification.update(status: :seen)
         render json: @notification
       end
     end

@@ -3,7 +3,7 @@
 module Api
   module V1
     class TeamsController < ApplicationController
-      before_action :set_team, only: %i[show update destroy]
+      before_action :load_team, only: %i[show update destroy]
 
       def index
         @teams = Team.all
@@ -23,8 +23,8 @@ module Api
       end
 
       def update
-        @team.update(team_params)
         authorize @team
+        @team.update(team_params)
         respond_with :api, :v1, @team
       end
 
@@ -39,7 +39,7 @@ module Api
         params.require(:team).permit(:title, :description)
       end
 
-      def set_team
+      def load_team
         @team = Team.find(params[:id])
       end
     end

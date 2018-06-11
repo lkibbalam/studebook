@@ -12,7 +12,7 @@ class LessonsUserPolicy < ApplicationPolicy
     user.admin? || user == record.student || user.leader? || user == record.student.mentor
   end
 
-  def approve_lesson?
+  def update?
     user.admin? || user == record.student.mentor
   end
 

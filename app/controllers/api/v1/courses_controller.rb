@@ -4,8 +4,8 @@ module Api
   module V1
     class CoursesController < ApplicationController
       include Commentable
-      before_action :set_course, only: %i[show update destroy start_course update_poster get_poster]
-      before_action :set_team, only: %i[index create]
+      before_action :load_course, only: %i[show update destroy start_course update_poster get_poster]
+      before_action :load_team, only: %i[index create]
 
       def index
         @courses = @team.courses.all
@@ -30,8 +30,8 @@ module Api
       end
 
       def update
-        @course.update(course_params)
         authorize @course
+        @course.update(course_params)
         respond_with :api, :v1, @course
       end
 
@@ -47,11 +47,11 @@ module Api
 
       private
 
-      def set_course
+      def load_course
         @course = Course.find(params[:id])
       end
 
-      def set_team
+      def load_team
         @team = Team.find(params[:team_id])
       end
 

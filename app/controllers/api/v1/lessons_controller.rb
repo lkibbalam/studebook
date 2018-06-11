@@ -4,8 +4,8 @@ module Api
   module V1
     class LessonsController < ApplicationController
       include Commentable
-      before_action :set_lesson, only: %i[show destroy update done]
-      before_action :set_course, only: %i[index create]
+      before_action :load_lesson, only: %i[show destroy update done]
+      before_action :load_course, only: %i[index create]
 
       def index
         @lessons = @course.lessons
@@ -25,8 +25,8 @@ module Api
       end
 
       def update
-        @lesson.update(lesson_params)
         authorize @lesson
+        @lesson.update(lesson_params)
         respond_with(@lesson)
       end
 
@@ -37,11 +37,11 @@ module Api
 
       private
 
-      def set_lesson
+      def load_lesson
         @lesson = Lesson.find(params[:id])
       end
 
-      def set_course
+      def load_course
         @course = Course.find(params[:course_id])
       end
 

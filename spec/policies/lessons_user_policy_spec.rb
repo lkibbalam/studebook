@@ -27,7 +27,7 @@ RSpec.describe LessonsUserPolicy do
     end
   end
 
-  permissions :approve_lesson? do
+  permissions :update? do
     it 'admin mentor can approve user lesson' do
       expect(subject).to permit(mentor, lessons_user)
       expect(subject).to permit(admin, lessons_user)

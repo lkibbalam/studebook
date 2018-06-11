@@ -3,7 +3,7 @@
 module Api
   module V1
     class TasksController < ApplicationController
-      before_action :set_task, only: %i[show update destroy]
+      before_action :load_task, only: %i[show update destroy]
 
       def show
         authorize @task
@@ -12,14 +12,14 @@ module Api
 
       def create
         @lesson = Lesson.find(params[:lesson_id])
-        @task = @lesson.tasks.create(task_params)
         authorize @task
+        @task = @lesson.tasks.create(task_params)
         respond_with :api, :v1, @task
       end
 
       def update
-        @task.update(task_params)
         authorize @task
+        @task.update(task_params)
         respond_with :api, :v1, @task
       end
 
@@ -34,7 +34,7 @@ module Api
         params.require(:task).permit(:title, :description)
       end
 
-      def set_task
+      def load_task
         @task = Task.find(params[:id])
       end
     end

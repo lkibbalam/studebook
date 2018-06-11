@@ -3,8 +3,12 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :set_team, only: %i[create mentors index]
-      before_action :set_user, only: %i[show update destroy get_avatar]
+      before_action :load_team, only: %i[create mentors index]
+      before_action :load_user, only: %i[show update destroy get_avatar]
+
+      def index
+        respond_with(@team.users)
+      end
 
       def current
         @user = current_user
@@ -29,10 +33,6 @@ module Api
         respond_with(@users)
       end
 
-      def index
-        respond_with(@team.users)
-      end
-
       def create
         @user = @team.users.create(admin_permissions_params)
         authorize @user
@@ -41,8 +41,8 @@ module Api
 
       def update
         return unless params.dig(:user, :password) == params.dig(:user, :password_confirmation)
-        @user.update(current_user.admin? ? admin_permissions_params : user_permissions_update_params)
         authorize @user
+        @user.update(current_user.admin? ? admin_permissions_params : user_permissions_update_params)
         respond_with :api, :v1, @user
       end
 
@@ -53,11 +53,11 @@ module Api
 
       private
 
-      def set_user
+      def load_user
         @user = User.find(params[:id])
       end
 
-      def set_team
+      def load_team
         @team = Team.find(params[:team_id])
       end
 
