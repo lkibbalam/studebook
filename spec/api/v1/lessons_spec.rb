@@ -21,32 +21,29 @@ describe 'lessons_controller_spec' do
       before { get "/api/v1/courses/#{course.id}/lessons", headers: authenticated_header(user) }
 
       it_behaves_like 'authenticate request'
-
-      it 'return 10 of resource objects' do
-        expect(JSON.parse(response.body)['lessons'].size).to eq 10
-      end
+      it_behaves_like 'response body with 10 objects'
     end
   end
 
-  #   describe 'GET #show' do
-  #     context 'when non-authenticate' do
-  #       before { get "/api/v1/lessons/#{lessons.first.id}" }
-  #
-  #       it_behaves_like 'non authenticate request'
-  #     end
-  #
-  #     context 'when authenticate' do
-  #       before { get "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(user) }
-  #
-  #       it_behaves_like 'authenticate request'
-  #
-  #       %w[id course_id description material task].each do |attr|
-  #         it "user object contains #{attr}" do
-  #           expect(response.body).to be_json_eql(lessons.first.send(attr.to_sym).to_json).at_path(attr)
-  #         end
-  #       end
-  #     end
-  #   end
+  describe 'GET #show' do
+    context 'when non-authenticate' do
+      before { get "/api/v1/lessons/#{lessons.first.id}" }
+
+      it_behaves_like 'non authenticate request'
+    end
+
+    context 'when authenticate' do
+      before { get "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(user) }
+
+      it_behaves_like 'authenticate request'
+
+      %w[course_id description material title].each do |attr|
+        it "user object contains #{attr}" do
+          expect(response.body).to be_json_eql(lessons.first.send(attr.to_sym).to_json).at_path("data/attributes/#{attr}")
+        end
+      end
+    end
+  end
 
   describe 'POST #create' do
     context 'when non-authenticate' do
@@ -99,22 +96,6 @@ describe 'lessons_controller_spec' do
     context 'when authenticate' do
       let(:delete_lesson) { delete "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(admin) }
       it { expect { delete_lesson }.to change(Lesson, :count).by(-1) }
-    end
-  end
-
-  describe 'PATCH #done' do
-    context 'when non authenticate' do
-      before { patch "/api/v1/lessons/#{lessons.first.id}/done", params: { id: lessons.first.id } }
-
-      it_behaves_like 'non authenticate request'
-    end
-
-    context 'when authenticate request' do
-      before do
-        patch "/api/v1/lessons/#{lessons.first.id}/done",
-              params: { id: lessons.first.id }, headers: authenticated_header(user)
-      end
-      it { expect(lessons_user.status).to eql('done') }
     end
   end
 

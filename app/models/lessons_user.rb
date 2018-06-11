@@ -10,8 +10,8 @@ class LessonsUser < ApplicationRecord
   enum status: { unlocked: 2, done: 1, locked: 0 }
 
   after_create :create_tasks_users
-  after_update :unlock_next_lesson, on: %i[approve_lesson]
-  after_update :change_course_progress, on: %i[approve_lesson approve_task]
+  after_update :unlock_next_lesson
+  after_update :change_course_progress
 
   private
 

@@ -9,10 +9,8 @@ module Api
 
       def index
         @lessons = @course.lessons
-        course_user = @course.courses_users.find_by(student: current_user)
-        status = course_user.status if course_user
-        respond_with(lessons: @lessons, status: status, course: @course)
-        # TODO: update tests, serializer!!!!
+        authorize @lessons
+        respond_with(@lessons)
       end
 
       def show
@@ -21,13 +19,13 @@ module Api
       end
 
       def create
-        @lesson = @course.lessons.create(set_lesson_params)
+        @lesson = @course.lessons.create(lesson_params)
         authorize @lesson
         respond_with :api, :v1, @lesson
       end
 
       def update
-        @lesson.update(set_lesson_params)
+        @lesson.update(lesson_params)
         authorize @lesson
         respond_with(@lesson)
       end
@@ -35,13 +33,6 @@ module Api
       def destroy
         authorize @lesson
         respond_with(@lesson.delete)
-      end
-
-      def done
-        @lesson_user = LessonsUser.find_by(student: current_user, lesson: @lesson)
-        @lesson_user.update(status: :done)
-        respond_with :api, :v1, @lesson_user
-        # TODO: what it do?
       end
 
       private
@@ -54,7 +45,7 @@ module Api
         @course = Course.find(params[:course_id])
       end
 
-      def set_lesson_params
+      def lesson_params
         params.require(:lesson).permit(:title, :description, :material, :video, :poster)
       end
     end

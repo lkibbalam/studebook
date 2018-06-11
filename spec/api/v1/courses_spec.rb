@@ -46,11 +46,6 @@ describe 'courses_controller_spec' do
         end
       end
 
-      # it "response body data contains course id" do
-      #   expect(response.body).to be_json_eql(course.send(:id).to_json).at_path("data/id")
-      # end
-      # TODO: why dosnt work
-
       it 'response body data contains type' do
         expect(response.body).to be_json_eql('courses'.to_json).at_path('data/type')
       end

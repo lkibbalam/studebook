@@ -24,13 +24,13 @@ module Api
       end
 
       def create
-        @course = @team.courses.create(set_params)
+        @course = @team.courses.create(course_params.merge(author: current_user))
         authorize @course
         respond_with :api, :v1, @course
       end
 
       def update
-        @course.update(set_params)
+        @course.update(course_params)
         authorize @course
         respond_with :api, :v1, @course
       end
@@ -55,8 +55,8 @@ module Api
         @team = Team.find(params[:team_id])
       end
 
-      def set_params
-        params.require(:course).permit(:title, :description, :poster).merge(author: current_user)
+      def course_params
+        params.require(:course).permit(:title, :description, :poster)
       end
     end
   end

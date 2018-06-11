@@ -4,21 +4,20 @@ module Commentable
   extend ActiveSupport::Concern
 
   def comments
-    @commentable = set_commentable
-    respond_with(@comments = @commentable.comments.as_json(include: :user))
+    @comments = commentable.comments
+    respond_with(@comments)
   end
 
   def create_comment
-    @commentable = set_commentable
-    @comment = @commentable.comments.new(set_comment_params.merge(user_id: current_user.id))
+    @comment = commentable.comments.new(comment_params.merge(user: current_user))
     @comment.parent_id = @commentable.id if @commentable.class.name == 'Comment'
-    render json: @comment.as_json(include: :user) if @comment.save
+    render json: @comment if @comment.save
   end
 
   def update_comment
     @comment = Comment.find(params[:id])
-    @comment.update(set_comment_params)
-    render json: @comment.as_json(include: :user)
+    @comment.update(comment_params)
+    render json: @comment
   end
 
   def destroy_comment
@@ -29,11 +28,11 @@ module Commentable
 
   private
 
-  def set_commentable
+  def commentable
     controller_path.classify.tr('Api::V1::', '').constantize.find(params[:id])
   end
 
-  def set_comment_params
+  def comment_params
     params.require(:comment).permit(:body)
   end
 end

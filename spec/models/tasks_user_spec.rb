@@ -40,12 +40,12 @@ RSpec.describe TasksUser, type: :model do
   end
 
   describe '.unlock_next_lesson' do
-    let(:change_all_tasks) { student.tasks_users.where(task: course.lessons.first.tasks).update_all(status: :verifying) }
+    let(:chang_all_tasks) { student.tasks_users.where(task: course.lessons.first.tasks).update_all(status: :verifying) }
     let(:approve_all_tasks) { student.tasks_users.where(task: course.lessons.first.tasks).each(&:accept!) }
     let!(:lesson_user) { student.lessons_users.second }
 
     it 'when approve last task of lesson' do
-      change_all_tasks
+      chang_all_tasks
       approve_all_tasks
       expect do
         lesson_user.reload

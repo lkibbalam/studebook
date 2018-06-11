@@ -20,8 +20,7 @@ class TasksUserPolicy < ApplicationPolicy
   end
 
   def update?
-    return true if user.admin?
-    return true if user == record.user && record.status == 'verifying'
+    return true if user.admin? || user == record.user && record.status == 'verifying'
     (user == record.user.mentor && %w[accept change].include?(record.status))
   end
 

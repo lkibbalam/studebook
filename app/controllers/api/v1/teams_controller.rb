@@ -17,13 +17,13 @@ module Api
       end
 
       def create
-        @team = Team.create(set_params)
+        @team = Team.create(team_params)
         authorize @team
         respond_with :api, :v1, @team
       end
 
       def update
-        @team.update(set_params)
+        @team.update(team_params)
         authorize @team
         respond_with :api, :v1, @team
       end
@@ -35,7 +35,7 @@ module Api
 
       private
 
-      def set_params
+      def team_params
         params.require(:team).permit(:title, :description)
       end
 

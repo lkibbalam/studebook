@@ -12,13 +12,13 @@ module Api
 
       def create
         @lesson = Lesson.find(params[:lesson_id])
-        @task = @lesson.tasks.create(set_params)
+        @task = @lesson.tasks.create(task_params)
         authorize @task
         respond_with :api, :v1, @task
       end
 
       def update
-        @task.update(set_params)
+        @task.update(task_params)
         authorize @task
         respond_with :api, :v1, @task
       end
@@ -30,7 +30,7 @@ module Api
 
       private
 
-      def set_params
+      def task_params
         params.require(:task).permit(:title, :description)
       end
 
