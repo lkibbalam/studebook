@@ -21,13 +21,13 @@ module Api
       def create
         @lesson = @course.lessons.create(lesson_params)
         authorize @lesson
-        respond_with :api, :v1, @lesson
+        render json: @lesson
       end
 
       def update
         authorize @lesson
         @lesson.update(lesson_params)
-        respond_with(@lesson)
+        render json: @lesson
       end
 
       def destroy
@@ -46,7 +46,7 @@ module Api
       end
 
       def lesson_params
-        params.require(:lesson).permit(:title, :description, :material, :video, :poster)
+        params.require(:lesson).permit(:title, :description, :material, :poster, :video)
       end
     end
   end

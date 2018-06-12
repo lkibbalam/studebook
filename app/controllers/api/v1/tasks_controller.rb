@@ -12,15 +12,15 @@ module Api
 
       def create
         @lesson = Lesson.find(params[:lesson_id])
-        authorize @task
         @task = @lesson.tasks.create(task_params)
-        respond_with :api, :v1, @task
+        authorize @task
+        render json: @task
       end
 
       def update
         authorize @task
         @task.update(task_params)
-        respond_with :api, :v1, @task
+        render json: @task
       end
 
       def destroy

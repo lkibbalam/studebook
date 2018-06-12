@@ -4,8 +4,8 @@ module Api
   module V1
     class CoursesController < ApplicationController
       include Commentable
-      before_action :load_course, only: %i[show update destroy start_course update_poster get_poster]
-      before_action :load_team, only: %i[index create]
+      before_action :load_course, only: %i[show update destroy start_course]
+      before_action :load_team, only: %i[index]
 
       def index
         @courses = @team.courses.all
@@ -24,15 +24,15 @@ module Api
       end
 
       def create
-        @course = @team.courses.create(course_params.merge(author: current_user))
+        @course = Course.create(course_params.merge(author: current_user))
         authorize @course
-        respond_with :api, :v1, @course
+        render json: @course
       end
 
       def update
         authorize @course
         @course.update(course_params)
-        respond_with :api, :v1, @course
+        render json: @course
       end
 
       def destroy
@@ -42,7 +42,7 @@ module Api
 
       def start_course
         @course_user = @course.courses_users.create(student: current_user)
-        respond_with @course_user, location: nil
+        render json: @course_user
       end
 
       private

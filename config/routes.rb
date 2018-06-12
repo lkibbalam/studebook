@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       get 'users/all' => 'users#index'
       get 'padawans/:id' => 'courses_users#padawan'
 
+      post 'courses/:id/poster' => 'courses#update'
       get '/' => 'courses_users#index'
 
       get 'padawans/:id/tasks' => 'tasks_users#index'
