@@ -50,6 +50,21 @@ GEM
     ancestry (3.0.2)
       activerecord (>= 3.2.0)
     arel (9.0.0)
+    aws-eventstream (1.0.0)
+    aws-partitions (1.91.0)
+    aws-sdk-core (3.21.2)
+      aws-eventstream (~> 1.0)
+      aws-partitions (~> 1.0)
+      aws-sigv4 (~> 1.0)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.5.0)
+      aws-sdk-core (~> 3)
+      aws-sigv4 (~> 1.0)
+    aws-sdk-s3 (1.13.0)
+      aws-sdk-core (~> 3, >= 3.21.2)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.0)
+    aws-sigv4 (1.0.2)
     bcrypt (3.1.12)
     bootsnap (1.3.0)
       msgpack (~> 1.0)
@@ -73,6 +88,7 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
+    jmespath (1.4.0)
     json-spec (0.2.1)
       cdt-utilities (~> 0.3)
       validates_email_format_of (~> 1.6)
@@ -206,6 +222,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.7)
   ancestry
+  aws-sdk-s3
   bootsnap
   byebug
   factory_bot_rails

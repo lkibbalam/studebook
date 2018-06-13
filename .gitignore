@@ -21,6 +21,7 @@
 .idea
 config/secrets.yml
 config/database.yml
+config/storage.yml
 public/files
 db/seeds.rb
 storage
