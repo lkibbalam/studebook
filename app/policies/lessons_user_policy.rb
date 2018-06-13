@@ -9,7 +9,8 @@ class LessonsUserPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin? || user == record.student || user.leader? || user == record.student.mentor
+    return true if user.admin? || user.leader?
+    (user == record.student && !record.locked?) || user == record.student.mentor
   end
 
   def update?

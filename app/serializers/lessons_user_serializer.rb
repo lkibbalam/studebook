@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LessonsUserSerializer < ActiveModel::Serializer
-  attributes %i[status lesson tasks course lessons student_id video poster]
+  attributes %i[status lesson tasks course lessons student_id video poster tasks_user]
 
   def lesson
     object.lesson
@@ -25,5 +25,9 @@ class LessonsUserSerializer < ActiveModel::Serializer
 
   def poster
     Rails.application.routes.url_helpers.rails_blob_url(lesson.poster) if lesson.poster.attached?
+  end
+
+  def tasks_user
+    TasksUser.where(task: tasks, user: object.student)
   end
 end
