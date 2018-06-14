@@ -9,7 +9,7 @@ class CoursesUserPolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin? || user.leader?
+    user.admin? || user.leader? || record.pluck(:student_id).all?(user.id)
   end
 
   def show?

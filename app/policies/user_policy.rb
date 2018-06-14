@@ -17,7 +17,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin? || user.leader?
+    user.admin? || user.leader? || user == record
   end
 
   def mentors?

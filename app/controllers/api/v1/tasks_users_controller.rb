@@ -4,7 +4,8 @@ module Api
   module V1
     class TasksUsersController < ApplicationController
       before_action :load_task_user, only: %i[show]
-      before_action :load_task, only: %i[update]
+      # before_action :load_task, only: %i[update]
+
       def index
         user = User.find(params[:id])
         @tasks_user = user.tasks_users
@@ -18,7 +19,7 @@ module Api
       end
 
       def update
-        @task_user = TasksUser.find_by(task: @task, user: current_user)
+        @task_user = TasksUser.find(params[:id])
         @task_user.assign_attributes(task_user_params)
         authorize @task_user
         render json: @task_user if @task_user.save

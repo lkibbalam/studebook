@@ -5,7 +5,6 @@ module Api
     class NotificationsController < ApplicationController
       def index
         @notifications = current_user.notifications
-        authorize @notifications
         respond_with(@notifications)
       end
 

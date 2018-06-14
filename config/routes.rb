@@ -22,11 +22,11 @@ Rails.application.routes.draw do
       get 'courses' => 'courses#all'
       get 'users' => 'users#all'
       get 'users/all' => 'users#index'
-      get 'padawans/:id' => 'courses_users#padawan'
 
       post 'courses/:id/poster' => 'courses#update'
       get '/' => 'courses_users#index'
 
+      get 'padawans/:id' => 'courses_users#padawan_courses'
       get 'padawans/:id/tasks' => 'tasks_users#index'
       get 'padawans/:id/task' => 'tasks_users#show'
       patch 'padawans/:id/task' => 'tasks_users#update'

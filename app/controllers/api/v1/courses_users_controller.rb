@@ -19,7 +19,7 @@ module Api
 
       def padawan_courses
         @courses_user = @user.courses_users
-        authorize @courses_user
+        # authorize @courses_user
         respond_with(@courses_user)
       end
 
