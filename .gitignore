@@ -25,3 +25,4 @@ config/storage.yml
 public/files
 db/seeds.rb
 storage
+.vscode

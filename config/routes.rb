@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  post "/graphql", to: "graphql#execute"
   default_url_options host: 'http://localhost:8001'
   concern :commentable do
     member do
@@ -9,6 +10,10 @@ Rails.application.routes.draw do
       patch :update_comment
       delete :destroy_comment
     end
+  end
+
+  if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
 
   namespace :api, defaults: { format: 'json' } do

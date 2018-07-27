@@ -22,6 +22,7 @@ gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '~> 5.2.0'
 gem 'responders'
+gem 'graphql'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -36,6 +37,7 @@ group :development, :test do
   gem 'json-spec'
   gem 'json_spec', '~> 1.1', '>= 1.1.5'
   gem 'pry'
+  gem 'graphiql-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
