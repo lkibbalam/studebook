@@ -16,7 +16,10 @@ class LessonsUserSerializer < ActiveModel::Serializer
   end
 
   def lessons
-    course.lessons
+    course.lessons.each do |lesson|
+      lesson_user = object.student.lessons_users.find_by(lesson: lesson)
+      lesson.attributes.merge(lesson_user)
+    end
   end
 
   def video
