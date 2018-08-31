@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LessonsUserSerializer < ActiveModel::Serializer
-  attributes %i[status lesson tasks course lessons student_id video poster tasks_user]
+  attributes %i[status lesson tasks course lessons student_id video poster tasks_user course_lessons_user]
 
   def lesson
     object.lesson
@@ -16,10 +16,11 @@ class LessonsUserSerializer < ActiveModel::Serializer
   end
 
   def lessons
-    course.lessons.each do |lesson|
-      lesson_user = object.student.lessons_users.find_by(lesson: lesson)
-      lesson.attributes.merge(lesson_user)
-    end
+    course.lessons
+  end
+
+  def course_lessons_user
+    LessonsUser.where(student: object.student, lesson: object.lesson.course.lessons)
   end
 
   def video
