@@ -26,5 +26,4 @@ public/files
 db/seeds.rb
 storage
 .vscode/
-config/credentials.yml.enc
 config/master.key
