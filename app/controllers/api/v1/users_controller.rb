@@ -40,10 +40,15 @@ module Api
       end
 
       def update
-        return unless params.dig(:user, :password) == params.dig(:user, :password_confirmation)
         authorize @user
         @user.update(current_user.admin? ? admin_permissions_params : user_permissions_update_params)
         render json: @user
+      end
+
+      def change_password
+        return unless current_user.authenticate(params.dig(:user, :current_password))
+        return unless params.dig(:user, :new_password) == params.dig(:user, :password_confirmation)
+        current_user.update(password: params.dig(:user, :new_password))
       end
 
       def destroy

@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       post 'courses/:id/poster' => 'courses#update'
       get '/' => 'courses_users#index'
 
+      patch 'users/current/change_password' => 'users#change_password'
+
       get 'padawans/:id' => 'courses_users#padawan_courses'
       get 'padawans/:id/tasks' => 'tasks_users#index'
       get 'padawans/:id/task' => 'tasks_users#show'
