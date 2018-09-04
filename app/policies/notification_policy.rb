@@ -13,7 +13,7 @@ class NotificationPolicy < ApplicationPolicy
   end
 
   def seen?
-    user.admin? || user == record.tasks_user.user.mentor
+    user.admin? || user == record.tasks_user.user.mentor || user == record.tasks_user.user
   end
 
   class Scope < Scope

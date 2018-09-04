@@ -4,7 +4,7 @@ module Api
   module V1
     class NotificationsController < ApplicationController
       def index
-        @notifications = current_user.notifications
+        @notifications = current_user.notifications.unseen
         respond_with(@notifications)
       end
 
