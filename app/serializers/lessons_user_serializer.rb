@@ -32,6 +32,8 @@ class LessonsUserSerializer < ActiveModel::Serializer
   end
 
   def tasks_user
-    TasksUser.where(task: tasks, user: object.student)
+    TasksUser.where(task: tasks, user: object.student).map do |task_user|
+      TasksUserSerializer.new(task_user)
+    end
   end
 end

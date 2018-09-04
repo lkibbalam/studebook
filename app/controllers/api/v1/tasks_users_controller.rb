@@ -22,6 +22,7 @@ module Api
         @task_user = TasksUser.find(params[:id])
         @task_user.assign_attributes(task_user_params)
         authorize @task_user
+        @task_user.comments.create(body: params.dig(:task, :comment), user: current_user) if params.dig(:task, :comment)
         render json: @task_user if @task_user.save
       end
 
