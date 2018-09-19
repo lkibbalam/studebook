@@ -30,7 +30,7 @@ module Api
       end
 
       def load_course_user
-        @course_user = current_user.courses_users.find(params[:id])
+        @course_user = current_user.courses_users.find_by(course_id: params[:id])
       end
     end
   end

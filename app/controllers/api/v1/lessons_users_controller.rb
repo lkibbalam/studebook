@@ -7,8 +7,7 @@ module Api
       before_action :load_lesson_user, only: %i[update]
 
       def show
-        lesson = Lesson.find(params[:id])
-        @lesson_user = LessonsUser.find_by(lesson: lesson, student: current_user)
+        @lesson_user = current_user.lessons_users.find_by(lesson_id: params[:id])
         authorize @lesson_user
         respond_with(@lesson_user)
       end
