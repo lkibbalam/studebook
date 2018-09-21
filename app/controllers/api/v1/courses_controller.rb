@@ -56,7 +56,7 @@ module Api
       end
 
       def course_params
-        params.require(:course).permit(:title, :description, :poster)
+        params.require(:course).permit(:title, :description, :poster, :team_id)
       end
     end
   end
