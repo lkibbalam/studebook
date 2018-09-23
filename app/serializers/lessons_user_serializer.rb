@@ -16,7 +16,7 @@ class LessonsUserSerializer < ActiveModel::Serializer
   end
 
   def lessons
-    course.lessons
+    course.lessons.order('created_at asc')
   end
 
   def course_lessons_user
