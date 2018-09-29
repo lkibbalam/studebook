@@ -12,6 +12,7 @@ class LessonsUser < ApplicationRecord
   after_create :create_tasks_users
   after_update :unlock_next_lesson
   after_update :change_course_progress
+  # after_update :after_lesson_approve
 
   private
 
@@ -19,8 +20,15 @@ class LessonsUser < ApplicationRecord
     lesson.tasks.each { |task| TasksUser.create(user: student, task: task) }
   end
 
+  def after_lesson_approve
+    # return unless saved_change_to_attribute?('status', from: 'unlocked', to: 'done')
+    # unlock_next_lesson
+    # change_course_progress
+  end
+
   def unlock_next_lesson
     return unless saved_change_to_attribute?('status', from: 'unlocked', to: 'done')
+
     course_lessons = lesson.course.lessons
     lesson_index = course_lessons.index { |course_lesson| lesson == course_lesson }
     next_lesson = course_lessons[lesson_index + 1]
@@ -29,6 +37,7 @@ class LessonsUser < ApplicationRecord
 
   def change_course_progress
     return unless saved_change_to_attribute?('status', from: 'unlocked', to: 'done')
+
     course = lesson.course
     course_user = student.courses_users.find_by(course: course)
     course_user.update(progress: course_user.progress + course.lesson_value)
