@@ -1,14 +1,22 @@
 # frozen_string_literal: true
 
 class CoursesUserSerializer < ActiveModel::Serializer
-  attributes %i[status created_at updated_at progress course poster lessons student]
+  attributes %i[status created_at updated_at progress course poster lessons student description title]
 
   def course
     object.course
   end
 
+  def description
+    course.description
+  end
+
+  def title
+    course.title
+  end
+
   def lessons
-    course.lessons
+    course.lessons.order('created_at asc')
   end
 
   def student
