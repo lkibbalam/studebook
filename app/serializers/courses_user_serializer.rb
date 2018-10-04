@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CoursesUserSerializer < ActiveModel::Serializer
-  attributes %i[status created_at updated_at progress course poster lessons student description title]
+  attributes %i[current_lesson status created_at updated_at progress course poster lessons student description title]
 
   def course
     object.course
@@ -21,6 +21,10 @@ class CoursesUserSerializer < ActiveModel::Serializer
 
   def student
     object.student
+  end
+
+  def current_lesson
+    LessonsUser.where(student: student, lesson: lessons, status: :unlocked).first
   end
 
   def poster

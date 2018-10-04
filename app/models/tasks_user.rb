@@ -34,10 +34,12 @@ class TasksUser < ApplicationRecord
     lesson_index = course_lessons.index { |course_lesson| task.lesson == course_lesson }
     done_lesson(course_lessons[lesson_index])
     next_lesson = course_lessons[lesson_index + 1]
-    user.lessons_users.find_by(lesson: next_lesson).update(status: :unlocked) if next_lesson&.locked?
+    lesson_user = user.lessons_users.find_by(lesson: next_lesson)
+    lesson_user.update(status: :unlocked) if lesson_user&.locked?
   end
 
   def done_lesson(lesson)
-    user.lessons_users.find_by(lesson: lesson).update(status: :done) if lesson&.unlocked?
+    lesson_user = user.lessons_users.find_by(lesson: lesson)
+    lesson_user.update(status: :done) if lesson_user&.unlocked?
   end
 end

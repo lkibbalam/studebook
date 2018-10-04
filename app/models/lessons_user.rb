@@ -29,7 +29,8 @@ class LessonsUser < ApplicationRecord
     course_lessons = lesson.course.lessons
     lesson_index = course_lessons.index { |course_lesson| lesson == course_lesson }
     next_lesson = course_lessons[lesson_index + 1]
-    student.lessons_users.find_by(lesson: next_lesson).update(status: :unlocked) if next_lesson
+    lesson_user = student.lessons_users.find_by(lesson: next_lesson)
+    lesson_user.update(status: :unlocked) if lesson_user&.locked?
   end
 
   def change_course_progress
