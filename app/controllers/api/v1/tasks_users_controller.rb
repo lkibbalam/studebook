@@ -7,6 +7,7 @@ module Api
       # before_action :load_task, only: %i[update]
 
       def index
+        # TODO: Rewrite for concreta course
         user = User.find(params[:id])
         @tasks_user = user.tasks_users
         authorize @tasks_user

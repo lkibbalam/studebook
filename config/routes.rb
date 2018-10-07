@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  default_url_options host: 'http://localhost:8001'
+  default_url_options host: 'https://studypet.herokuapp.com'
   concern :commentable do
     member do
       get :comments
