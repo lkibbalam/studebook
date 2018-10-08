@@ -20,7 +20,7 @@ class LessonsUserSerializer < ActiveModel::Serializer
   end
 
   def course_lessons_user
-    LessonsUser.where(student: object.student, lesson: object.lesson.course.lessons)
+    current_user.lessons_users.where(lesson_id: object.lesson.course.lessons.ids)
   end
 
   def video
@@ -32,7 +32,7 @@ class LessonsUserSerializer < ActiveModel::Serializer
   end
 
   def tasks_user
-    TasksUser.where(task: tasks, user: object.student).map do |task_user|
+    current_user.tasks_users.where(task_id: tasks.ids).map do |task_user|
       TasksUserSerializer.new(task_user)
     end
   end

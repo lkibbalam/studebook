@@ -24,7 +24,7 @@ class CoursesUserSerializer < ActiveModel::Serializer
   end
 
   def current_lesson
-    LessonsUser.where(student: student, lesson: lessons, status: :unlocked).first
+    current_user.lessons_users.where(lesson_id: lessons.ids, status: :unlocked).first
   end
 
   def poster

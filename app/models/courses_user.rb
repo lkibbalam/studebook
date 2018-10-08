@@ -15,8 +15,8 @@ class CoursesUser < ApplicationRecord
   private
 
   def create_course_lessons
-    course.lessons.each { |lesson| LessonsUser.create(lesson: lesson, student: student) }
-    LessonsUser.find_by(student: student, lesson: course.lessons.first).update(status: :unlocked) # unlocked first lesson of course for student
+    course.lessons.each { |lesson| student.lessons_users.create(lesson: lesson) }
+    student.lessons_users.find_by(lesson: course.lessons.order('id').first).update(status: :unlocked)
   end
 
   def full_progress_for_archived
