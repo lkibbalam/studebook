@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from Pundit::NotDefinedError, with: :record_not_found
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   respond_to :json
 

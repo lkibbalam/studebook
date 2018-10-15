@@ -7,11 +7,16 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+ruby '2.5.1'
+
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'ancestry'
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap'
+gem 'graphql'
+gem 'graphql-batch'
+gem 'graphql-docs'
+gem 'graphql-rails_logger'
 gem 'jwt'
 gem 'knock'
 gem 'oj'
@@ -20,7 +25,7 @@ gem 'pg'
 gem 'puma', '~> 3.7'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 5.2.1'
 gem 'responders'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -42,6 +47,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'graphiql-rails'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
