@@ -40,5 +40,13 @@ module Types
     def courses
       Course.all
     end
+
+    field :lesson, LessonType, null: true do
+      description 'Find course by ID'
+      argument :id, ID, required: true
+    end
+    def lesson(id:)
+      Lesson.find(id)
+    end
   end
 end
