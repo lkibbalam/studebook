@@ -13,4 +13,5 @@ RSpec.describe User, type: :model do
   it { should have_many(:lessons).through(:lessons_users) }
   it { should have_many(:tasks_users).dependent(:destroy) }
   it { should have_many(:tasks).through(:tasks_users) }
+  it { should have_many(:comments).class_name('Comment').with_foreign_key('user_id') }
 end

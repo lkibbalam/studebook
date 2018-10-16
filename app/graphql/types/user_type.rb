@@ -15,8 +15,9 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :notifications, NotificationsConnectionType, null: true
     field :mentor, Types::UserType, null: true
-    field :team, Types::TeamType, null: true
-    field :padawans, UsersConnectionType, null: false
+    field :team, Types::TeamType, null: false
+    field :padawans, UsersConnectionType, null: true
+    field :comments, CommentsConnectionType, null: true
 
     def avatar
       rails_blob_url(object.avatar) if object.avatar.attached?
