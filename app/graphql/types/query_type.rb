@@ -27,5 +27,18 @@ module Types
     def teams
       Team.all
     end
+
+    field :course, CourseType, null: true do
+      description 'Find course by ID'
+      argument :id, ID, required: true
+    end
+    def course(id:)
+      Course.find(id)
+    end
+
+    field :courses, CoursesConnectionType, null: true, connection: true
+    def courses
+      Course.all
+    end
   end
 end
