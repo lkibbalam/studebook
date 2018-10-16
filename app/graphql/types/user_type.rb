@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 module Types
-  class UserType < GraphQL::Schema::Object
+  class UserType < BaseObject
     field :id, ID, null: false
     field :email, String, null: false
+    field :avatar, String, null: true
     field :first_name, String, null: true
     field :last_name, String, null: true
     field :role, String, null: false
@@ -15,5 +16,10 @@ module Types
     field :notifications, NotificationsConnectionType, null: true
     field :mentor, Types::UserType, null: true
     field :team, Types::TeamType, null: true
+    field :padawans, UsersConnectionType, null: false
+
+    def avatar
+      rails_blob_url(object.avatar) if object.avatar.attached?
+    end
   end
 end

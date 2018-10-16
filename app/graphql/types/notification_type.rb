@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class NotificationType < GraphQL::Schema::Object
+  class NotificationType < BaseObject
     field :id, ID, null: false
     field :status, String, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false

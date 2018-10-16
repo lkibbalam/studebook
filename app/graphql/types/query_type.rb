@@ -14,5 +14,18 @@ module Types
     def users
       User.all
     end
+
+    field :team, TeamType, null: true do
+      description 'Find team by ID'
+      argument :id, ID, required: true
+    end
+    def team(id:)
+      Team.find(id)
+    end
+
+    field :teams, TeamsConnectionType, null: true, connection: true
+    def teams
+      Team.all
+    end
   end
 end
