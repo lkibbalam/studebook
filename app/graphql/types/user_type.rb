@@ -18,6 +18,12 @@ module Types
     field :team, Types::TeamType, null: false
     field :padawans, UsersConnectionType, null: true
     field :comments, CommentsConnectionType, null: true
+    field :courses_user, CoursesUserConnectionType, null: true
+    field :courses, CoursesConnectionType, null: true
+
+    def courses_user
+      object.courses_users.where(course: object.courses)
+    end
 
     def avatar
       rails_blob_url(object.avatar) if object.avatar.attached?

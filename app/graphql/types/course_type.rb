@@ -12,6 +12,13 @@ module Types
     field :author, Types::UserType, null: false
     field :students, [Types::UserType], null: true
     field :lessons, [Types::LessonType], null: true
+    field :course_user, CourseUserType, null: true
+
+    def course_user
+      current_user = context[:current_user]
+      return false unless current_user
+      current_user.courses_users.find_by_course_id(object.id)
+    end
 
     def poster
       rails_blob_url(object.poster) if object.poster.attached?
