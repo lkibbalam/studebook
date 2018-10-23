@@ -27,6 +27,7 @@ gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '~> 5.2.1'
 gem 'responders'
+gem 'graphql-libgraphqlparser'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
