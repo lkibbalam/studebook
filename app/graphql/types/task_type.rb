@@ -7,5 +7,12 @@ module Types
     field :description, String, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :task_user, TaskUserType, null: true
+
+    def task_user
+      current_user = context[:current_user]
+      return false unless current_user
+      current_user.tasks_users.find_by_task_id(object.id)
+    end
   end
 end
