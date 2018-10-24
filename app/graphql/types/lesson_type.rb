@@ -6,8 +6,8 @@ module Types
     field :title, String, null: false
     field :material, String, null: true
     field :description, String, null: true
-    field :poster, String, null: true
-    field :video, String, null: true
+    field :poster, Url, null: true
+    field :video, Url, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :course, CourseType, null: false

@@ -14,8 +14,8 @@ module Types
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :notifications, NotificationsConnectionType, null: true
-    field :mentor, Types::UserType, null: true
-    field :team, Types::TeamType, null: false
+    field :mentor, UserType, null: true
+    field :team, TeamType, null: false
     field :padawans, UsersConnectionType, null: true
     field :comments, CommentsConnectionType, null: true
     field :courses_user, CoursesUserConnectionType, null: true

@@ -8,10 +8,10 @@ module Types
     field :description, String, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :users, UsersConnectionType, null: true
+    field :users, UsersConnectionType, null: true, extras: %i[ast_node]
 
-    def users
-      object.users
+    def users(ast_node:)
+      Loaders::AttachmentsLoader.load_many(object, ast_node)
     end
 
     def poster

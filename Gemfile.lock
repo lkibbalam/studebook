@@ -47,20 +47,20 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    ancestry (3.0.2)
+    ancestry (3.0.3)
       activerecord (>= 3.2.0)
     arel (9.0.0)
     aws-eventstream (1.0.1)
     aws-partitions (1.106.0)
-    aws-sdk-core (3.33.0)
+    aws-sdk-core (3.34.0)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-kms (1.9.0)
+    aws-sdk-kms (1.10.0)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sigv4 (~> 1.0)
-    aws-sdk-s3 (1.21.0)
+    aws-sdk-s3 (1.22.0)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
@@ -215,7 +215,7 @@ GEM
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
-    rspec-rails (3.8.0)
+    rspec-rails (3.8.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -281,7 +281,7 @@ DEPENDENCIES
   oj_mimic_json
   pg
   pry
-  puma (~> 3.7)
+  puma
   pundit
   rack-cors
   rails (~> 5.2.1)

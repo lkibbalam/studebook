@@ -8,10 +8,10 @@ module Types
     field :poster, String, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :team, Types::TeamType, null: true
-    field :author, Types::UserType, null: false
-    field :students, [Types::UserType], null: true
-    field :lessons, [Types::LessonType], null: true
+    field :team, TeamType, null: true
+    field :author, UserType, null: false
+    field :students, [UserType], null: true
+    field :lessons, [LessonType], null: true, extras: %i[ast_node]
     field :course_user, CourseUserType, null: true
 
     def course_user
@@ -24,8 +24,8 @@ module Types
       rails_blob_url(object.poster) if object.poster.attached?
     end
 
-    def lessons
-      object.lessons.with_attached_video
+    def lessons(ast_node:)
+      Loaders::AttachmentsLoader.load_many(object, ast_node)
     end
   end
 end

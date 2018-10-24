@@ -8,6 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 ruby '2.5.1'
+gem 'rails', '~> 5.2.1'
 
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'ancestry'
@@ -22,10 +23,9 @@ gem 'knock'
 gem 'oj'
 gem 'oj_mimic_json'
 gem 'pg'
-gem 'puma', '~> 3.7'
+gem 'puma'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
-gem 'rails', '~> 5.2.1'
 gem 'responders'
 gem 'graphql-libgraphqlparser'
 # Use Redis adapter to run Action Cable in production
