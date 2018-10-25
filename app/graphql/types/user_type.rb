@@ -19,10 +19,14 @@ module Types
     field :padawans, UsersConnectionType, null: true
     field :comments, CommentsConnectionType, null: true
     field :courses_user, CoursesUserConnectionType, null: true
-    field :courses, CoursesConnectionType, null: true
+    field :courses, CoursesConnectionType, null: true, extras: %i[ast_node]
 
     def courses_user
       object.courses_users.where(course: object.courses)
+    end
+
+    def courses(ast_node:)
+      Loaders::AttachmentsLoader.load_many(object, ast_node)
     end
 
     def avatar

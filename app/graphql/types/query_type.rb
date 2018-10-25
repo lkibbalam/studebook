@@ -36,9 +36,9 @@ module Types
       Course.find(id)
     end
 
-    field :courses, CoursesConnectionType, null: true, connection: true
-    def courses
-      Course.all
+    field :courses, CoursesConnectionType, null: true, connection: true, extras: %i[ast_node]
+    def courses(ast_node:)
+      Loaders::AttachmentsLoader.load_many(nil, ast_node)
     end
 
     field :lesson, LessonType, null: true do

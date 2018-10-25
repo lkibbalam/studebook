@@ -25,7 +25,8 @@ module Types
     end
 
     def lessons(ast_node:)
-      Loaders::AttachmentsLoader.load_many(object, ast_node)
+      includes = ['tasks']
+      Loaders::AttachmentsLoader.load_many(object, ast_node, includes)
     end
   end
 end
