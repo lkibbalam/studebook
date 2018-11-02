@@ -51,16 +51,16 @@ GEM
       activerecord (>= 3.2.0)
     arel (9.0.0)
     aws-eventstream (1.0.1)
-    aws-partitions (1.106.0)
-    aws-sdk-core (3.34.0)
+    aws-partitions (1.107.0)
+    aws-sdk-core (3.36.0)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-kms (1.10.0)
+    aws-sdk-kms (1.11.0)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sigv4 (~> 1.0)
-    aws-sdk-s3 (1.22.0)
+    aws-sdk-s3 (1.23.1)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
@@ -107,6 +107,8 @@ GEM
       graphql (~> 1.6)
       html-pipeline (~> 2.8)
       sass (~> 3.4)
+    graphql-guard (1.2.1)
+      graphql (>= 1.6.0, < 2)
     graphql-libgraphqlparser (1.3.0)
       graphql (~> 1.2)
     graphql-rails_logger (1.1.0)
@@ -136,7 +138,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -153,7 +155,7 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
-    oj (3.6.12)
+    oj (3.7.0)
     oj_mimic_json (1.0.1)
     pg (1.1.3)
     promise.rb (0.7.4)
@@ -270,6 +272,7 @@ DEPENDENCIES
   graphql
   graphql-batch
   graphql-docs
+  graphql-guard
   graphql-libgraphqlparser
   graphql-rails_logger
   json-spec
@@ -294,7 +297,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.5.3p105
 
 BUNDLED WITH
-   1.16.6
+   1.17.1

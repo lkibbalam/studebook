@@ -10,8 +10,9 @@ module Types
     field :task_user, TaskUserType, null: true
 
     def task_user
-      current_user = context[:current_user]
+      current_user = context[:me]
       return false unless current_user
+
       current_user.tasks_users.find_by_task_id(object.id)
     end
   end

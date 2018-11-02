@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.1'
+ruby '2.5.3'
 gem 'rails', '~> 5.2.1'
 
 gem 'active_model_serializers', '~> 0.10.7'
@@ -17,6 +17,8 @@ gem 'bootsnap'
 gem 'graphql'
 gem 'graphql-batch'
 gem 'graphql-docs'
+gem 'graphql-guard'
+gem 'graphql-libgraphqlparser'
 gem 'graphql-rails_logger'
 gem 'jwt'
 gem 'knock'
@@ -27,7 +29,6 @@ gem 'puma'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
 gem 'responders'
-gem 'graphql-libgraphqlparser'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

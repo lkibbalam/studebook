@@ -9,11 +9,11 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def index?
-    user.present? && !user.inactive?
+    user.present? && user.active?
   end
 
   def show?
-    user.present? && !user.inactive?
+    user.present? && user.active?
   end
 
   def create?

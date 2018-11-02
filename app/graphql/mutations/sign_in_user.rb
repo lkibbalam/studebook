@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::SignInUser < Mutations::Base
   argument :email, String, required: true
   argument :password, String, required: true
@@ -29,6 +31,7 @@ class Mutations::SignInUser < Mutations::Base
     user = User.find_by(email: email)
     return unless user
     return unless user.authenticate(password)
+
     user
   end
 end

@@ -2,6 +2,11 @@
 
 module Types
   class QueryType < Types::BaseObject
+    field :me, UserType, null: true
+    def me
+      context[:me]
+    end
+
     field :user, UserType, null: true do
       description 'Find a user by ID'
       argument :id, ID, required: true
@@ -25,7 +30,7 @@ module Types
 
     field :teams, TeamsConnectionType, null: true, connection: true
     def teams
-      Team.all
+      Team.with_attached_poster
     end
 
     field :course, CourseType, null: true do
@@ -38,15 +43,8 @@ module Types
 
     field :courses, CoursesConnectionType, null: true, connection: true, extras: %i[ast_node]
     def courses(ast_node:)
-      Loaders::AttachmentsLoader.load_many(nil, ast_node)
-    end
-
-    field :lesson, LessonType, null: true do
-      description 'Find course by ID'
-      argument :id, ID, required: true
-    end
-    def lesson(id:)
-      Lesson.find(id)
+      includes = ['lessons'] if ast_node.selections.last.name == 'lessons'
+      Loaders::AttachmentsLoader.load_many(nil, ast_node, includes)
     end
   end
 end

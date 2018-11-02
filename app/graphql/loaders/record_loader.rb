@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # frozen_sting_literal: true
 
 module Loaders
@@ -7,7 +9,6 @@ module Loaders
     end
 
     def perform(ids)
-      binding.pry
       @model.where(id: ids).each { |record| fulfill(record.id, record) }
       ids.each { |id| fulfill(id, nil) unless fulfilled?(id) }
     end

@@ -15,8 +15,9 @@ module Types
     field :course_user, CourseUserType, null: true
 
     def course_user
-      current_user = context[:current_user]
+      current_user = context[:me]
       return false unless current_user
+
       current_user.courses_users.find_by_course_id(object.id)
     end
 
@@ -25,7 +26,7 @@ module Types
     end
 
     def lessons(ast_node:)
-      includes = ['tasks']
+      includes = ['tasks'] if ast_node.selections.last.name == 'tasks'
       Loaders::AttachmentsLoader.load_many(object, ast_node, includes)
     end
   end
