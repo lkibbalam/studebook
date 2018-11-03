@@ -17,7 +17,7 @@ module Types
     field :notifications, NotificationsConnectionType, null: true
     field :mentor, UserType, null: true
     field :team, TeamType, null: false
-    field :padawans, UsersConnectionType, null: true
+    field :padawans, UsersConnectionType, null: true, extras: %i[ast_node]
     field :comments, CommentsConnectionType, null: true
     field :courses_user, CoursesUserConnectionType, null: true
     field :courses, CoursesConnectionType, null: true, extras: %i[ast_node]
@@ -27,6 +27,10 @@ module Types
     end
 
     def courses(ast_node:)
+      Loaders::AttachmentsLoader.load_many(object, ast_node)
+    end
+
+    def padawans(ast_node:)
       Loaders::AttachmentsLoader.load_many(object, ast_node)
     end
 

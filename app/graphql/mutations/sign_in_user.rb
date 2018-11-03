@@ -1,37 +1,36 @@
 # frozen_string_literal: true
 
-class Mutations::SignInUser < Mutations::Base
-  argument :email, String, required: true
-  argument :password, String, required: true
+module Mutations
+  class SignInUser < Mutations::Base
+    argument :email, String, required: true
+    argument :password, String, required: true
 
-  field :token, String, null: true
+    field :token, String, null: true
+    field :errors, [Types::UserErrorType], null: true
 
-  def resolve(email:, password:)
-    user = authenticate_user(email, password)
+    def resolve(email:, password:)
+      user = authenticate_user(email, password)
+      return { errors: [UserError.new('email or password is invalid')] } unless user
 
-    unless user
-      return {
-        errors: [UserError.new('email or password is invalid')]
+      token = Knock::AuthToken.new(payload: { sub: user.id }).token
+
+      {
+        token: token,
+        viewer: user,
+        errors: []
       }
     end
 
-    token = Knock::AuthToken.new(payload: { sub: user.id }).token
+    private
 
-    {
-      token: token,
-      errors: []
-    }
-  end
+    def authenticate_user(email, password)
+      return if email.blank? || password.blank?
 
-  private
+      user = User.find_by(email: email)
+      return unless user
+      return unless user.authenticate(password)
 
-  def authenticate_user(email, password)
-    return if email.blank? || password.blank?
-
-    user = User.find_by(email: email)
-    return unless user
-    return unless user.authenticate(password)
-
-    user
+      user
+    end
   end
 end
