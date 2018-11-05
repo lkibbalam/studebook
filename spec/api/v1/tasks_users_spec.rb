@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 describe 'tasks_users_controller' do
-  let(:mentor) { create(:user) }
-  let(:padawan) { create(:user, mentor: mentor) }
+  let(:mentor) { create(:mentor, :staff) }
+  let(:padawan) { create(:student, mentor: mentor) }
   let(:task_user) { create(:tasks_user, user: padawan) }
 
   describe 'GET #padawan_tasks' do
@@ -44,7 +44,7 @@ describe 'tasks_users_controller' do
     end
   end
 
-  describe 'PATCH #task_to_verify' do
+  describe 'PATCH #update' do
     context 'non authenticate request' do
       before do
         patch "/api/v1/tasks/#{task_user.id}/task_to_verify",
@@ -55,28 +55,8 @@ describe 'tasks_users_controller' do
     end
 
     context 'authenticate request' do
-      before do
-        patch "/api/v1/tasks/#{task_user.id}/task_to_verify",
-              params: { task: { github_url: 'www.leningrad.ru', status: :verifying } },
-              headers: authenticated_header(padawan)
-      end
+      let(:padawan_task) { create(:tasks_user, user: padawan, status: :verifying) }
 
-      it_behaves_like 'authenticate request'
-      it { expect(task_user.reload.status).to eql('verifying') }
-      it { expect(task_user.reload.github_url).to eql('www.leningrad.ru') }
-    end
-  end
-
-  describe 'PATCH #approve_or_change_task' do
-    let(:padawan_task) { create(:tasks_user, user: padawan, status: :verifying) }
-
-    context 'non authenticate request' do
-      before { patch "/api/v1/padawans/#{padawan_task.id}/task" }
-
-      it_behaves_like 'non authenticate request'
-    end
-
-    context 'authenticate request' do
       describe 'when mentor accept task' do
         before do
           patch "/api/v1/padawans/#{padawan_task.id}/task", params: { task: { status: :accept } },
@@ -95,6 +75,17 @@ describe 'tasks_users_controller' do
 
         it_behaves_like 'authenticate request'
         it { expect(padawan_task.reload.status).to eql('change') }
+      end
+      describe 'when student send task to verifying' do
+        before do
+          patch "/api/v1/tasks/#{task_user.id}/task_to_verify",
+                params: { task: { github_url: 'www.leningrad.ru', status: :verifying } },
+                headers: authenticated_header(padawan)
+        end
+
+        it_behaves_like 'authenticate request'
+        it { expect(task_user.reload.status).to eql('verifying') }
+        it { expect(task_user.reload.github_url).to eql('www.leningrad.ru') }
       end
     end
   end

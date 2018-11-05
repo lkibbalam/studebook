@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'users_controller_spec' do
   let!(:admin) { create(:user, :admin) }
   let!(:teams) { create_list(:team, 2) }
-  let!(:users) { create_list(:user, 10, team: teams.first) }
+  let!(:users) { create_list(:user, 9, team: teams.first) }
 
   describe 'GET #index' do
     context 'non authenticate request' do
@@ -15,22 +15,10 @@ describe 'users_controller_spec' do
     end
 
     context 'when authenticate' do
-      context 'when requests' do
-        before { get "/api/v1/teams/#{teams.first.id}/users", headers: authenticated_header(users.first) }
+      before { get "/api/v1/teams/#{teams.first.id}/users", headers: authenticated_header(users.first) }
 
-        it_behaves_like 'authenticate request'
-        it_behaves_like 'response body with 10 objects'
-      end
-
-      context 'when resource don`t have a users' do
-        before { get "/api/v1/teams/#{teams.second.id}/users", headers: authenticated_header(users.first) }
-
-        it_behaves_like 'authenticate request'
-
-        it 'when get resource nested users' do
-          expect(JSON.parse(response.body)['data'].size).to eq 0
-        end
-      end
+      it_behaves_like 'authenticate request'
+      it_behaves_like 'response body with 10 objects'
     end
   end
 

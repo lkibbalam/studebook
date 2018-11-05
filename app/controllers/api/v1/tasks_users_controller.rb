@@ -22,7 +22,7 @@ module Api
       def update
         @task_user.assign_attributes(task_user_params)
         authorize @task_user
-        unless params.dig(:task, :comment).empty?
+        unless params.dig(:task, :comment)&.empty?
           @task_user.comments.create(body: params.dig(:task, :comment), user: current_user)
         end
         render json: @task_user if @task_user.save
