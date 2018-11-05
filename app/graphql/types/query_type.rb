@@ -15,9 +15,9 @@ module Types
       User.find(id)
     end
 
-    field :users, UsersConnectionType, null: false, connection: true
-    def users
-      User.all
+    field :users, UsersConnectionType, null: false, connection: true, extras: %i[ast_node]
+    def users(ast_node:)
+      Loaders::AttachmentsLoader.load_many(nil, ast_node)
     end
 
     field :team, TeamType, null: true do
@@ -28,9 +28,9 @@ module Types
       Team.find(id)
     end
 
-    field :teams, TeamsConnectionType, null: true, connection: true
-    def teams
-      Team.with_attached_poster
+    field :teams, TeamsConnectionType, null: true, connection: true, extras: %i[ast_node]
+    def teams(ast_node:)
+      Loaders::AttachmentsLoader.load_many(nil, ast_node)
     end
 
     field :course, CourseType, null: true do
