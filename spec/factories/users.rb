@@ -6,25 +6,29 @@ FactoryBot.define do
   end
 
   factory :user, aliases: %i[student mentor author] do
-    first_name 'MyFirst_name'
-    last_name 'MyLast_name'
+    first_name { 'MyFirst_name' }
+    last_name { 'MyLast_name' }
     email
-    password '12345678'
-    password_confirmation '12345678'
-    phone 9999
-    role 'student'
+    password { '12345678' }
+    password_confirmation { '12345678' }
+    phone { 9999 }
+    role { 'student' }
     team
 
     trait :admin do
-      role :admin
+      role { :admin }
     end
 
-    trait :student do
-      role :student
+    trait :leader do
+      role { :leader }
     end
 
     trait :staff do
-      role :staff
+      role { :staff }
+    end
+
+    trait :student do
+      role { :student }
     end
   end
 end

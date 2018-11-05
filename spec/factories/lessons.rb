@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :lesson do
-    description 'MyText'
-    material 'MyText'
+    description { 'MyText' }
+    material { 'MyText' }
     course
 
     factory :lesson_with_3_tasks do
