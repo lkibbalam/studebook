@@ -7,7 +7,7 @@ class CreateCoursesUsers < ActiveRecord::Migration[5.1]
       t.bigint :course_id
       t.integer :status, default: 0
       t.integer :mark, default: 0
-      t.integer :progress, default: 0 # change to float when next migrate, adds between 0 and 100
+      t.integer :progress, default: 0
 
       t.timestamps
     end
