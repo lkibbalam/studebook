@@ -8,6 +8,7 @@ class CreateCourses < ActiveRecord::Migration[5.1]
       t.text :description
       t.string :title
       t.integer :status, default: 0
+      t.text :slug, unique: true, index: true
 
       t.timestamps
     end
