@@ -9,6 +9,11 @@ class Course < ApplicationRecord
   has_many :lessons
   has_many :comments, as: :commentable, dependent: :destroy
 
+  enum status: { unpublished: 0, published: 1 }
+
+  scope :published, -> { where(status: :published) }
+  scope :unpublished, -> { where(status: :unpublished) }
+
   def lesson_value
     (100 / lessons.count.to_f).round(2) # 100 mean 100%, full bar of progress
   end
