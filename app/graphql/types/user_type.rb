@@ -2,7 +2,7 @@
 
 module Types
   class UserType < BaseObject
-    guard ->(user, _args, ctx) { UserPolicy.new(ctx[:me], user).show? }
+    guard ->(user, _args, ctx) { UserPolicy.new(ctx[:me], user.object).show? }
     field :id, ID, null: false
     field :email, String, null: false
     field :avatar, String, null: true
