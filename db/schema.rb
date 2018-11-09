@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20_180_529_090_403) do
     t.bigint 'author_id'
     t.text 'description'
     t.string 'title'
+    t.integer 'status', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['author_id'], name: 'index_courses_on_author_id'
@@ -77,6 +78,7 @@ ActiveRecord::Schema.define(version: 20_180_529_090_403) do
     t.text 'description'
     t.text 'material'
     t.string 'title'
+    t.integer 'order_number'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['course_id'], name: 'index_lessons_on_course_id'
@@ -106,6 +108,7 @@ ActiveRecord::Schema.define(version: 20_180_529_090_403) do
     t.bigint 'lesson_id'
     t.string 'title'
     t.text 'description'
+    t.integer 'order_number'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['lesson_id'], name: 'index_tasks_on_lesson_id'
@@ -138,6 +141,7 @@ ActiveRecord::Schema.define(version: 20_180_529_090_403) do
     t.string 'phone'
     t.string 'github_url'
     t.integer 'status', default: 0
+    t.string 'nickname'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'email'

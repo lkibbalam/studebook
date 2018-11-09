@@ -7,6 +7,7 @@ class CreateCourses < ActiveRecord::Migration[5.1]
       t.bigint :author_id, index: true
       t.text :description
       t.string :title
+      t.integer :status, default: 0
 
       t.timestamps
     end

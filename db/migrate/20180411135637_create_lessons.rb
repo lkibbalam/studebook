@@ -7,6 +7,7 @@ class CreateLessons < ActiveRecord::Migration[5.1]
       t.text :description
       t.text :material
       t.string :title
+      t.integer :order_number
 
       t.timestamps
     end
