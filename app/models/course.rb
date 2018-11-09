@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Course < ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   has_one_attached :poster
   belongs_to :team, optional: true
   belongs_to :author, class_name: 'User', foreign_key: :author_id

@@ -8,7 +8,6 @@ class CreateLessons < ActiveRecord::Migration[5.1]
       t.text :material
       t.string :title
       t.integer :order_number
-      t.text :slug, unique: true, index: true
 
       t.timestamps
     end

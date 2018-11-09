@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_29_090403) do
+ActiveRecord::Schema.define(version: 2018_11_09_170454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,17 +74,27 @@ ActiveRecord::Schema.define(version: 2018_05_29_090403) do
     t.index ["course_id", "student_id"], name: "index_courses_users_on_course_id_and_student_id"
   end
 
+  create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
   create_table "lessons", force: :cascade do |t|
     t.bigint "course_id"
     t.text "description"
     t.text "material"
     t.string "title"
     t.integer "order_number"
-    t.text "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_lessons_on_course_id"
-    t.index ["slug"], name: "index_lessons_on_slug"
   end
 
   create_table "lessons_users", force: :cascade do |t|
@@ -112,11 +122,9 @@ ActiveRecord::Schema.define(version: 2018_05_29_090403) do
     t.string "title"
     t.text "description"
     t.integer "order_number"
-    t.text "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lesson_id"], name: "index_tasks_on_lesson_id"
-    t.index ["slug"], name: "index_tasks_on_slug"
   end
 
   create_table "tasks_users", force: :cascade do |t|

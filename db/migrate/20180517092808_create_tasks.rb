@@ -7,7 +7,6 @@ class CreateTasks < ActiveRecord::Migration[5.1]
       t.string :title
       t.text :description
       t.integer :order_number
-      t.text :slug, unique: true, index: true
 
       t.timestamps
     end
