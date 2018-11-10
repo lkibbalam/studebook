@@ -13,7 +13,6 @@ class ApplicationPolicy
   end
 
   def show?
-    binding.pry
     scope.where(id: record.id).exists?
   end
 

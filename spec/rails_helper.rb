@@ -2,10 +2,8 @@
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
-require 'support/shared/commentable.rb'
-require 'support/shared/requests.rb'
-require 'support/authenticate_header.rb'
 require 'pundit/rspec'
+require 'pundit/matchers'
 require 'database_cleaner'
 
 ENV['RAILS_ENV'] ||= 'test'
@@ -18,6 +16,8 @@ Shoulda::Matchers.configure do |config|
 end
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }
+
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -39,6 +39,10 @@ require 'rspec/rails'
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
+
+Pundit::Matchers.configure do |config|
+  config.user_alias = :account
+end
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods

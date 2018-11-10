@@ -42,4 +42,12 @@ describe TeamPolicy do
       expect(subject).to_not permit(moder)
     end
   end
+
+  context 'for a visitor' do
+    subject { TeamPolicy.new(user, team) }
+    let(:user) { nil }
+    let(:team) { create(:team) }
+
+    it { is_expected.to forbid_actions(%i[show index create update delete]) }
+  end
 end

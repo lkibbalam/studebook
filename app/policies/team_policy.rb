@@ -9,23 +9,23 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def index?
-    user.present? && user.active?
+    user&.active?
   end
 
   def show?
-    user.present? && user.active?
+    user&.active?
   end
 
   def create?
-    user.admin?
+    user&.admin?
   end
 
   def update?
-    user.admin?
+    user&.admin?
   end
 
   def destroy?
-    user.admin?
+    user&.admin?
   end
 
   class Scope < Scope
