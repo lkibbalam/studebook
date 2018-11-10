@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :task do
     lesson
-    title { 'My title' }
-    description { 'My desc' }
+    title { Faker::Lorem.word }
+    description { Faker::Lorem.sentence }
   end
 end
