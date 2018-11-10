@@ -14,7 +14,7 @@ describe TeamPolicy do
     it { is_expected.to forbid_actions(%i[create update destroy]) }
   end
 
-  context 'inactive student accessing a team' do
+  context 'inactive staff accessing a team' do
     let(:staff) { create(:user, :staff, status: :inactive) }
 
     it { is_expected.to forbid_actions(%i[index show create update destroy]) }

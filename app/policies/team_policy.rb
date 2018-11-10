@@ -17,15 +17,22 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def create?
-    user&.admin?
+    return unless user&.active?
+
+    user&.admin? || (user&.leader? && user.team == record)
   end
 
   def update?
-    user&.admin? || (user&.moder? && record.users.exists?(user.id))
+    return unless user&.active?
+
+    user.admin? || (user.moder? && record.users.exists?(user.id)) ||
+      (user.leader? && user.team == record)
   end
 
   def destroy?
-    user&.admin?
+    return unless user&.active?
+
+    user.admin? || (user.leader? && user.team == record)
   end
 
   class Scope < Scope
