@@ -2,10 +2,7 @@
 
 FactoryBot.define do
   factory :comment do
-    commentable_type { 'MyString' }
-    commentable_id { '' }
-    body { 'MyText' }
+    body { Faker::Lorem.sentence }
     user
-    parent_id { nil }
   end
 end
