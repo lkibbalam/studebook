@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LessonsUserPolicy do
+describe LessonsUserPolicy do
   let(:mentor) { create(:user, :staff) }
   let(:admin) { create(:user, :admin) }
   let(:lead) { create(:user, :leader) }

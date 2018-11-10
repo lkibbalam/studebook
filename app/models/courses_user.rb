@@ -20,7 +20,7 @@ class CoursesUser < ApplicationRecord
   end
 
   def unlock_first_course_lesson
-    student.lessons_users.find_by(lesson: course.lessons.order('id').first).update(status: :unlocked)
+    student.lessons_users.find_by(lesson: course.lessons.order('id').first)&.update(status: :unlocked)
   end
 
   def course_status_from_current_to_archived?

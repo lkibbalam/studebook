@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe CoursePolicy do
-  let(:user) { User.new }
-  let(:admin) { User.new(role: :admin) }
+describe CoursePolicy do
+  let(:user) { create(:user) }
+  let(:admin) { create(:user, :admin) }
 
   subject { described_class }
   permissions :show?, :index?, :all? do
@@ -15,19 +15,19 @@ RSpec.describe CoursePolicy do
 
   permissions :create? do
     it 'admin can create courses' do
-      expect(subject).to permit(admin, Course.new)
+      expect(subject).to permit(admin, create(:course))
     end
   end
 
   permissions :update? do
     it 'admin can create courses' do
-      expect(subject).to permit(admin, Course.new)
+      expect(subject).to permit(admin, create(:course))
     end
   end
 
   permissions :destroy? do
     it 'admin can create courses' do
-      expect(subject).to permit(admin, Course.new)
+      expect(subject).to permit(admin, create(:course))
     end
   end
 end

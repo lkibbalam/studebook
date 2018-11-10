@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe UserPolicy do
-  let(:admin) { User.new(role: :admin) }
-  let(:lead) { User.new(role: :leader) }
-  let(:moder) { User.new(role: :moder) }
-  let(:staff) { User.new(role: :staff) }
-  let(:student) { User.new(role: :student) }
-  let!(:user) { User.new }
+describe UserPolicy do
+  let(:admin) { create(:user, :admin) }
+  let(:lead) { create(:user, :leader) }
+  let(:moder) { create(:user, :moder) }
+  let(:staff) { create(:user, :staff) }
+  let(:student) { create(:user, :student) }
+  let!(:user) { create(:user) }
 
   subject { described_class }
 

@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  sequence :email do |n|
-    "user#{n}@test.com"
-  end
+  sequence(:email) { |n| "user#{n}@test.com" }
 
   factory :user, aliases: %i[student mentor author] do
     first_name { 'MyFirst_name' }
@@ -15,20 +13,11 @@ FactoryBot.define do
     role { 'student' }
     team
 
-    trait :admin do
-      role { :admin }
-    end
-
-    trait :leader do
-      role { :leader }
-    end
-
-    trait :staff do
-      role { :staff }
-    end
-
-    trait :student do
-      role { :student }
-    end
+    trait(:admin) { role { :admin } }
+    trait(:leader) { role { :leader } }
+    trait(:moder) { role { :moder } }
+    trait(:staff) { role { :staff } }
+    trait(:student) { role { :student } }
+    trait(:inactive) { status { :inactive } }
   end
 end
