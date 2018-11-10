@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :course do
-    description { 'MyText' }
-    title { 'MyString' }
+    title { Faker::Lorem.sentence }
+    description { Faker::Lorem.paragraph }
     author
     team
 
