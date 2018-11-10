@@ -1,4 +1,16 @@
 Metrics/LineLength:
   Max: 120
+  Exclude:
+    - 'db/schema.rb'
 Documentation:
   Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+    - 'db/schema.rb'
+    - 'config/routes.rb'
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*.rb'  
