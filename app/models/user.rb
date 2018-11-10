@@ -18,5 +18,4 @@ class User < ApplicationRecord
 
   enum role: { admin: 5, leader: 4, moder: 3, staff: 2, student: 1 }
   enum status: { active: 0, inactive: 1 }
-  default_scope { where(status: :active) }
 end

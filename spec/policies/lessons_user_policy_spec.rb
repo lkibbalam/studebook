@@ -3,12 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe LessonsUserPolicy do
-  let(:user) { User.new }
-  let!(:mentor) { User.new(role: :staff) }
-  let(:admin) { User.new(role: :admin) }
-  let(:lead) { User.new(role: :leader) }
-  let!(:student) { User.new(role: :student, mentor: mentor) }
-  let!(:lessons_user) { LessonsUser.new(student: student) }
+  let(:mentor) { create(:user, :staff) }
+  let(:admin) { create(:user, :admin) }
+  let(:lead) { create(:user, :leader) }
+  let!(:student) { create(:user, :student, mentor: mentor) }
+  let!(:lessons_user) { create(:lessons_user, student: student) }
 
   subject { described_class }
 

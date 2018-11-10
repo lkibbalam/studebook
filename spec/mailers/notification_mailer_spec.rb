@@ -2,6 +2,20 @@
 
 require 'rails_helper'
 
-RSpec.describe NotificationMailer, type: :mailer do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe NotificationMailer, type: :mailer do
+  describe 'notify' do
+    let(:user) { create(:user) }
+    let(:tasks_user) { create(:tasks_user) }
+    let(:mail) { NotificationMailer.notification_email(user, tasks_user) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq("Your padawan #{user.first_name} #{user.last_name} waiting for task approve")
+      expect(mail.to).to eq([user.email])
+      expect(mail.from).to eq(['notifications@example.com'])
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match('Welcome')
+    end
+  end
 end

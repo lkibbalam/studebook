@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :course do
-    description 'MyText'
-    title 'MyString'
+    description { 'MyText' }
+    title { 'MyString' }
     author
     team
   end

@@ -10,7 +10,10 @@ class LessonsUser < ApplicationRecord
   enum status: { unlocked: 2, done: 1, locked: 0 }
 
   after_create :create_tasks_users
-  after_update :after_lesson_approve
+
+  ActiveRecord::Base.transaction do
+    after_update :unlock_next_lesson, :change_course_progress, if: :lesson_approved?
+  end
 
   private
 
@@ -18,11 +21,8 @@ class LessonsUser < ApplicationRecord
     lesson.tasks.each { |task| TasksUser.create(user: student, task: task) }
   end
 
-  def after_lesson_approve
-    return unless saved_change_to_attribute?('status', from: 'unlocked', to: 'done')
-
-    unlock_next_lesson
-    change_course_progress
+  def lesson_approved?
+    saved_change_to_status?(from: 'unlocked', to: 'done')
   end
 
   def unlock_next_lesson
