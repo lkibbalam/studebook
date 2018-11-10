@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :team do
-    title { 'MyTitle' }
-    description { 'MyDescription' }
+    title { Faker::Lorem.sentence }
+    description { Faker::Lorem.paragraph }
   end
 end
