@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  sequence(:email) { |n| "user#{n}@test.com" }
-
   factory :user, aliases: %i[student mentor author] do
-    first_name { 'MyFirst_name' }
-    last_name { 'MyLast_name' }
-    email
-    password { '12345678' }
-    password_confirmation { '12345678' }
-    phone { 9999 }
-    role { 'student' }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
+    email { Faker::Internet.email }
+    nickname { Faker::Internet.username }
+    password { Faker::Internet.password(8) }
+    phone { Faker::PhoneNumber.phone_number }
     team
 
     trait(:admin) { role { :admin } }
