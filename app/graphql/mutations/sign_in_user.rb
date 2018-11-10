@@ -9,7 +9,7 @@ module Mutations
 
     def resolve(email:, password:)
       user = authenticate_user(email, password)
-      return { errors: [UserError.new('email or password is invalid')] } unless user
+      return { errors: [UserElrror.new('email or password is invalid')] } unless user
 
       token = Knock::AuthToken.new(payload: { sub: user.id }).token
 
