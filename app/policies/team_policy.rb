@@ -21,7 +21,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def update?
-    user&.admin?
+    user&.admin? || (user&.moder? && record.users.exists?(user.id))
   end
 
   def destroy?

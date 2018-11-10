@@ -52,10 +52,10 @@ group :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'json_spec', '~> 1.1', '>= 1.1.5'
+  gem 'pundit-matchers'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
-  gem 'pundit-matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

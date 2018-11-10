@@ -14,7 +14,7 @@ describe TeamPolicy do
 
   permissions :show?, :index? do
     it 'if user present' do
-      expect(subject).to permit(User.new)
+      expect(subject).to permit(user)
     end
 
     it 'denied if user inactive' do
