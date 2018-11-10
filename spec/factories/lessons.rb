@@ -2,8 +2,9 @@
 
 FactoryBot.define do
   factory :lesson do
-    description { 'MyText' }
-    material { 'MyText' }
+    title { Faker::Lorem.sentence }
+    description { Faker::Lorem.paragraph }
+    material { Faker::Lorem.paragraph }
     course
 
     factory :lesson_with_3_tasks do
