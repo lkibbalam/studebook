@@ -9,31 +9,31 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def index?
-    user.present?
+    user
   end
 
   def show?
-    user.present?
+    user
   end
 
   def all?
-    user.present?
+    user
   end
 
   def create?
-    user.admin?
+    user
   end
 
   def update?
-    user.admin?
+    user
   end
 
   def destroy?
-    user.admin?
+    user
   end
 
   def start_course?
-    user.present?
+    user
   end
 
   class Scope < Scope

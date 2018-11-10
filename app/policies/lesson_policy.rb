@@ -9,11 +9,11 @@ class LessonPolicy < ApplicationPolicy
   end
 
   def index?
-    user.present?
+    user
   end
 
   def show?
-    user.present?
+    user
   end
 
   def create?

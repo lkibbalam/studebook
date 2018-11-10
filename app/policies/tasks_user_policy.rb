@@ -24,7 +24,7 @@ class TasksUserPolicy < ApplicationPolicy
   def update?
     return true if user.admin? || user == record.user && record.status == 'verifying'
 
-    (user == record.user.mentor && %w[accept change].include?(record.status))
+    user == record.user.mentor && %w[accept change].include?(record.status)
   end
 
   class Scope < Scope
