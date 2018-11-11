@@ -8,10 +8,6 @@ class TeamPolicy < ApplicationPolicy
     @record = record
   end
 
-  def index?
-    user&.active?
-  end
-
   def show?
     user&.active?
   end

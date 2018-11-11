@@ -4,6 +4,7 @@ module Api
   module V1
     class CoursesUsersController < ApplicationController
       before_action :load_padawan, only: %i[padawan_courses]
+      before_action :load_course, only: :start_course
 
       def index
         @courses_user = current_user.courses_users
@@ -29,7 +30,17 @@ module Api
         respond_with(@courses_user)
       end
 
+      def start_course
+        @course_user = @course.courses_users.create(student: current_user)
+        # TODO: authorize @course_user
+        render json: @course_user
+      end
+
       private
+
+      def load_course
+        @course = Course.find(params[:id])
+      end
 
       def load_padawan
         @padawan = User.find(params[:id])

@@ -10,13 +10,13 @@ describe TeamPolicy do
   context 'staff accessing a team' do
     let(:staff) { create(:user, :staff) }
 
-    it { is_expected.to permit_actions(%i[index show]) }
+    it { is_expected.to permit_actions(%i[show]) }
     it { is_expected.to forbid_actions(%i[create update destroy]) }
   end
 
   context 'inactive staff accessing a team' do
     let(:staff) { create(:user, :staff, status: :inactive) }
 
-    it { is_expected.to forbid_actions(%i[index show create update destroy]) }
+    it { is_expected.to forbid_actions(%i[show create update destroy]) }
   end
 end

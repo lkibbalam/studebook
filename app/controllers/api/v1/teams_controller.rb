@@ -7,7 +7,6 @@ module Api
 
       def index
         @teams = Team.all
-        authorize @teams
         respond_with(@teams)
       end
 

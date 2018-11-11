@@ -10,6 +10,6 @@ describe TeamPolicy do
   context 'visitor accessing a team' do
     let(:team) { create(:team) }
 
-    it { is_expected.to forbid_actions(%i[index show create update destroy]) }
+    it { is_expected.to forbid_actions(%i[show create update destroy]) }
   end
 end

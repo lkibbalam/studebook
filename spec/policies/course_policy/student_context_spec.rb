@@ -17,7 +17,7 @@ describe CoursePolicy do
       expect(resolved_scope).to include(course)
     end
 
-    it { is_expected.to permit_actions(%i[index all show start_course]) }
+    it { is_expected.to permit_actions(%i[all show start_course]) }
     it { is_expected.to forbid_actions(%i[create update destroy]) }
   end
 
@@ -29,13 +29,13 @@ describe CoursePolicy do
       expect(resolved_scope).not_to include(course)
     end
 
-    it { is_expected.to forbid_actions(%i[index show all create update destroy start_course]) }
+    it { is_expected.to forbid_actions(%i[show all create update destroy start_course]) }
   end
 
   context 'inactive student accessing a course' do
     let(:student) { create(:user, :student, status: :inactive) }
     let(:course) { create(:course, :published) }
 
-    it { is_expected.to forbid_actions(%i[index all show create update destroy start_course]) }
+    it { is_expected.to forbid_actions(%i[all show create update destroy start_course]) }
   end
 end

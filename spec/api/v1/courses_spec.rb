@@ -6,11 +6,11 @@ describe 'courses_controller_spec' do
   let!(:user) { create(:user) }
   let!(:admin) { create(:user, :admin) }
   let!(:team) { create(:team) }
-  let(:course) { create(:course, author: user, team: team) }
+  let(:course) { create(:course, :published, author: user, team: team) }
   let!(:lessons) { create_list(:lesson, 3, tasks: create_list(:task, 3), course: course) }
 
   describe 'GET #index' do
-    let!(:courses) { create_list(:course, 10, team: create(:team)) }
+    let!(:courses) { create_list(:course, 10, :published, team: create(:team)) }
 
     context 'when non authenticate' do
       before { get "/api/v1/teams/#{courses.first.team_id}/courses" }
@@ -104,22 +104,6 @@ describe 'courses_controller_spec' do
       let(:delete_course) { delete "/api/v1/courses/#{course.id}", headers: authenticated_header(admin) }
 
       it { expect { delete_course }.to change(Course, :count).by(-1) }
-    end
-  end
-
-  describe 'POST #start_course' do
-    context 'when non authenticate request' do
-      before { post "/api/v1/courses/#{course.id}/start_course" }
-
-      it_behaves_like 'non authenticate request'
-    end
-
-    context 'when authenticate request' do
-      let(:start_course) do
-        post "/api/v1/courses/#{course.id}/start_course", headers: authenticated_header(user)
-      end
-
-      it { expect { start_course }.to change(CoursesUser, :count).by(1) }
     end
   end
 

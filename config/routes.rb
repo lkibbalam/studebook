@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
       post 'courses/create' => 'courses#create'
       get 'users/mentors' => 'users#mentors'
-      post 'courses/:id/start_course' => 'courses#start_course'
+      post 'courses/:id/start_course' => 'courses_users#start_course'
       get 'courses/:id/current_user' => 'courses_users#show'
       get 'courses' => 'courses#all'
       get 'users' => 'users#all'

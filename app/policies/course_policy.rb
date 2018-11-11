@@ -44,15 +44,11 @@ class CoursePolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      if user.admin?
-        scope.all
-      elsif user.leader? && user.team == course.team
-        scope.where(team: user.team)
-      elsif user.moder? && user.team == ccourse.team
-        scope.where(team: user.team)
-      else
-        scope.where(status: :published)
-      end
+      return [] unless user&.active?
+      return scope if user.admin?
+      return scope.where(team: user.team).or(scope.where(status: :published)) if user.leader? || user.moder?
+
+      scope.where(status: :published)
     end
   end
 end

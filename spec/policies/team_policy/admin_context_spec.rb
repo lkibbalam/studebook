@@ -10,12 +10,12 @@ describe TeamPolicy do
   context 'admin accessing not own team with own one' do
     let(:admin) { create(:user, :admin) }
 
-    it { is_expected.to permit_actions(%i[index show update create destroy]) }
+    it { is_expected.to permit_actions(%i[show update create destroy]) }
   end
 
   context 'inactive admin accessing a team' do
     let(:admin) { create(:user, :admin, status: :inactive) }
 
-    it { is_expected.to forbid_actions(%i[index show create update destroy]) }
+    it { is_expected.to forbid_actions(%i[show create update destroy]) }
   end
 end

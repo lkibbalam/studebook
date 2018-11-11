@@ -8,13 +8,12 @@ module Api
       before_action :load_team, only: %i[index]
 
       def index
-        @courses = @team.courses.all
-        authorize @courses
+        @courses = policy_scope(Course).where(team: @team)
         respond_with(@courses)
       end
 
       def all
-        @courses = Course.all
+        @courses = policy_scope(Course)
         respond_with(@courses)
       end
 
@@ -38,11 +37,6 @@ module Api
       def destroy
         authorize @course
         respond_with(@course.delete)
-      end
-
-      def start_course
-        @course_user = @course.courses_users.create(student: current_user)
-        render json: @course_user
       end
 
       private

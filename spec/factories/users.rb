@@ -6,8 +6,9 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email }
     nickname { Faker::Internet.username }
-    password { Faker::Internet.password(8) }
+    github_url { Faker::Internet.url('github.com') }
     phone { Faker::PhoneNumber.phone_number }
+    password { Faker::Internet.password(8) }
     team
 
     trait(:admin) { role { :admin } }
