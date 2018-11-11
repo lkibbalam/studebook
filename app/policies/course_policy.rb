@@ -7,7 +7,7 @@ class CoursePolicy < ApplicationPolicy
     return unless user&.active?
     return true if record&.published? || user.admin?
 
-    user.leader? || user.moder? && user.team == record.team
+    (user.leader? || user.moder?) && user.team == record.team
   end
 
   def create?
@@ -21,7 +21,7 @@ class CoursePolicy < ApplicationPolicy
     return unless user&.active?
     return true if user.admin?
 
-    user.leader? || user.moder? && record.team == user.team
+    (user.leader? || user.moder?) && record.team == user.team
   end
 
   def destroy?
