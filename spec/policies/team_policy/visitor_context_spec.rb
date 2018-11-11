@@ -7,7 +7,7 @@ describe TeamPolicy do
 
   let(:visitor) { nil }
 
-  context 'visitor try anything' do
+  context 'visitor accessing a team' do
     let(:team) { create(:team) }
 
     it { is_expected.to forbid_actions(%i[index show create update destroy]) }

@@ -7,9 +7,9 @@ describe CoursePolicy do
 
   let(:visitor) { nil }
 
-  context 'visitor access to course' do
+  context 'visitor accessing a course' do
     let(:course) { create(:course) }
 
-    it { is_expected.to forbid_actions(%i[index all show create update destroy]) }
+    it { is_expected.to forbid_actions(%i[index all show create update destroy start_course]) }
   end
 end

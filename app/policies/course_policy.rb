@@ -4,41 +4,55 @@ class CoursePolicy < ApplicationPolicy
   attr_reader :record, :user
 
   def initializer(user, record)
-    @user = user
-    @record = record
+    super
   end
 
   def index?
-    user
+    user&.active? && record&.published?
   end
 
   def show?
-    user
+    user&.active? && record&.published?
   end
 
   def all?
-    user
+    user&.active? && record&.published?
   end
 
   def create?
-    user
+    return unless user&.active?
+
+    user.admin? || (user.leader? && record.team == user.team)
   end
 
   def update?
-    user
+    return unless user&.active?
+
+    user.admin? || (user.leader? && record.team == user.team) ||
+      (user.moder? && record.team == user.team)
   end
 
   def destroy?
-    user
+    return unless user&.active?
+
+    user.admin? || (user.leader? && record.team == user.team)
   end
 
   def start_course?
-    user
+    user&.active? && record&.published?
   end
 
   class Scope < Scope
     def resolve
-      scope
+      if user.admin?
+        scope.all
+      elsif user.leader? && user.team == course.team
+        scope.where(team: user.team)
+      elsif user.moder? && user.team == ccourse.team
+        scope.where(team: user.team)
+      else
+        scope.where(status: :published)
+      end
     end
   end
 end

@@ -7,6 +7,9 @@ FactoryBot.define do
     author
     team
 
+    trait(:published) { status { :published } }
+    trait(:unpublished) { status { :unpublished } }
+
     factory :course_with_lessons do
       transient do
         count { 3 } # TODO: Check how it works
