@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 describe TeamPolicy do
-  subject { described_class.new(user, team) }
+  subject { described_class.new(visitor, team) }
 
-  let(:user) { nil }
+  let(:visitor) { nil }
 
   context 'visitor try anything' do
     let(:team) { create(:team) }
