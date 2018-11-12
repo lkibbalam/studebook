@@ -69,7 +69,7 @@ module Api
 
       def admin_permissions_params
         params.require(:user).permit(:first_name, :last_name, :phone, :email,
-                                     :password, :status, :role, :avatar, :github_url, :mentor_id)
+                                     :password, :status, :role, :avatar, :github_url, :mentor_id, :nickname)
       end
 
       def user_permissions_update_params

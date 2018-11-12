@@ -22,43 +22,15 @@ module Users
       it { expect(sign_in_user.dig(:me)).to eq(user) }
       it { expect(sign_in_user.dig(:token)).to be_kind_of(String) }
 
-      it 'response includes correct JWT token' do
-        expect { JWT.decode(sign_in_user.dig(:token), key) }.to_not raise_error(JWT::DecodeError)
-      end
-
       it 'response JWT have correct user id' do
         expect(decode_jwt.first['sub']).to eq(user.id)
       end
     end
 
-    context 'invalid' do
+    context 'invalid email or password' do
       context 'email' do
         let(:sign_in_user) do
           described_class.call(email: fake.email, password: user.password)
-        end
-
-        it { expect(sign_in_user).to include(:errors) }
-        it { expect(sign_in_user.dig(:errors)).not_to be_empty }
-        it { expect(sign_in_user.dig(:me)).to be_nil }
-        it { expect(sign_in_user.dig(:token)).to be_nil }
-        it { expect(sign_in_user.dig(:errors).first['message']).to eq('email or password is invalid') }
-      end
-
-      context 'password' do
-        let(:sign_in_user) do
-          described_class.call(email: user.email, password: fake.password)
-        end
-
-        it { expect(sign_in_user).to include(:errors) }
-        it { expect(sign_in_user.dig(:errors)).not_to be_empty }
-        it { expect(sign_in_user.dig(:me)).to be_nil }
-        it { expect(sign_in_user.dig(:token)).to be_nil }
-        it { expect(sign_in_user.dig(:errors).first['message']).to eq('email or password is invalid') }
-      end
-
-      context 'empty data' do
-        let(:sign_in_user) do
-          described_class.call(email: '', password: '')
         end
 
         it { expect(sign_in_user).to include(:errors) }
