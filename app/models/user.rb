@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  validates_with EmailValidator
+
   has_secure_password
   has_one_attached :avatar
   belongs_to :team, optional: true

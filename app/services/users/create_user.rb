@@ -15,12 +15,12 @@ module Users
     private
 
     attr_reader :email, :password, :first_name, :last_name, :nickname, :phone,
-                :role, :avatar, :github_url, :mentor_id, :status, :team
+                :role, :avatar, :github_url, :mentor_id, :status, :team_id
 
     def create_user
       return if email_occupied?
 
-      User.create(email: email, password: password, team: team,
+      User.create(email: email, password: password, team_id: team_id,
                   first_name: first_name, last_name: last_name,
                   nickname: nickname, phone: phone, role: role,
                   avatar: avatar, github_url: github_url,
