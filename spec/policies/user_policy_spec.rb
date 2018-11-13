@@ -18,12 +18,6 @@ describe UserPolicy do
     end
   end
 
-  permissions :all? do
-    it 'only staff mentor can see own padawans' do
-      expect(subject).to permit(staff)
-    end
-  end
-
   permissions :show? do
     it 'only lead admin can see profiles others users' do
       expect(subject).to permit(admin)

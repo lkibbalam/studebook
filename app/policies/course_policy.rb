@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class CoursePolicy < ApplicationPolicy
-  attr_reader :record, :user
-
   def show?
     return unless user&.active?
     return true if record&.published? || user.admin?

@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class NotificationPolicy < ApplicationPolicy
-  attr_reader :record, :user
-
-  def initializer(user, record)
-    @user = user
-    @record = record
-  end
-
   def index?
     user.admin? || user == record.user
   end

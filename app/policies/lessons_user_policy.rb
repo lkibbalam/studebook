@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class LessonsUserPolicy < ApplicationPolicy
-  attr_reader :record, :user
-
-  def initializer(user, record)
-    @user = user
-    @record = record
-  end
-
   def show?
     return true if user.admin? || user.leader?
 

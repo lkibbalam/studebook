@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class LessonPolicy < ApplicationPolicy
-  attr_reader :user, :record
-
-  def initializer(user, record)
-    @user = user
-    @record = record
-  end
-
   def index?
     user
   end
