@@ -41,6 +41,12 @@ class UserPolicy < ApplicationPolicy
     user&.admin?
   end
 
+  def change_password?
+    return unless user&.active?
+
+    user&.admin? || user == record
+  end
+
   class Scope < Scope
     def resolve
       return [] unless user&.active? && !user.student?

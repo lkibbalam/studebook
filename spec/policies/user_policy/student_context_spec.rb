@@ -22,7 +22,7 @@ describe UserPolicy do
     context 'own account' do
       let(:user) { student }
 
-      it { is_expected.to permit_actions(%i[current show]) }
+      it { is_expected.to permit_actions(%i[current show change_password]) }
       it { is_expected.to forbid_actions(%i[create destroy]) }
     end
 
@@ -30,7 +30,7 @@ describe UserPolicy do
       let(:user) { create(:user) }
 
       it { is_expected.to permit_actions(%i[current]) }
-      it { is_expected.to forbid_actions(%i[show create update destroy]) }
+      it { is_expected.to forbid_actions(%i[show create update destroy change_password]) }
     end
   end
 
@@ -42,6 +42,6 @@ describe UserPolicy do
       expect(resolved_scope).not_to include(user)
     end
 
-    it { is_expected.to forbid_actions(%i[current show create update destroy]) }
+    it { is_expected.to forbid_actions(%i[current show create update destroy change_password]) }
   end
 end

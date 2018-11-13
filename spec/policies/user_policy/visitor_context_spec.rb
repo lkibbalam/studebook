@@ -18,6 +18,6 @@ describe UserPolicy do
       expect(resolved_scope).not_to include(user)
     end
 
-    it { is_expected.to forbid_actions(%i[show create update destroy]) }
+    it { is_expected.to forbid_actions(%i[show current create update destroy change_password]) }
   end
 end
