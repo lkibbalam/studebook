@@ -3,7 +3,6 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :load_team, only: %i[create]
       before_action :load_user, only: %i[show update destroy get_avatar]
 
       def index
@@ -16,9 +15,8 @@ module Api
         respond_with(@user)
       end
 
-      def all
-        @users = User.where(mentor: current_user)
-        authorize @users
+      def padawans
+        @users = current_user.padawans
         respond_with(@users)
       end
 
@@ -29,12 +27,11 @@ module Api
 
       def mentors
         @users = current_user.team.users.select(&:staff?)
-        # authorize @users
         respond_with(@users)
       end
 
       def create
-        @user = @team.users.create(admin_permissions_params)
+        @user = Users::CreateUser.call(admin_permissions_params)
         authorize @user
         render json: @user
       end
@@ -63,13 +60,9 @@ module Api
         @user = User.find(params[:id])
       end
 
-      def load_team
-        @team = Team.find(params[:team_id])
-      end
-
       def admin_permissions_params
         params.require(:user).permit(:first_name, :last_name, :phone, :email,
-                                     :password, :status, :role, :avatar, :github_url, :mentor_id, :nickname)
+                                     :password, :status, :role, :avatar, :github_url, :mentor_id, :nickname, :team_id)
       end
 
       def user_permissions_update_params

@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       post 'courses/:id/start_course' => 'courses_users#start_course'
       get 'courses/:id/current_user' => 'courses_users#show'
       get 'courses' => 'courses#all'
-      get 'users' => 'users#all'
+      get 'users' => 'users#padawans'
       get 'users/all' => 'users#index'
 
       post 'courses/:id/poster' => 'courses#update'
