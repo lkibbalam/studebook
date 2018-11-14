@@ -11,6 +11,6 @@ class CreateTasksUsers < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :tasks_users, %i[user_id task_id]
+    add_index :tasks_users, %i[user_id task_id], unique: true
   end
 end

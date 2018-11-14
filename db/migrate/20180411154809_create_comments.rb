@@ -10,6 +10,7 @@ class CreateComments < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+
     add_index :comments, %i[commentable_type commentable_id]
   end
 end

@@ -11,9 +11,13 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :phone
       t.string :github_url
       t.integer :status, default: 0
-      t.string :nickname, unique: true, index: true
-
+      t.string :nickname
+      t.string :email
+      t.string :password_digest
       t.timestamps
     end
+
+    add_index :users, :email, unique: true
+    add_index :users, :nickname, unique: true
   end
 end

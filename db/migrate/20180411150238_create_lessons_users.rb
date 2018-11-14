@@ -11,6 +11,6 @@ class CreateLessonsUsers < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    add_index :lessons_users, %i[student_id lesson_id]
+    add_index :lessons_users, %i[student_id lesson_id], unique: true
   end
 end
