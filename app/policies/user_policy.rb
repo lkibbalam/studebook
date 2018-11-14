@@ -16,10 +16,11 @@ class UserPolicy < ApplicationPolicy
 
   def show?
     return unless user&.active?
+    return true if user == record
     return true if user.padawans.exists?(record.id)
-    return true if user.staff? && user.team == record.team
+    return true if (user.staff? || user.moder? || user.leader) && user.team == record.team
 
-    user.admin? || user.leader? || user == record
+    user.admin? || user.leader?
   end
 
   def mentors?
@@ -30,14 +31,17 @@ class UserPolicy < ApplicationPolicy
 
   def create?
     return unless user&.active?
+    return true if (user.staff? || user.moder? || user.leader) && user.team == record.team
 
     user&.admin? || user&.leader?
   end
 
   def update?
     return unless user&.active?
+    return true if user == record
+    return true if (user.staff? || user.moder? || user.leader) && user.team == record.team
 
-    user&.admin? || user == record
+    user&.admin?
   end
 
   def destroy?
@@ -56,9 +60,9 @@ class UserPolicy < ApplicationPolicy
     def resolve
       return [] unless user&.active? && !user.student?
       return scope if user.admin?
-      return scope.where(mentor: user).or(scope.where(team: user.team)) if user.staff?
+      return scope.where(mentor: user).or(scope.where(team: user.team)) if user.staff? || user.moder?
 
-      User.where(team: user.team) if user.leader? || user.moder?
+      scope.where(team: user.team) if user.leader? || user.moder?
     end
   end
 end
