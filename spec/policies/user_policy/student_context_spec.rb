@@ -29,7 +29,6 @@ describe UserPolicy do
     context 'not own account' do
       let(:user) { create(:user) }
 
-      it { is_expected.to permit_actions(%i[current]) }
       it { is_expected.to forbid_actions(%i[show create update destroy change_password]) }
     end
   end
