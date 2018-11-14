@@ -18,51 +18,53 @@ class UserPolicy < ApplicationPolicy
     return unless user&.active?
     return true if user == record
     return true if user.padawans.exists?(record.id)
-    return true if (user.staff? || user.moder? || user.leader) && user.team == record.team
+    return true if (user.staff? || user.moder? || user.leader?) && user.team == record.team
 
-    user.admin? || user.leader?
+    user.admin?
   end
 
   def mentors?
     return unless user&.active?
 
-    user&.admin? || user&.leader?
+    user.admin? || user.leader?
   end
 
   def create?
     return unless user&.active?
-    return true if (user.staff? || user.moder? || user.leader) && user.team == record.team
+    return true if (user.moder? || user.leader?) && user.team == record.team
 
-    user&.admin? || user&.leader?
+    user.admin?
   end
 
   def update?
     return unless user&.active?
     return true if user == record
-    return true if (user.staff? || user.moder? || user.leader) && user.team == record.team
+    return true if (user.moder? || user.leader?) && user.team == record.team
 
-    user&.admin?
+    user.admin?
   end
 
   def destroy?
     return unless user&.active?
+    return true if user.leader? && user.team == record.team
 
-    user&.admin?
+    user.admin?
   end
 
   def change_password?
     return unless user&.active?
+    return true if user == record
+    return true if user.leader? && user.team == record.team
 
-    user&.admin? || user == record
+    user.admin?
   end
 
   class Scope < Scope
     def resolve
       return [] unless user&.active? && !user.student?
       return scope if user.admin?
-      return scope.where(mentor: user).or(scope.where(team: user.team)) if user.staff? || user.moder?
 
-      scope.where(team: user.team) if user.leader? || user.moder?
+      scope.where(mentor: user).or(scope.where(team: user.team))
     end
   end
 end
