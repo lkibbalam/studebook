@@ -31,7 +31,7 @@ module Api
       end
 
       def create
-        @user = Users::CreateUser.call(admin_permissions_params)
+        @user = Users::CreateUser.call(params: admin_permissions_params)
         authorize @user
         render json: @user
       end

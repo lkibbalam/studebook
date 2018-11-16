@@ -1,30 +1,26 @@
 # frozen_string_literal: true
 
 module Users
-  class CreateUser
+  class UpdateUser
     include Callable
 
-    def initialize(params:)
+    def initialize(user:, params:)
+      @user = user
       params.each { |key, value| instance_variable_set("@#{key}", value) }
     end
 
     def call
-      create_user
+      update_user
     end
 
     private
 
-    attr_reader :email, :password, :first_name, :last_name, :nickname, :phone,
+    attr_reader :user, :email, :password, :first_name, :last_name, :nickname, :phone,
                 :role, :avatar, :github_url, :mentor_id, :status, :team_id
 
-    def create_user
-      return if email_occupied?
-
-      User.create(attributes)
-    end
-
-    def email_occupied?
-      User.exists?(email: email)
+    def update_user
+      user.update(attributes)
+      user
     end
 
     def attributes

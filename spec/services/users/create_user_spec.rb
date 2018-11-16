@@ -5,7 +5,7 @@ require 'rails_helper'
 module Users
   describe CreateUser do
     let(:create_user) do
-      described_class.call(params)
+      described_class.call(params: params)
     end
 
     context 'with valid data' do
