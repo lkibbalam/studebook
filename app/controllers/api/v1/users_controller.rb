@@ -38,15 +38,12 @@ module Api
 
       def update
         authorize @user
-        @user.update(current_user.admin? ? admin_permissions_params : user_permissions_update_params)
+        Users::UpdateUser.call(user: @user, params: current_user.admin? ? admin_permissions_params : user_permissions_update_params)
         render json: @user
       end
 
       def change_password
-        return unless current_user.authenticate(params.dig(:user, :current_password))
-        return unless params.dig(:user, :new_password) == params.dig(:user, :password_confirmation)
-
-        current_user.update(password: params.dig(:user, :new_password))
+        Users::UpdateUser.call(user: @user, params: current_user.admin? ? admin_permissions_params : user_permissions_update_params)
       end
 
       def destroy
@@ -62,7 +59,9 @@ module Api
 
       def admin_permissions_params
         params.require(:user).permit(:first_name, :last_name, :phone, :email,
-                                     :password, :status, :role, :avatar, :github_url, :mentor_id, :nickname, :team_id)
+                                     :password, :status, :role, :avatar, :github_url,
+                                     :mentor_id, :nickname, :team_id, :new_password,
+                                     :current_password, :password_confirmation)
       end
 
       def user_permissions_update_params
