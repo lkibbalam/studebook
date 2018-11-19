@@ -43,4 +43,22 @@ describe UserPolicy do
 
     it { is_expected.to forbid_actions(%i[current show create update destroy change_password]) }
   end
+
+  describe 'permitted attributes for student own record' do
+    let(:student) { create(:user) }
+    let(:user) { student }
+
+    it do
+      is_expected
+        .to permit_mass_assignment_of(%i[email first_name last_name
+                                         nickname phone avatar github_url
+                                         current_password new_password
+                                         password_confirmation])
+    end
+
+    it do
+      is_expected
+        .to forbid_mass_assignment_of(%i[team_id mentor_id status role password])
+    end
+  end
 end

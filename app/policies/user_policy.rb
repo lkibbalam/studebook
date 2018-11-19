@@ -59,6 +59,17 @@ class UserPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def permitted_attributes
+    if user.admin? || (user.leader? || user.moder?) && user.team == record.team
+      %i[ email password first_name last_name nickname phone role avatar
+          github_url mentor_id status team_id current_password new_password
+          password_confirmation ]
+    elsif user == record
+      %i[ email first_name last_name nickname phone avatar
+          github_url current_password new_password password_confirmation ]
+    end
+  end
+
   class Scope < Scope
     def resolve
       return [] unless user&.active? && !user.student?
