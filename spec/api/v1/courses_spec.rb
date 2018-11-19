@@ -62,7 +62,11 @@ describe 'courses_controller_spec' do
 
     context 'when authenticate' do
       let(:create_course) do
-        post "/api/v1/teams/#{team.id}/courses", params: { course: attributes_for(:course) },
+        post "/api/v1/teams/#{team.id}/courses", params: { course: {
+          title: Faker::Lorem.sentence,
+          description: Faker::Lorem.paragraph,
+          team_id: create(:team).id
+        } },
                                                  headers: authenticated_header(admin)
       end
 

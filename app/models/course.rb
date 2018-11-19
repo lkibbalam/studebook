@@ -4,6 +4,11 @@ class Course < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
 
+  validates :title, presence: true, length: { in: 6..80 }
+  validates :author, presence: true, length: { in: 20..250 }
+  validates :team, presence: true
+  validates :description, presence: true
+
   has_one_attached :poster
   belongs_to :team, optional: true
   belongs_to :author, class_name: 'User', foreign_key: :author_id

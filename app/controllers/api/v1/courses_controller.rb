@@ -23,7 +23,7 @@ module Api
       end
 
       def create
-        @course = Course.create(course_params.merge(author: current_user))
+        @course = Courses::CreateCourse.call(params: course_params.merge(author_id: current_user.id))
         authorize @course
         render json: @course
       end
