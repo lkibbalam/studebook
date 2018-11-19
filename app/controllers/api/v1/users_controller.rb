@@ -43,12 +43,13 @@ module Api
       end
 
       def change_password
-        Users::UpdateUser.call(user: @user, params: current_user.admin? ? admin_permissions_params : user_permissions_update_params)
+        authorize current_user
+        Users::UpdateUser.call(user: current_user, params: current_user.admin? ? admin_permissions_params : user_permissions_update_params)
       end
 
       def destroy
         authorize @user
-        respond_with(@user.delete)
+        respond_with(Users::DestroyUser.call(user: @user))
       end
 
       private
