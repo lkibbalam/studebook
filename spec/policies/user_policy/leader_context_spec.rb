@@ -53,4 +53,18 @@ describe UserPolicy do
 
     it { is_expected.to forbid_actions(%i[show create update change_password]) }
   end
+
+  describe 'permitted attributes for moder' do
+    let(:leader) { create(:user, :leader) }
+    let(:user) { create(:user, team: leader.team) }
+
+    it do
+      is_expected
+        .to permit_mass_assignment_of(%i[team_id mentor_id status role password
+                                         email first_name last_name
+                                         nickname phone avatar github_url
+                                         current_password new_password
+                                         password_confirmation])
+    end
+  end
 end
