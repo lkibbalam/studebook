@@ -31,20 +31,20 @@ module Api
       end
 
       def create
-        @user = Users::CreateUser.call(params: admin_permissions_params)
+        @user = Users::CreateUser.call(params: user_params)
         authorize @user
         render json: @user
       end
 
       def update
         authorize @user
-        Users::UpdateUser.call(user: @user, params: current_user.admin? ? admin_permissions_params : user_permissions_update_params)
+        Users::UpdateUser.call(user: @user, params: user_params)
         render json: @user
       end
 
       def change_password
         authorize current_user
-        Users::UpdateUser.call(user: current_user, params: current_user.admin? ? admin_permissions_params : user_permissions_update_params)
+        Users::UpdateUser.call(user: current_user, params: user_params)
       end
 
       def destroy
@@ -58,15 +58,8 @@ module Api
         @user = User.find(params[:id])
       end
 
-      def admin_permissions_params
-        params.require(:user).permit(:first_name, :last_name, :phone, :email,
-                                     :password, :status, :role, :avatar, :github_url,
-                                     :mentor_id, :nickname, :team_id, :new_password,
-                                     :current_password, :password_confirmation)
-      end
-
-      def user_permissions_update_params
-        params.require(:user).permit(:first_name, :last_name, :phone, :password, :github_url, :avatar)
+      def user_params
+        params.require(:user).permit(UserPolicy.new(current_user, @user).permitted_attributes)
       end
     end
   end

@@ -69,7 +69,7 @@ describe 'users_controller_spec' do
       before do
         patch "/api/v1/users/#{users.first.id}",
               params: { user: { first_name: 'NewFirst', last_name: 'NewLast',
-                                phone: 0, email: 'NewEmail@mail.ru' } },
+                                phone: 0 } },
               headers: authenticated_header(users.first)
         users.first.reload
       end
@@ -77,7 +77,6 @@ describe 'users_controller_spec' do
       it { expect(users.first.first_name).to eql('NewFirst') }
       it { expect(users.first.last_name).to eql('NewLast') }
       it { expect(users.first.phone).to eql('0') }
-      it { expect(users.first.email).to_not eql('NewEmail@mail.ru') }
     end
     context 'admin`s request' do
       before do

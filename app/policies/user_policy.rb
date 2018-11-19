@@ -60,7 +60,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    if user.admin? || (user.leader? || user.moder?) && user.team == record.team
+    if user.admin? || ((user.leader? || user.moder?) && user.team == record.team)
       %i[ email password first_name last_name nickname phone role avatar
           github_url mentor_id status team_id current_password new_password
           password_confirmation ]
