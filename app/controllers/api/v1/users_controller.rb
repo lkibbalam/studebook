@@ -59,7 +59,8 @@ module Api
       end
 
       def user_params
-        params.require(:user).permit(UserPolicy.new(current_user, @user).permitted_attributes)
+        params.require(:user)
+              .permit(UserPolicy.new(current_user, @user).permitted_attributes)
       end
     end
   end
