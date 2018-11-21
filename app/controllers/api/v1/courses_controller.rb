@@ -36,7 +36,7 @@ module Api
 
       def destroy
         authorize @course
-        respond_with(@course.delete)
+        respond_with(Courses::DestroyCourse.call(course: @course))
       end
 
       private
