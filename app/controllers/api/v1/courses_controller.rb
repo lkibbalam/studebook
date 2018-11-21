@@ -30,7 +30,7 @@ module Api
 
       def update
         authorize @course
-        @course.update(course_params)
+        Courses::UpdateCourse.call(course: @course, params: course_params)
         render json: @course
       end
 
