@@ -22,7 +22,7 @@ describe 'courses_users_spec' do
     end
   end
 
-  describe 'POST #start_course' do
+  describe 'POST #create' do
     context 'when non authenticate request' do
       before { post "/api/v1/courses/#{course.id}/start_course" }
 

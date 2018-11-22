@@ -4,7 +4,7 @@ module Api
   module V1
     class CoursesController < ApplicationController
       include Commentable
-      before_action :load_course, only: %i[show update destroy start_course]
+      before_action :load_course, only: %i[show update destroy]
       before_action :load_team, only: %i[index]
 
       def index
