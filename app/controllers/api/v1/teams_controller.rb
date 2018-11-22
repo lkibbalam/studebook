@@ -29,7 +29,7 @@ module Api
 
       def destroy
         authorize @team
-        respond_with(@team.delete)
+        respond_with(Teams::DestroyTeam.call(team: @team))
       end
 
       private
