@@ -23,7 +23,7 @@ module Api
 
       def update
         authorize @team
-        @team.update(team_params)
+        Teams::UpdateTeam.call(team: @team, params: team_params)
         respond_with :api, :v1, @team
       end
 
