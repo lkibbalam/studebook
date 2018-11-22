@@ -58,21 +58,24 @@ describe 'teams_controller_spec' do
   end
 
   describe 'PATCH #update' do
+    let(:params) do
+      { team: { title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph } }
+    end
+
     context 'when non authenticate' do
       before do
-        patch "/api/v1/teams/#{team.id}", params: { team: { title: 'NewTitle', description: 'NewDesc' } }
+        patch "/api/v1/teams/#{team.id}", params: params
       end
 
       it_behaves_like 'non authenticate request'
     end
 
     before do
-      patch "/api/v1/teams/#{team.id}", params: { team: { title: 'NewTitle', description: 'NewDesc' } },
-                                        headers: authenticated_header(admin)
+      patch "/api/v1/teams/#{team.id}", params: params, headers: authenticated_header(admin)
     end
 
-    it { expect(team.reload.title).to eql('NewTitle') }
-    it { expect(team.reload.description).to eql('NewDesc') }
+    it { expect(team.reload.title).to eq(params.dig(:team, :title)) }
+    it { expect(team.reload.description).to eq(params.dig(:team, :description)) }
   end
 
   describe 'DELETE #destroy' do

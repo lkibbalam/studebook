@@ -18,13 +18,15 @@ module Courses
     attr_reader :course, :title, :description, :poster, :team_id
 
     def update_course
-      course.update(course_params)
+      course.update(attributes)
       course
     end
 
-    def course_params
-      { title: title, description: description,
-        poster: poster, team_id: team_id }.compact
+    def attributes
+      { description: description,
+        team_id: team_id,
+        poster: poster,
+        title: title }.compact
     end
   end
 end

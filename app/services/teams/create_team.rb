@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
-module Courses
-  class CreateCourse
+module Teams
+  class CreateTeam
     include Callable
 
     def initialize(params:)
@@ -11,23 +9,21 @@ module Courses
     end
 
     def call
-      create_course
+      create_team
     end
 
     private
 
-    attr_reader :title, :description, :poster, :author_id, :team_id
+    attr_reader :title, :description, :poster
 
-    def create_course
-      Course.create(attributes)
+    def create_team
+      Team.create(attributes)
     end
 
     def attributes
       { title: title,
         description: description,
-        poster: poster,
-        author_id: author_id,
-        team_id: team_id }.compact
+        poster: poster }.compact
     end
   end
 end

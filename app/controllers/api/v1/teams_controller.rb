@@ -16,7 +16,7 @@ module Api
       end
 
       def create
-        @team = Team.create(team_params)
+        @team = Teams::CreateTeam.call(params: team_params)
         authorize @team
         respond_with :api, :v1, @team
       end
@@ -35,7 +35,7 @@ module Api
       private
 
       def team_params
-        params.require(:team).permit(:title, :description)
+        params.require(:team).permit(:title, :description, :poster)
       end
 
       def load_team
