@@ -10,7 +10,6 @@ module Api
         # TODO: Rewrite for concreta course
         user = User.find(params[:id])
         @tasks_user = user.tasks_users
-        authorize @tasks_user
         respond_with(@tasks_user)
       end
 

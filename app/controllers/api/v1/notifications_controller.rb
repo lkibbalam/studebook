@@ -8,7 +8,7 @@ module Api
         respond_with(@notifications)
       end
 
-      def seen
+      def update
         @notification = Notification.find(params[:id])
         authorize @notification
         @notification.update(status: :seen)

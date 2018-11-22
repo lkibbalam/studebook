@@ -13,13 +13,6 @@ describe CoursesUserPolicy do
 
   subject { described_class }
 
-  permissions :index? do
-    it 'can index if admin or lead' do
-      expect(subject).to permit(admin)
-      expect(subject).to permit(lead)
-    end
-  end
-
   permissions :show? do
     it 'can see own courses' do
       expect(subject).to permit(student, course_user)
@@ -32,12 +25,6 @@ describe CoursesUserPolicy do
     it 'admin lead can see course' do
       expect(subject).to permit(admin, course_user)
       expect(subject).to permit(lead, course_user)
-    end
-  end
-
-  permissions :padawan_courses? do
-    it 'approve  can student mentor' do
-      expect(subject).to permit(staff)
     end
   end
 end

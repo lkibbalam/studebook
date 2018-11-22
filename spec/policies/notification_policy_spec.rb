@@ -10,13 +10,7 @@ describe NotificationPolicy do
 
   subject { described_class }
 
-  permissions :index? do
-    it 'mentor can see all own notifications' do
-      expect(subject).to permit(mentor, create(:notification, tasks_user: task_user, user: mentor))
-    end
-  end
-
-  permissions :seen? do
+  permissions :update? do
     it 'mentor can update status to seen own notification' do
       expect(subject).to permit(mentor, create(:notification, tasks_user: task_user, user: mentor, status: :seen))
     end

@@ -25,7 +25,7 @@ describe 'notifications_controller_spec' do
     end
   end
 
-  describe 'PATCH #seen' do
+  describe 'PATCH #update' do
     context 'when non authenticate request' do
       before { patch "/api/v1/notifications/#{notification.id}/seen" }
 
@@ -36,7 +36,7 @@ describe 'notifications_controller_spec' do
       before { patch "/api/v1/notifications/#{notification.id}/seen", headers: authenticated_header(admin) }
       it_behaves_like 'authenticate request'
 
-      it { expect(notification.reload.status).to eql('seen') }
+      it { expect(notification.reload.status).to eq('seen') }
     end
   end
 end

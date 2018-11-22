@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class TasksUserPolicy < ApplicationPolicy
-  def index?
-    return true if user.admin?
-
-    user == record.first.user.mentor || user == record.first.user
-    # TODO: refactor something better
-  end
-
   def show?
     return true if user.admin?
 
