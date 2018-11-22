@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Teams
-  describe CreateTeam do
+  describe Create do
     let(:create_team) do
       described_class.call(params: params)
     end

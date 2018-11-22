@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Courses
-  describe DestroyCourse do
+  describe Destroy do
     let(:delete_course) do
       described_class.call(course: course)
     end

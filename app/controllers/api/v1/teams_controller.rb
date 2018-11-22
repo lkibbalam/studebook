@@ -16,20 +16,20 @@ module Api
       end
 
       def create
-        @team = Teams::CreateTeam.call(params: team_params)
+        @team = Teams::Create.call(params: team_params)
         authorize @team
         respond_with :api, :v1, @team
       end
 
       def update
         authorize @team
-        Teams::UpdateTeam.call(team: @team, params: team_params)
+        Teams::Update.call(team: @team, params: team_params)
         respond_with :api, :v1, @team
       end
 
       def destroy
         authorize @team
-        respond_with(Teams::DestroyTeam.call(team: @team))
+        respond_with(Teams::Destroy.call(team: @team))
       end
 
       private

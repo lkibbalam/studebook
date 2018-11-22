@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Users
-  describe UpdateUser do
+  describe Update do
     let(:update_user) do
       described_class.call(user: user, params: params)
     end

@@ -31,25 +31,25 @@ module Api
       end
 
       def create
-        @user = Users::CreateUser.call(params: user_params)
+        @user = Users::Create.call(params: user_params)
         authorize @user
         render json: @user
       end
 
       def update
         authorize @user
-        Users::UpdateUser.call(user: @user, params: user_params)
+        Users::Update.call(user: @user, params: user_params)
         render json: @user
       end
 
       def change_password
         authorize current_user
-        Users::UpdateUser.call(user: current_user, params: user_params)
+        Users::Update.call(user: current_user, params: user_params)
       end
 
       def destroy
         authorize @user
-        respond_with(Users::DestroyUser.call(user: @user))
+        respond_with(Users::Destroy.call(user: @user))
       end
 
       private

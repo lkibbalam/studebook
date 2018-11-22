@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Teams
-  class CreateTeam
+  class Create
     include Callable
 
     def initialize(params:)

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Courses
-  describe UpdateCourse do
+  describe Update do
     let(:update_course) do
       described_class.call(course: course, params: params)
     end

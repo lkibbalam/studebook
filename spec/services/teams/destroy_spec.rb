@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Teams
-  describe DestroyTeam do
+  describe Destroy do
     let(:destroy_team) do
       described_class.call(team: team)
     end

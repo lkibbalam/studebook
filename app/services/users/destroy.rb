@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class DestroyUser
+  class Destroy
     include Callable
 
     def initialize(user:)

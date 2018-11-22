@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Courses
-  class CreateCourse
+  class Create
     include Callable
 
     def initialize(params:)

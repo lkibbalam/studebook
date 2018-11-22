@@ -23,20 +23,20 @@ module Api
       end
 
       def create
-        @course = Courses::CreateCourse.call(params: course_params.merge(author_id: current_user.id))
+        @course = Courses::Create.call(params: course_params.merge(author_id: current_user.id))
         authorize @course
         render json: @course
       end
 
       def update
         authorize @course
-        Courses::UpdateCourse.call(course: @course, params: course_params)
+        Courses::Update.call(course: @course, params: course_params)
         render json: @course
       end
 
       def destroy
         authorize @course
-        respond_with(Courses::DestroyCourse.call(course: @course))
+        respond_with(Courses::Destroy.call(course: @course))
       end
 
       private

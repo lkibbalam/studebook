@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Teams
-  class UpdateTeam
+  class Update
     include Callable
 
     def initialize(team:, params:)

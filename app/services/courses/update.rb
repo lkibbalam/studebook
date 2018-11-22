@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Courses
-  class UpdateCourse
+  class Update
     include Callable
 
     def initialize(course:, params:)

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Courses
-  describe CreateCourse do
+  describe Create do
     let(:create_course) do
       described_class.call(params: params)
     end

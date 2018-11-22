@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Users
-  describe DestroyUser do
+  describe Destroy do
     let(:destroy_user) { described_class.call(user: user) }
 
     context 'destroy user' do

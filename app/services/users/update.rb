@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class UpdateUser
+  class Update
     include Callable
 
     def initialize(user:, params:)

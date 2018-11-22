@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class CreateUser
+  class Create
     include Callable
 
     def initialize(params:)

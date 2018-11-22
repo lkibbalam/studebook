@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Teams
-  describe UpdateTeam do
+  describe Update do
     let(:update_team) do
       described_class.call(team: team, params: params)
     end

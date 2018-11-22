@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Courses
-  class DestroyCourse
+  class Destroy
     include Callable
 
     def initialize(course:)
