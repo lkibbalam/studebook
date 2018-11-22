@@ -17,8 +17,7 @@ class CoursesUserPolicy < ApplicationPolicy
       return [] unless user&.active?
       return scope.where(student: user) if user.student?
       return scope.where(student: user.padawans).or(scope.where(student: user)) if user.staff?
-
-      scope
+      scope.all
     end
   end
 end
