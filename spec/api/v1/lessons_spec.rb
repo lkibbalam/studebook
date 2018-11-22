@@ -18,7 +18,7 @@ describe 'lessons_controller_spec' do
     end
 
     context 'when authenticate' do
-      before { get "/api/v1/courses/#{course.id}/lessons", headers: authenticated_header(user) }
+      before { get "/api/v1/courses/#{course.id}/lessons", headers: authenticated_header(admin) }
 
       it_behaves_like 'authenticate request'
       it_behaves_like 'response body with 10 objects'
@@ -33,13 +33,15 @@ describe 'lessons_controller_spec' do
     end
 
     context 'when authenticate' do
-      before { get "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(user) }
+      before { get "/api/v1/lessons/#{lessons.first.id}", headers: authenticated_header(admin) }
 
       it_behaves_like 'authenticate request'
 
-      %w[course_id description material title].each do |attr|
-        it "user object contains #{attr}" do
-          expect(response.body).to be_json_eql(lessons.first.send(attr.to_sym).to_json).at_path("data/attributes/#{attr}")
+      %w[course_id description material title].each do |attribute|
+        it "user object contains #{attribute}" do
+          expect(response.body)
+            .to be_json_eql(lessons.first.send(attribute.to_sym).to_json)
+            .at_path("data/attributes/#{attribute}")
         end
       end
     end

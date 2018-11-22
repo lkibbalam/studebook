@@ -1,24 +1,32 @@
 # frozen_string_literal: true
 
 class LessonPolicy < ApplicationPolicy
-  def index?
-    user
-  end
-
   def show?
-    user
+    return unless user&.active?
+    return true if record&.course&.published? || user.admin?
+
+    (user.leader? || user.moder?) && user.team == record.course.team
   end
 
   def create?
-    user.admin?
+    return unless user&.active?
+    return true if user.admin?
+
+    user.leader? && record.course.team == user.team
   end
 
   def update?
-    user.admin?
+    return unless user&.active?
+    return true if user.admin?
+
+    (user.leader? || user.moder?) && record.course.team == user.team
   end
 
   def destroy?
-    user.admin?
+    return unless user&.active?
+    return true if user.admin?
+
+    user.leader? && record.course.team == user.team
   end
 
   class Scope < Scope

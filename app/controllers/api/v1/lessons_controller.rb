@@ -9,7 +9,6 @@ module Api
 
       def index
         @lessons = @course.lessons
-        authorize @lessons
         respond_with(@lessons)
       end
 
