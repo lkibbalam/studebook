@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-describe LessonPolicy do
-  subject { described_class.new(visitor, lesson) }
+describe TaskPolicy do
+  subject { described_class.new(visitor, task) }
 
   let(:visitor) { nil }
 
-  context 'visitor accessing a lesson' do
-    let(:lesson) { create(:lesson) }
+  context 'visitor accessing a task' do
+    let(:task) { create(:task) }
 
     it { is_expected.to forbid_actions(%i[show create update destroy]) }
   end

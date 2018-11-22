@@ -2,19 +2,31 @@
 
 class TaskPolicy < ApplicationPolicy
   def show?
-    user.admin?
+    return unless user&.active?
+    return true if record&.lesson&.course&.published? || user.admin?
+
+    (user.leader? || user.moder?) && user.team == record.lesson.course.team
   end
 
   def create?
-    user.admin?
+    return unless user&.active?
+    return true if user.admin?
+
+    user.leader? && record.lesson.course.team == user.team
   end
 
   def update?
-    user.admin?
+    return unless user&.active?
+    return true if user.admin?
+
+    (user.leader? || user.moder?) && record.lesson.course.team == user.team
   end
 
   def destroy?
-    user.admin?
+    return unless user&.active?
+    return true if user.admin?
+
+    user.leader? && record.lesson.course.team == user.team
   end
 
   class Scope < Scope
