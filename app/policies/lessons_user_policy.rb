@@ -2,12 +2,18 @@
 
 class LessonsUserPolicy < ApplicationPolicy
   def show?
-    return true if user.admin? || user.leader?
+    return unless user&.active?
+    return true if user == record.student || user == record.student.mentor
+    return true if (user.leader? || user.moder?) && user.team == record.student.team
 
-    (user == record.student && !record.locked?) || user == record.student.mentor
+    user.admin?
   end
 
   def update?
+    return unless user&.active?
+    return true if user == record.student || user == record.student.mentor
+    return true if (user.leader? || user.moder?) && user.team == record.student.team
+
     user.admin? || user == record.student.mentor
   end
 
