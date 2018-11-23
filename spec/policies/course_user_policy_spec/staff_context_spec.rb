@@ -38,7 +38,7 @@ describe CoursesUserPolicy do
       let(:padawan) { create(:user, :student, mentor: staff) }
       let(:course_user) { create(:courses_user, student: padawan) }
 
-      it 'excludes course user from resolved scope' do
+      it 'includes course user from resolved scope' do
         expect(resolved_scope).to include(course_user)
       end
 
