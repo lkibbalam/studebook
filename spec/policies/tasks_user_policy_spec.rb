@@ -12,9 +12,6 @@ describe TasksUserPolicy do
 
   subject { described_class }
 
-  # permissions :index? do
-  # end
-
   permissions :show? do
     it 'user can see own task' do
       expect(subject).to permit(student, task_user)
