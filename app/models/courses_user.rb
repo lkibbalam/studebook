@@ -9,7 +9,7 @@ class CoursesUser < ApplicationRecord
 
   enum status: { current: 0, archived: 1 }
 
-  after_create :create_course_lessons
+  #after_create :create_course_lessons
   after_update :full_progress!, if: :course_status_from_current_to_archived?
 
   private
