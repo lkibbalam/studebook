@@ -5,5 +5,7 @@ FactoryBot.define do
     lesson
     title { Faker::Lorem.word }
     description { Faker::Lorem.sentence }
+
+    trait(:invalid) { description { '' } }
   end
 end

@@ -11,19 +11,13 @@ RSpec.describe LessonsUser, type: :model do
   let(:lesson) { create(:lesson, tasks: create_list(:task, tasks_count)) }
   let(:lesson_user) { create(:lessons_user, lesson: lesson) }
 
-  describe '.create_tasks_user' do
-    it 'should create task_user list for lesson_user when created' do
-      expect { lesson_user }.to change(TasksUser, :count).to(tasks_count)
-    end
-  end
-
   describe 'when mentor approve lesson for user' do
     let(:lessons_count) { 10 }
     let(:student) { create(:user, :student) }
     let(:course) { create(:course, lessons: create_list(:lesson, lessons_count)) }
     let!(:course_user) { create(:courses_user, student: student, course: course) }
-    let(:lesson_user_first) { student.lessons_users.first }
-    let(:lesson_user_second) { student.lessons_users.second }
+    let(:lesson_user_first) { create(:lessons_user, :unlocked, student: student, lesson: course.lessons.first) }
+    let(:lesson_user_second) { create(:lessons_user, :locked, student: student, lesson: course.lessons.second) }
 
     describe '.unlocked_next_lesson' do
       it 'should unlock next lesson in course for student when current are done' do

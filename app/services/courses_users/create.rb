@@ -12,9 +12,11 @@ module CoursesUsers
     end
 
     def call
-      create_course_user &&
+      ActiveRecord::Base.transaction do
         create_lessons_user &&
-        create_tasks_user
+          create_tasks_user &&
+          create_course_user
+      end
     end
 
     private
@@ -26,13 +28,22 @@ module CoursesUsers
     end
 
     def create_lessons_user
-      LessonsUser.create!(lessons: course.lessons, student: user)
+      lessons_user = course.lessons.ids.map { |id| { lesson_id: id, student_id: user.id } }
+      unlock_first_lesson!(lessons_user)
+      LessonsUser.create!(lessons_user)
     end
-     TODO #Finish this shit
+
     def create_tasks_user
-      tasks = []
-      course.lessons.each { |lesson| tasks << lesson.tasks }
-      TasksUser.create!(tasks: tasks, user: user)
+      tasks_user = []
+      course.lessons.includes(:tasks).each do |lesson|
+        lesson_tasks = lesson.tasks.ids.map { |id| { user_id: user.id, task_id: id } }
+        tasks_user << lesson_tasks
+      end
+      TasksUser.create!(tasks_user)
+    end
+
+    def unlock_first_lesson!(lessons_user)
+      lessons_user.first[:status] = :unlocked
     end
   end
 end

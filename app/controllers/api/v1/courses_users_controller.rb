@@ -29,8 +29,8 @@ module Api
       end
 
       def create
-        @course_user = @course.courses_users.create(student: current_user)
-        # TODO: authorize @course_user
+        @course_user = CoursesUsers::Create.call(user: current_user, course: @course)
+        authorize @course_user
         render json: @course_user
       end
 
