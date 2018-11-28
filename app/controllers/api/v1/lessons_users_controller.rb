@@ -14,7 +14,7 @@ module Api
 
       def update
         authorize @lesson_user
-        @lesson_user.update(status: :done)
+        LessonsUsers::Update.call(lesson_user: @lesson_user, params: lesson_user_params)
         render json: @lesson_user
       end
 

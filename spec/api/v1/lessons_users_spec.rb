@@ -15,7 +15,10 @@ describe 'lessons_users_spec' do
     end
 
     context 'when authenticate request' do
-      before { patch "/api/v1/lesson_user/#{lessons_user.id}/approve", headers: authenticated_header(mentor) }
+      before do
+        patch "/api/v1/lesson_user/#{lessons_user.id}/approve", params: { lesson_user: { status: :done, mark: 100 } },
+                                                                headers: authenticated_header(mentor)
+      end
       it_behaves_like 'authenticate request'
 
       it { expect(lessons_user.status).to eql('done') }
