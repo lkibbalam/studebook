@@ -8,30 +8,11 @@ class TasksUser < ApplicationRecord
 
   enum status: { undone: 0, verifying: 1, change: 2, accept: 3 }
 
-  after_update :create_notification_to_mentor, if: :notification_to_mentor?
-  after_update :create_notification_to_student, if: :notification_to_student?
-
-  ActiveRecord::Base.transaction do
-    after_update :unlock_next_lesson, if: :lesson_accept? && :tasks_accept?
-  end
+  # ActiveRecord::Base.transaction do
+  # after_update :unlock_next_lesson, if: :lesson_accept? && :tasks_accept?
+  # end
 
   private
-
-  def create_notification_to_mentor
-    notifications.create(user: user.mentor)
-  end
-
-  def create_notification_to_student
-    notifications.create(user: user)
-  end
-
-  def notification_to_student?
-    (change? || accept?) && status_before_last_save == 'verifying'
-  end
-
-  def notification_to_mentor?
-    %w[change undone].include?(status_before_last_save) && verifying?
-  end
 
   def lesson_accept?
     %w[change verifying].include?(status_before_last_save) && accept?

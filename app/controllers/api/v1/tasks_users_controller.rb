@@ -38,7 +38,7 @@ module Api
       end
 
       def task_user_params
-        params.require(:task).permit(:github_url, :status)
+        params.require(:task).permit(:github_url, :status, :comment)
       end
     end
   end

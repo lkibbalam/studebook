@@ -7,5 +7,10 @@ FactoryBot.define do
     status { 0 }
     task
     user
+
+    trait(:undone) { status { :undone } }
+    trait(:verifying) { status { :verifying } }
+    trait(:change) { status { :change } }
+    trait(:accept) { status { :accept } }
   end
 end
