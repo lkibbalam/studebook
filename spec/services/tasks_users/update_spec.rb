@@ -114,7 +114,6 @@ module TasksUsers
           let!(:task_user) { student.tasks_users.where(task: first_lesson_tasks).second }
           it 'should unlock next lesson user if accept all tasks user of lesson' do
             expect do
-              binding.pry
               update_task_user
               second_lesson_user.reload
             end.to change(second_lesson_user, :status).from('locked').to('unlocked')

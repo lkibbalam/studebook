@@ -19,12 +19,12 @@ module Api
       end
 
       def update
-        @task_user.assign_attributes(task_user_params)
         authorize @task_user
-        unless params.dig(:task, :comment)&.empty?
-          @task_user.comments.create(body: params.dig(:task, :comment), user: current_user)
-        end
-        render json: @task_user if @task_user.save
+        TasksUsers::Update
+          .call(current_user: current_user,
+                params: task_user_params,
+                task_user: @task_user)
+        render json: @task_user
       end
 
       private
