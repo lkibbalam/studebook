@@ -6,7 +6,7 @@ module Api
       before_action :load_user, only: %i[show update destroy get_avatar]
 
       def index
-        respond_with(User.all)
+        respond_with(policy_scope(User).all)
       end
 
       def current
