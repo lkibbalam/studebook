@@ -21,13 +21,15 @@ class LessonsUserPolicy < ApplicationPolicy
     def resolve
       return [] unless user&.active?
 
-      { student: scope.where(student: user),
+      {
+        student: scope.where(student: user),
         staff: scope.where(student: user).or(scope.where(student: user.padawans)),
         moder: scope.joins(lesson: :course).where(student: user)
                     .or(scope.joins(lesson: :course).where(lessons: { courses: { team_id: user.team_id } })),
         leader: scope.joins(lesson: :course).where(student: user)
                      .or(scope.joins(lesson: :course).where(lessons: { courses: { team_id: user.team_id } })),
-        admin: scope }[user.role.to_sym]
+        admin: scope
+      }[user.role.to_sym]
     end
   end
 end

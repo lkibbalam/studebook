@@ -15,7 +15,7 @@ describe 'users_controller_spec' do
     end
 
     context 'when authenticate' do
-      before { get "/api/v1/teams/#{teams.first.id}/users", headers: authenticated_header(users.first) }
+      before { get "/api/v1/teams/#{teams.first.id}/users", headers: authenticated_header(admin) }
 
       it_behaves_like 'authenticate request'
       it_behaves_like 'response body with 10 objects'

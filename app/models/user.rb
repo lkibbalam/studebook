@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   validates_with EmailValidator
+  validates :email, uniqueness: true
 
   has_secure_password
   has_one_attached :avatar

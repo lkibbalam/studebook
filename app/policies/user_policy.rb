@@ -73,7 +73,7 @@ class UserPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       return [] unless user&.active? && !user.student?
-      return scope if user.admin?
+      return scope.all if user.admin?
 
       scope.where(mentor: user).or(scope.where(team: user.team))
     end

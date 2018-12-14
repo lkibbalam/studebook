@@ -13,11 +13,13 @@ class NotificationPolicy < ApplicationPolicy
     def resolve
       return [] unless user&.active?
 
-      { student: scope.where(user: user),
+      {
+        student: scope.where(user: user),
         staff: scope.where(user: user),
         moder: scope.where(user: user),
         leader: scope.where(user: user),
-        admin: scope }[user.role.to_sym]
+        admin: scope
+      }[user.role.to_sym]
     end
   end
 end
