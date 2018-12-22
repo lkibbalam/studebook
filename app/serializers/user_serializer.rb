@@ -8,6 +8,6 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def notifications
-    object.notifications.unseen
+    object.notifications
   end
 end
