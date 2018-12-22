@@ -38,7 +38,7 @@ describe 'tasks_users_controller' do
 
       %w[user_id task_id github_url mark status created_at updated_at].each do |attr|
         it "task_user object contains #{attr}" do
-          expect(response.body).to be_json_eql(task_user.send(attr.to_sym).to_json).at_path("data/attributes/#{attr}")
+          expect(response.body).to be_json_eql(task_user.send(attr.to_sym).to_json).at_path("data/attributes/#{attr.camelize(:lower)}")
         end
       end
     end

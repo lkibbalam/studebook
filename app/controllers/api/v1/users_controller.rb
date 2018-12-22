@@ -3,10 +3,17 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :load_user, only: %i[show update destroy get_avatar]
+      before_action :load_user, only: %i[show update destroy]
 
       def index
-        respond_with(policy_scope(User).with_attached_avatar.includes(:notifications))
+        @users = policy_scope(User).with_attached_avatar.includes(:notifications).page(params[:page])
+        meta = {  total_pages: @users.total_pages,
+                  current_page: @users.current_page,
+                  next_page: @users.next_page,
+                  prev_page: @users.prev_page,
+                  first_page: @users.first_page?,
+                  last_page: @users.last_page? }
+        render json: @users, meta: meta
       end
 
       def current

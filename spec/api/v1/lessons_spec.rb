@@ -41,7 +41,7 @@ describe 'lessons_controller_spec' do
         it "user object contains #{attribute}" do
           expect(response.body)
             .to be_json_eql(lessons.first.send(attribute.to_sym).to_json)
-            .at_path("data/attributes/#{attribute}")
+            .at_path("data/attributes/#{attribute.camelize(:lower)}")
         end
       end
     end

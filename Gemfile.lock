@@ -107,6 +107,18 @@ GEM
       rspec (>= 2.0, < 4.0)
     jsonapi-renderer (0.2.0)
     jwt (1.5.6)
+    kaminari (1.1.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.1.1)
+      kaminari-activerecord (= 1.1.1)
+      kaminari-core (= 1.1.1)
+    kaminari-actionview (1.1.1)
+      actionview
+      kaminari-core (= 1.1.1)
+    kaminari-activerecord (1.1.1)
+      activerecord
+      kaminari-core (= 1.1.1)
+    kaminari-core (1.1.1)
     knock (2.1.1)
       bcrypt (~> 3.1)
       jwt (~> 1.5)
@@ -246,6 +258,7 @@ DEPENDENCIES
   graphql-guard
   json_spec (~> 1.1, >= 1.1.5)
   jwt
+  kaminari
   knock
   listen (>= 3.0.5, < 3.2)
   oj

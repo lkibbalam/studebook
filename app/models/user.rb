@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  paginates_per 25
+
   validates_with EmailValidator
   validates :email, uniqueness: true
 
   has_secure_password
   has_one_attached :avatar
+
   belongs_to :team, optional: true
   belongs_to :mentor, class_name: 'User', foreign_key: :mentor_id, optional: true
   has_many :own_courses, class_name: 'Course', foreign_key: :author_id

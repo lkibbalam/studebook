@@ -35,7 +35,7 @@ describe 'users_controller_spec' do
 
       %w[mentor_id team_id first_name last_name role phone github_url email].each do |attr|
         it "user object attributes contains #{attr}" do
-          expect(response.body).to be_json_eql(users.first.send(attr.to_sym).to_json).at_path("data/attributes/#{attr}")
+          expect(response.body).to be_json_eql(users.first.send(attr.to_sym).to_json).at_path("data/attributes/#{attr.camelize(:lower)}")
         end
       end
     end

@@ -42,7 +42,7 @@ describe 'courses_controller_spec' do
 
       %w[team_id author_id description title created_at updated_at].each do |attr|
         it "course object attributes contains #{attr}" do
-          expect(response.body).to be_json_eql(course.send(attr.to_sym).to_json).at_path("data/attributes/#{attr}")
+          expect(response.body).to be_json_eql(course.send(attr.to_sym).to_json).at_path("data/attributes/#{attr.camelize(:lower)}")
         end
       end
 
