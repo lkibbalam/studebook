@@ -6,7 +6,7 @@ module Api
       before_action :load_user, only: %i[show update destroy]
 
       def index
-        @users = policy_scope(User).with_attached_avatar.includes(:notifications).page(params[:page])
+        @users = policy_scope(::User).with_attached_avatar.includes(:notifications).page(params[:page])
         meta = {  total_pages: @users.total_pages,
                   current_page: @users.current_page,
                   next_page: @users.next_page,
@@ -62,7 +62,7 @@ module Api
       private
 
       def load_user
-        @user = User.find(params[:id])
+        @user = ::User.find(params[:id])
       end
 
       def user_params
