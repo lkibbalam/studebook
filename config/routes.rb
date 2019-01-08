@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   post '/graphql', to: 'graphql#execute'
-  default_url_options host: 'http://localhost:8001'
+  default_url_options host: 'https://studypet.herokuapp.com'
 
   mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
 
