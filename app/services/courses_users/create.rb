@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
 module CoursesUsers
   class Create
     include Callable

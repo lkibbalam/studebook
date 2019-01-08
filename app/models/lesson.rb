@@ -2,7 +2,7 @@
 
 class Lesson < ApplicationRecord
   has_one_attached :poster
-  has_many_attached :video
+  has_one_attached :video
   belongs_to :course
   has_many :lessons_users, dependent: :destroy
   has_many :students, through: :lessons_users

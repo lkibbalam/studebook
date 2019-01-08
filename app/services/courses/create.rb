@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
 module Courses
   class Create
     include Callable
 
     def initialize(params:)
-      params.each { |key, value| instance_variable_set("@#{key}", value) }
+      @params = params
     end
 
     def call
@@ -16,18 +14,10 @@ module Courses
 
     private
 
-    attr_reader :title, :description, :poster, :author_id, :team_id
+    attr_reader :params
 
     def create_course
-      Course.create(attributes)
-    end
-
-    def attributes
-      { title: title,
-        description: description,
-        poster: poster,
-        author_id: author_id,
-        team_id: team_id }.compact
+      Course.create(params)
     end
   end
 end
