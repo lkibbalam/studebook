@@ -13,8 +13,7 @@ module Api
       end
 
       def all
-        @courses = policy_scope(Course)
-        respond_with(@courses)
+        respond_with(policy_scope(Course).with_attached_poster)
       end
 
       def show
