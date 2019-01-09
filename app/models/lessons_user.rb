@@ -9,9 +9,9 @@ class LessonsUser < ApplicationRecord
 
   enum status: { unlocked: 2, done: 1, locked: 0 }
 
-  ActiveRecord::Base.transaction do
-    after_update :unlock_next_lesson, :change_course_progress, if: :lesson_approved?
-  end
+  # ActiveRecord::Base.transaction do
+  #   after_update :unlock_next_lesson, :change_course_progress, if: :lesson_approved?
+  # end
 
   private
 
