@@ -8,4 +8,6 @@ class Lesson < ApplicationRecord
   has_many :students, through: :lessons_users
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :tasks, dependent: :destroy
+
+  default_scope { order(created_at: :asc) }
 end
