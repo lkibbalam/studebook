@@ -41,7 +41,7 @@ module TasksUsers
     end
 
     def unlock_next_lesson!
-      course_lessons = task_user.task.lesson.course.lessons
+      course_lessons = task_user.task.lesson.course.lessons.sort
       lesson_index = course_lessons.index(task_user.task.lesson)
 
       lesson_done!(course_lessons[lesson_index])

@@ -26,7 +26,7 @@ module CoursesUsers
     end
 
     def create_lessons_user
-      lessons_user = course.lessons.ids.map { |id| { lesson_id: id, student_id: user.id } }
+      lessons_user = course.lessons.ids.sort.map { |id| { lesson_id: id, student_id: user.id } }
       unlock_first_lesson!(lessons_user)
       LessonsUser.create!(lessons_user)
     end
