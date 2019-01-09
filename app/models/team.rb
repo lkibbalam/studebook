@@ -4,8 +4,8 @@ class Team < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
 
-  validates :title, presence: true, length: { in: 10..100 }
-  validates :description, presence: true, length: { in: 30..1000 }
+  validates :title, presence: true, length: { in: 1..100 }
+  validates :description, presence: true, length: { in: 1..1000 }
 
   has_one_attached :poster
   has_many :users
