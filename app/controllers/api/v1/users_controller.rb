@@ -33,7 +33,8 @@ module Api
       end
 
       def mentors
-        @users = current_user.team.users.select(&:staff?)
+        team = Team.find(params[:id])
+        @users = team.users.where(role: :staff)
         respond_with(@users)
       end
 

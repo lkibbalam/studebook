@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   post '/graphql', to: 'graphql#execute'
-  default_url_options host: 'https://studypet.herokuapp.com'
+  default_url_options host: 'http://localhost:8001'
 
   mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
 
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       get 'users/current' => 'users#current'
 
       post 'courses/create' => 'courses#create'
-      get 'users/mentors' => 'users#mentors'
+      get 'team/:id/mentors' => 'users#mentors'
       post 'courses/:id/start_course' => 'courses_users#create'
       get 'courses/:id/current_user' => 'courses_users#show'
       get 'courses' => 'courses#all'
