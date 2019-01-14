@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
+      post 'user/ldap' => 'ldat#create'
       post 'user/token' => 'user_token#create'
       get 'users/current' => 'users#current'
 

@@ -28,6 +28,7 @@ gem 'puma'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
 gem 'responders'
+gem 'net-ldap'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
