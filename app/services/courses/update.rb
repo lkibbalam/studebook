@@ -6,7 +6,7 @@ module Courses
 
     def initialize(course:, params:)
       @course = course
-      params.each { |key, value| instance_variable_set("@#{key}", value) }
+      @params = params
     end
 
     def call
@@ -15,18 +15,11 @@ module Courses
 
     private
 
-    attr_reader :course, :title, :description, :poster, :team_id
+    attr_reader :course, :params
 
     def update_course
-      course.update(attributes)
+      course.update(params)
       course
-    end
-
-    def attributes
-      { description: description,
-        team_id: team_id,
-        poster: poster,
-        title: title }.compact
     end
   end
 end
