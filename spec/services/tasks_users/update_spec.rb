@@ -8,6 +8,10 @@ module TasksUsers
       described_class.call(task_user: task_user, current_user: user, params: params)
     end
 
+    let!(:course) { create(:course) }
+    let!(:lesson) { create(:lesson, course: course) }
+    let!(:task) { create(:task, lesson: lesson) }
+
     context 'student send task to verify' do
       let(:mentor) { create(:user, :staff) }
       let(:user) { create(:user, :student, mentor: mentor) }
@@ -16,42 +20,43 @@ module TasksUsers
         { status: 'verifying',
           github_url: Faker::Internet.url('github.com'),
           comment: Faker::Lorem.sentence }
-      end
-
-      %w[status github_url].each do |attribute|
-        it "should update task`s #{attribute}" do
-          expect(update_task_user.send(attribute)).to eq(params[attribute.to_sym])
         end
-      end
+        
+        %w[status github_url].each do |attribute|
+          it "should update task`s #{attribute}" do
+            expect(update_task_user.send(attribute)).to eq(params[attribute.to_sym])
+          end
+        end
 
-      it 'mentor should have notification' do
-        expect { update_task_user }.to change(mentor.notifications, :count).by(1)
-      end
-
+        it 'mentor should have notification' do
+          expect { update_task_user }.to change(mentor.notifications, :count).by(1)
+        end
+        
       it 'should add comment' do
         expect { update_task_user }.to change(user.comments, :count).by(1)
       end
-
+      
       it 'body comment should be' do
         update_task_user
         expect(user.comments.first.body).to eq(params[:comment])
       end
     end
-
+    
     context 'mentor' do
       let(:user) { create(:user, :staff) }
       let(:student) { create(:user, :student, mentor: user) }
-      let(:task_user) { create(:tasks_user, :verifying, user: student) }
-
+      let(:task_user) { create(:tasks_user, :verifying, user: student, task: task) }
+      let!(:course_user) { create(:courses_user, course: course, student: student) }
+      let!(:lesson_user) { create(:lessons_user, lesson: lesson, student: student) }
       context 'send task to change' do
         let(:params) do
           { status: 'change',
             github_url: Faker::Internet.url('github.com'),
             comment: Faker::Lorem.sentence }
-        end
-
-        %w[status github_url].each do |attribute|
-          it "should update task`s #{attribute}" do
+          end
+          
+          %w[status github_url].each do |attribute|
+            it "should update task`s #{attribute}" do
             expect(update_task_user.send(attribute)).to eq(params[attribute.to_sym])
           end
         end
@@ -97,13 +102,13 @@ module TasksUsers
         end
 
         context 'if all lesson`s tasks user accept' do
-          let(:course) { create(:course) }
-          let(:lesson_first) { create(:lesson, course: course) }
-          let(:lesson_second) { create(:lesson, course: course) }
+          let!(:course2) { create(:course) }
+          let(:lesson_first) { create(:lesson, course: course2) }
+          let(:lesson_second) { create(:lesson, course: course2) }
           let!(:first_lesson_tasks) { create_list(:task, 2, lesson: lesson_first) }
           let!(:second_lesson_tasks) { create_list(:task, 2, lesson: lesson_second) }
           let!(:create_course_user) do
-            CoursesUsers::Create.call(course: course, user: student)
+            CoursesUsers::Create.call(course: course2, user: student)
           end
 
           let!(:first_task_user) do
