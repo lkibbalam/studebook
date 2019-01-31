@@ -7,7 +7,7 @@ module TasksUsers
     def initialize(task_user:, current_user:, params:)
       @task_user = task_user
       @current_user = current_user
-      params.each { |key, value| instance_variable_set("@#{key}", value) }
+      @params = params
     end
 
     def call
@@ -22,10 +22,11 @@ module TasksUsers
 
     private
 
-    attr_reader :task_user, :current_user, :status, :github_url, :comment
+    attr_reader :task_user, :current_user, :params
 
     def update_task_user
-      task_user.update!(task_user_attributes)
+      task_user.update!(status: params.dig(:status),
+                        github_url: params.dig(:github_url))
     end
 
     def create_notification
@@ -33,7 +34,9 @@ module TasksUsers
     end
 
     def create_comment
-      Comment.create!(comment_attributes)
+      Comment.create!(body: params.dig(:comment),
+                      user: current_user,
+                      commentable: task_user)
     end
 
     def all_lesson_tasks_user_accept?
@@ -43,9 +46,7 @@ module TasksUsers
     def unlock_next_lesson!
       course_lessons = task_user.task.lesson.course.lessons.sort
       lesson_index = course_lessons.index(task_user.task.lesson)
-
       lesson_done!(course_lessons[lesson_index])
-
       next_lesson = course_lessons[lesson_index + 1]
       lesson_user = task_user.user.lessons_users.find_by(lesson: next_lesson)
       lesson_user.update!(status: :unlocked) if lesson_user&.locked?
@@ -68,22 +69,7 @@ module TasksUsers
         verifying: { user: task_user.user.mentor, tasks_user: task_user },
         change: { user: task_user.user, tasks_user: task_user },
         accept: { user: task_user.user, tasks_user: task_user }
-      }[status.to_sym]
-    end
-
-    def task_user_attributes
-      {
-        status: status,
-        github_url: github_url
-      }.compact
-    end
-
-    def comment_attributes
-      {
-        body: comment,
-        user: current_user,
-        commentable: task_user
-      }.compact
+      }[params.dig(:status).to_sym]
     end
   end
 end

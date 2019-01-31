@@ -5,7 +5,12 @@ require 'rails_helper'
 describe 'tasks_users_controller' do
   let(:mentor) { create(:mentor, :staff) }
   let(:padawan) { create(:student, mentor: mentor) }
-  let(:task_user) { create(:tasks_user, user: padawan) }
+  let(:course) { create(:course) }
+  let(:lesson) { create(:lesson, course: course) }
+  let(:task) { create(:task, lesson: lesson) }
+  let!(:course_user) { create(:courses_user, course: course, student: padawan) }
+  let!(:lesson_user) { create(:lessons_user, lesson: lesson, student: padawan) }
+  let(:task_user) { create(:tasks_user, task: task, user: padawan) }
 
   describe 'GET #padawan_tasks' do
     context 'non authenticate request' do
@@ -15,7 +20,7 @@ describe 'tasks_users_controller' do
     end
 
     context 'authenticate request' do
-      let!(:task_user) { create_list(:tasks_user, 10, user: padawan) }
+      let!(:tasks_user) { create_list(:tasks_user, 10, user: padawan) }
 
       before { get "/api/v1/padawans/#{padawan.id}/tasks", headers: authenticated_header(mentor) }
 
@@ -55,7 +60,7 @@ describe 'tasks_users_controller' do
     end
 
     context 'authenticate request' do
-      let(:padawan_task) { create(:tasks_user, user: padawan, status: :verifying) }
+      let(:padawan_task) { create(:tasks_user, task: task, user: padawan) }
 
       describe 'when mentor accept task' do
         before do
@@ -77,15 +82,16 @@ describe 'tasks_users_controller' do
         it { expect(padawan_task.reload.status).to eql('change') }
       end
       describe 'when student send task to verifying' do
+        let(:undone_task) { create(:tasks_user, task: task, user: padawan, status: :undone) }
         before do
-          patch "/api/v1/tasks/#{task_user.id}/task_to_verify",
+          patch "/api/v1/tasks/#{undone_task.id}/task_to_verify",
                 params: { task: { github_url: 'www.leningrad.ru', status: :verifying } },
                 headers: authenticated_header(padawan)
         end
 
         it_behaves_like 'authenticate request'
-        it { expect(task_user.reload.status).to eql('verifying') }
-        it { expect(task_user.reload.github_url).to eql('www.leningrad.ru') }
+        it { expect(undone_task.reload.status).to eql('verifying') }
+        it { expect(undone_task.reload.github_url).to eql('www.leningrad.ru') }
       end
     end
   end
