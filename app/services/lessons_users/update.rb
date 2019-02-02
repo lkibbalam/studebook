@@ -13,6 +13,7 @@ module LessonsUsers
       ActiveRecord::Base.transaction do
         update_lesson_user &&
           unlock_next_lesson_user
+        update_course_user
         lesson_user
       end
     end
@@ -29,9 +30,8 @@ module LessonsUsers
       return unless lesson_user.done?
 
       next_lesson = next_course_lesson
-      return course_user_archived! unless next_lesson
-
-      next_lesson_user = LessonsUser.find_by(lesson: next_lesson, student: lesson_user.student)
+      next_lesson_user = LessonsUser.find_by(lesson: next_lesson,
+                                             student: lesson_user.student)
       next_lesson_user&.unlock!
     end
 
@@ -41,14 +41,10 @@ module LessonsUsers
       course_lessons[lesson_index + 1]
     end
 
-    def course_user_archived!
+    def update_course_user
       course = lesson_user.lesson.course
-      course_user = CoursesUser.find_by(course: course, student: lesson_user.student)
-      course_user.archived! && full_progress!(course_user)
-    end
-
-    def full_progress!(course_user)
-      course_user.update(progress: 100)
+      course_user = lesson_user.student.courses_users.find_by(course: course)
+      course_user.update_progress!
     end
   end
 end

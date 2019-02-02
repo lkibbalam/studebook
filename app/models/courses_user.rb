@@ -9,7 +9,7 @@ class CoursesUser < ApplicationRecord
 
   enum status: { current: 0, archived: 1 }
 
-  def change_progress!
+  def update_progress!
     lessons_user = student.lessons_users.where(lesson: course.lessons)
     done_lessons_user_count = lessons_user.where(status: :done).count
     return update(progress: 100, status: :archived) if lessons_user.size == done_lessons_user_count

@@ -62,7 +62,7 @@ module TasksUsers
     def change_course_progress
       course = task_user.task.lesson.course
       course_user = task_user.user.courses_users.find_by(course: course)
-      course_user.update(progress: course_user.progress + course.lesson_value)
+      course_user.update_progress!
     end
 
     def notification_attributes

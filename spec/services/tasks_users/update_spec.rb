@@ -101,14 +101,14 @@ module TasksUsers
           expect(user.comments.first.body).to eq(params[:comment])
         end
 
-        context 'if all lesson`s tasks user accept' do
-          let!(:course2) { create(:course) }
-          let(:lesson_first) { create(:lesson, course: course2) }
-          let(:lesson_second) { create(:lesson, course: course2) }
+        context 'if all lesson`s tasks user accepted' do
+          let!(:course_2) { create(:course) }
+          let(:lesson_first) { create(:lesson, course: course_2) }
+          let(:lesson_second) { create(:lesson, course: course_2) }
           let!(:first_lesson_tasks) { create_list(:task, 2, lesson: lesson_first) }
           let!(:second_lesson_tasks) { create_list(:task, 2, lesson: lesson_second) }
-          let!(:create_course_user) do
-            CoursesUsers::Create.call(course: course2, user: student)
+          let!(:course_user_2) do
+            CoursesUsers::Create.call(course: course_2, user: student)
           end
 
           let!(:first_task_user) do
@@ -122,6 +122,20 @@ module TasksUsers
               update_task_user
               second_lesson_user.reload
             end.to change(second_lesson_user, :status).from('locked').to('unlocked')
+          end
+
+          it 'should change course user progress' do
+            expect do
+              update_task_user
+              course_user_2.reload
+            end.to change(course_user_2, :progress).from(0).to(50)
+          end
+
+          it 'should change course user status' do
+            expect do
+              update_task_user
+              course_user_2.reload
+            end.to_not change(course_user_2, :status)
           end
         end
       end
