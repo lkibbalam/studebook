@@ -6,24 +6,49 @@ module LessonsUsers
 
     def initialize(lesson_user:, params:)
       @lesson_user = lesson_user
-      params.each { |key, value| instance_variable_set("@#{key}", value) }
+      @params = params
     end
 
     def call
-      update_lesson_user
+      result = update_lesson_user
+      ActiveRecord::Base.transaction do
+        result &&
+          unlock_next_lesson_user
+      end
+      result
     end
 
     private
 
-    attr_reader :lesson_user, :status, :mark
+    attr_reader :lesson_user, :params
 
     def update_lesson_user
-      lesson_user if lesson_user.update(attributes)
+      lesson_user if lesson_user.update(params)
     end
 
-    def attributes
-      { mark: mark,
-        status: status }.compact
+    def unlock_next_lesson_user
+      return unless lesson_user.done?
+
+      next_lesson = next_course_lesson
+      course_user_archived! unless next_lesson
+      next_lesson_user = LessonsUser.find_by(lesson: next_lesson, student: lesson_user.student)
+      next_lesson_user&.unlock!
+    end
+
+    def next_course_lesson
+      course_lessons = lesson_user.lesson.course.lessons.sort
+      lesson_index = course_lessons.index(lesson_user.lesson)
+      course_lessons[lesson_index + 1]
+    end
+
+    def course_user_archived!
+      course = lesson_user.lesson.course
+      course_user = CoursesUser.find_by(course: course, student: lesson_user.student)
+      course_user.archived! && full_progress!(course_user)
+    end
+
+    def full_progress!(course_user)
+      course_user.update(progress: 100)
     end
   end
 end

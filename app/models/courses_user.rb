@@ -8,16 +8,4 @@ class CoursesUser < ApplicationRecord
   validates :student, uniqueness: { scope: :course }
 
   enum status: { current: 0, archived: 1 }
-
-  after_update :full_progress!, if: :course_status_from_current_to_archived?
-
-  private
-
-  def course_status_from_current_to_archived?
-    saved_change_to_status?(from: 'current', to: 'archived')
-  end
-
-  def full_progress!
-    update(progress: 100)
-  end
 end
