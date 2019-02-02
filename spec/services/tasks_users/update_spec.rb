@@ -20,28 +20,28 @@ module TasksUsers
         { status: 'verifying',
           github_url: Faker::Internet.url('github.com'),
           comment: Faker::Lorem.sentence }
-        end
-        
-        %w[status github_url].each do |attribute|
-          it "should update task`s #{attribute}" do
-            expect(update_task_user.send(attribute)).to eq(params[attribute.to_sym])
-          end
-        end
+      end
 
-        it 'mentor should have notification' do
-          expect { update_task_user }.to change(mentor.notifications, :count).by(1)
+      %w[status github_url].each do |attribute|
+        it "should update task`s #{attribute}" do
+          expect(update_task_user.send(attribute)).to eq(params[attribute.to_sym])
         end
-        
+      end
+
+      it 'mentor should have notification' do
+        expect { update_task_user }.to change(mentor.notifications, :count).by(1)
+      end
+
       it 'should add comment' do
         expect { update_task_user }.to change(user.comments, :count).by(1)
       end
-      
+
       it 'body comment should be' do
         update_task_user
         expect(user.comments.first.body).to eq(params[:comment])
       end
     end
-    
+
     context 'mentor' do
       let(:user) { create(:user, :staff) }
       let(:student) { create(:user, :student, mentor: user) }
@@ -53,10 +53,10 @@ module TasksUsers
           { status: 'change',
             github_url: Faker::Internet.url('github.com'),
             comment: Faker::Lorem.sentence }
-          end
-          
-          %w[status github_url].each do |attribute|
-            it "should update task`s #{attribute}" do
+        end
+
+        %w[status github_url].each do |attribute|
+          it "should update task`s #{attribute}" do
             expect(update_task_user.send(attribute)).to eq(params[attribute.to_sym])
           end
         end

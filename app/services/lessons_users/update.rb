@@ -10,12 +10,11 @@ module LessonsUsers
     end
 
     def call
-      result = update_lesson_user
       ActiveRecord::Base.transaction do
-        result &&
+        update_lesson_user &&
           unlock_next_lesson_user
+        lesson_user
       end
-      result
     end
 
     private
@@ -23,14 +22,15 @@ module LessonsUsers
     attr_reader :lesson_user, :params
 
     def update_lesson_user
-      lesson_user if lesson_user.update(params)
+      lesson_user.update!(params)
     end
 
     def unlock_next_lesson_user
       return unless lesson_user.done?
 
       next_lesson = next_course_lesson
-      course_user_archived! unless next_lesson
+      return course_user_archived! unless next_lesson
+
       next_lesson_user = LessonsUser.find_by(lesson: next_lesson, student: lesson_user.student)
       next_lesson_user&.unlock!
     end

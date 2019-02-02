@@ -40,7 +40,8 @@ module TasksUsers
     end
 
     def all_lesson_tasks_user_accept?
-      TasksUser.where(user: task_user.user, task: task_user.task.lesson.tasks).all?(&:accept?)
+      TasksUser.where(user: task_user.user,
+                      task: task_user.task.lesson.tasks).all?(&:accept?)
     end
 
     def unlock_next_lesson!

@@ -20,7 +20,7 @@ describe 'lessons_users_spec' do
     context 'when authenticate request' do
       before do
         patch "/api/v1/lesson_user/#{lesson_user.id}/approve", params: { lesson_user: { status: :done, mark: 100 } },
-                                                                headers: authenticated_header(mentor)
+                                                               headers: authenticated_header(mentor)
       end
       it_behaves_like 'authenticate request'
 
