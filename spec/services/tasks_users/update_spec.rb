@@ -41,7 +41,19 @@ module TasksUsers
     context 'mentor' do
       let(:user) { create(:user, :staff) }
       let(:student) { create(:user, :student, mentor: user) }
-      let(:task_user) { create(:tasks_user, :verifying, user: student) }
+      let(:course) { create(:course) }
+      let(:lesson_first) { create(:lesson, course: course) }
+      let(:lesson_second) { create(:lesson, course: course) }
+      let!(:first_lesson_tasks) { create_list(:task, 2, lesson: lesson_first) }
+      let!(:second_lesson_tasks) { create_list(:task, 2, lesson: lesson_second) }
+      let!(:create_course_user) do
+        CoursesUsers::Create.call(course: course, user: student)
+      end
+      let!(:first_task_user) do
+        student.tasks_users.where(task: first_lesson_tasks).first.update(status: :accept)
+      end
+      let!(:second_lesson_user) { LessonsUser.find_by(student: student, lesson: second_lesson_tasks.first.lesson) }
+      let!(:task_user) { student.tasks_users.where(task: first_lesson_tasks).second }
 
       context 'send task to change' do
         let(:params) do

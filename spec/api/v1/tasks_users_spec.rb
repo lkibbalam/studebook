@@ -5,7 +5,13 @@ require 'rails_helper'
 describe 'tasks_users_controller' do
   let(:mentor) { create(:mentor, :staff) }
   let(:padawan) { create(:student, mentor: mentor) }
-  let(:task_user) { create(:tasks_user, user: padawan) }
+  let(:course) { create(:course) }
+  let(:lessons) { create_list(:lesson, 3, course: course) }
+  let(:tasks) { create_list(:task, 3, lesson: lessons.first) }
+  let!(:courses_user) { create(:courses_user, student: padawan, course: course) }
+  let!(:lessons_user1) { create(:lessons_user, student: padawan, lesson: lessons.first) }
+  let!(:lessons_user2) { create(:lessons_user, student: padawan, lesson: lessons.second) }
+  let(:task_user) { create(:tasks_user, user: padawan, task: tasks.first) }
 
   describe 'GET #padawan_tasks' do
     context 'non authenticate request' do
@@ -55,26 +61,24 @@ describe 'tasks_users_controller' do
     end
 
     context 'authenticate request' do
-      let(:padawan_task) { create(:tasks_user, user: padawan, status: :verifying) }
-
       describe 'when mentor accept task' do
         before do
-          patch "/api/v1/padawans/#{padawan_task.id}/task", params: { task: { status: :accept } },
-                                                            headers: authenticated_header(mentor)
+          patch "/api/v1/padawans/#{task_user.id}/task", params: { task: { status: :accept } },
+                                                         headers: authenticated_header(mentor)
         end
 
         it_behaves_like 'authenticate request'
-        it { expect(padawan_task.reload.status).to eql('accept') }
+        it { expect(task_user.reload.status).to eql('accept') }
       end
 
       describe 'when mentor denied task, and switch to change it' do
         before do
-          patch "/api/v1/padawans/#{padawan_task.id}/task", params: { task: { status: :change } },
-                                                            headers: authenticated_header(mentor)
+          patch "/api/v1/padawans/#{task_user.id}/task", params: { task: { status: :change } },
+                                                         headers: authenticated_header(mentor)
         end
 
         it_behaves_like 'authenticate request'
-        it { expect(padawan_task.reload.status).to eql('change') }
+        it { expect(task_user.reload.status).to eql('change') }
       end
       describe 'when student send task to verifying' do
         before do
