@@ -6,7 +6,7 @@ class CreateTasks < ActiveRecord::Migration[5.1]
       t.bigint :lesson_id, index: true
       t.string :title
       t.text :description
-      t.integer :order_number
+      t.integer :position
 
       t.timestamps
     end

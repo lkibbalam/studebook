@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['author_id'], name: 'index_courses_on_author_id'
-    t.index ['slug'], name: 'index_courses_on_slug'
+    t.index ['slug'], name: 'index_courses_on_slug', unique: true
     t.index ['team_id'], name: 'index_courses_on_team_id'
   end
 
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.integer 'progress', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index %w[course_id student_id], name: 'index_courses_users_on_course_id_and_student_id'
+    t.index %w[course_id student_id], name: 'index_courses_users_on_course_id_and_student_id', unique: true
   end
 
   create_table 'friendly_id_slugs', id: :serial, force: :cascade do |t|
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.text 'description'
     t.text 'material'
     t.string 'title'
-    t.integer 'order_number'
+    t.integer 'position'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['course_id'], name: 'index_lessons_on_course_id'
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.integer 'mark', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index %w[student_id lesson_id], name: 'index_lessons_users_on_student_id_and_lesson_id'
+    t.index %w[student_id lesson_id], name: 'index_lessons_users_on_student_id_and_lesson_id', unique: true
   end
 
   create_table 'notifications', force: :cascade do |t|
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.bigint 'lesson_id'
     t.string 'title'
     t.text 'description'
-    t.integer 'order_number'
+    t.integer 'position'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['lesson_id'], name: 'index_tasks_on_lesson_id'
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.integer 'status', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index %w[user_id task_id], name: 'index_tasks_users_on_user_id_and_task_id'
+    t.index %w[user_id task_id], name: 'index_tasks_users_on_user_id_and_task_id', unique: true
   end
 
   create_table 'teams', force: :cascade do |t|
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.text 'slug'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['slug'], name: 'index_teams_on_slug'
+    t.index ['slug'], name: 'index_teams_on_slug', unique: true
   end
 
   create_table 'users', force: :cascade do |t|
@@ -158,12 +158,13 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.string 'github_url'
     t.integer 'status', default: 0
     t.string 'nickname'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
     t.string 'email'
     t.string 'password_digest'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['mentor_id'], name: 'index_users_on_mentor_id'
-    t.index ['nickname'], name: 'index_users_on_nickname'
+    t.index ['nickname'], name: 'index_users_on_nickname', unique: true
     t.index ['team_id'], name: 'index_users_on_team_id'
   end
 end

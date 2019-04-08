@@ -54,13 +54,31 @@ describe 'lessons_controller_spec' do
       it_behaves_like 'non authenticate request'
     end
     context 'when authenticate' do
+      let!(:course2) { create(:course) }
       let(:create_lesson) do
-        post "/api/v1/courses/#{course.id}/lessons", params: { lesson: attributes_for(:lesson) },
-                                                     headers: authenticated_header(admin)
+        post "/api/v1/courses/#{course2.id}/lessons", params: { lesson: attributes_for(:lesson) },
+                                                      headers: authenticated_header(admin)
+      end
+      let(:create_lesson2) do
+        post "/api/v1/courses/#{course2.id}/lessons", params: { lesson: attributes_for(:lesson) },
+                                                      headers: authenticated_header(admin)
+      end
+      let(:create_lesson3) do
+        post "/api/v1/courses/#{course2.id}/lessons", params: { lesson: attributes_for(:lesson) },
+                                                      headers: authenticated_header(admin)
       end
 
-      it 'when lesson with valid params' do
+      it 'schould create one lesson' do
         expect { create_lesson }.to change(Lesson, :count).by(1)
+      end
+
+      it 'schould make course with position' do
+        create_lesson
+        create_lesson2
+        create_lesson3
+        expect(course2.lessons.first.position).to eql(1)
+        expect(course2.lessons.second.position).to eql(2)
+        expect(course2.lessons.third.position).to eql(3)
       end
     end
   end
