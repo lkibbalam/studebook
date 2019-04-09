@@ -11,5 +11,6 @@ class CreateLessons < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_index :lessons, %i[course_id position], unique: true
   end
 end

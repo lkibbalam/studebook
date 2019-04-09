@@ -7,10 +7,8 @@ RSpec.describe CoursesUser, type: :model do
   it { should belong_to(:student).class_name('User').with_foreign_key('student_id') }
   it { should have_many(:comments).dependent(:destroy) }
 
-  let(:lessons_count) { 20 }
   let(:student) { create(:user) }
-  let(:course) { create(:course, lessons: create_list(:lesson, lessons_count)) }
-  let(:course_user) { create(:courses_user, student: student, course: course) }
+  let(:course_user) { create(:courses_user, student: student) }
 
   describe '.full_progress_for_archived' do
     let(:archive_course) { course_user.update(status: :archived) }

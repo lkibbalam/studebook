@@ -5,8 +5,11 @@ require 'rails_helper'
 describe 'courses_users_spec' do
   let(:admin) { create(:user, :admin) }
   let(:user) { create(:user, :student) }
-  let(:lessons) { create_list(:lesson, 3, tasks: create_list(:task, 3)) }
-  let(:course) { create(:course, :published, lessons: lessons) }
+  let!(:course) { create(:course, :published) }
+  let!(:lessons) { create_list(:lesson, 3, course: course) }
+  let!(:tasks_list1) { create_list(:task, 3, lesson: lessons.first) }
+  let!(:tasks_list2) { create_list(:task, 3, lesson: lessons.second) }
+  let!(:tasks_list3) { create_list(:task, 3, lesson: lessons.third) }
 
   describe 'GET #index' do
     context 'non-authenticate request' do

@@ -10,5 +10,6 @@ class CreateTasks < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_index :tasks, %i[lesson_id position], unique: true
   end
 end

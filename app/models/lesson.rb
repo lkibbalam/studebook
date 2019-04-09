@@ -10,5 +10,7 @@ class Lesson < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :tasks, dependent: :destroy
 
+  validates :position, uniqueness: { scope: :course }
+
   position_increment(scope: :course)
 end

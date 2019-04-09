@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.integer 'position'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index %w[course_id position], name: 'index_lessons_on_course_id_and_position', unique: true
     t.index ['course_id'], name: 'index_lessons_on_course_id'
   end
 
@@ -125,6 +126,7 @@ ActiveRecord::Schema.define(version: 20_181_109_170_454) do
     t.integer 'position'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index %w[lesson_id position], name: 'index_tasks_on_lesson_id_and_position', unique: true
     t.index ['lesson_id'], name: 'index_tasks_on_lesson_id'
   end
 

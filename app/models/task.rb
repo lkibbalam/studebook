@@ -5,6 +5,7 @@ class Task < ApplicationRecord
 
   validates :description, presence: true
   validates :title, presence: true
+  validates :position, uniqueness: { scope: :lesson }
 
   belongs_to :lesson
   has_many :tasks_users, dependent: :destroy

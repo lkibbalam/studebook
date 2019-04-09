@@ -6,8 +6,7 @@ describe 'lessons_controller_spec' do
   let!(:user) { create(:user) }
   let!(:admin) { create(:user, :admin) }
   let!(:course) { create(:course) }
-  let!(:lessons) { create_list(:lesson, 10, tasks: create_list(:task, 3)) }
-  let!(:lessons_user) { create(:lessons_user, student: user, lesson: lessons.first) }
+  let!(:lessons) { create_list(:lesson, 10, :with_tasks, tasks_count: 3) }
 
   describe 'GET #index' do
     let(:lessons) { create_list(:lesson, 10, course: course) }
