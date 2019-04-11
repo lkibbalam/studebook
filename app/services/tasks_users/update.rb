@@ -40,12 +40,14 @@ module TasksUsers
       TasksUser.where(user: task_user.user, task: task_user.task.lesson.tasks).all?(&:accept?)
     end
 
+    def all_course_lessons_user_done?
+      LessonsUser.where(student: task_user.user, lesson: task_user.task.lesson.course.lessons).all?(&:done?)
+    end
+
     def unlock_next_lesson!
       course_lessons = task_user.task.lesson.course.lessons.sort
       lesson_index = course_lessons.index(task_user.task.lesson)
-
       lesson_done!(course_lessons[lesson_index])
-
       next_lesson = course_lessons[lesson_index + 1]
       lesson_user = task_user.user.lessons_users.find_by(lesson: next_lesson)
       lesson_user.update!(status: :unlocked) if lesson_user&.locked?
@@ -60,6 +62,8 @@ module TasksUsers
     def change_course_progress
       course = task_user.task.lesson.course
       course_user = task_user.user.courses_users.find_by(course: course)
+      return course_user.update(progress: 100, status: :archived) if all_course_lessons_user_done?
+
       course_user.update(progress: course_user.progress + course.lesson_value)
     end
 

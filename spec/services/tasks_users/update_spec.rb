@@ -131,6 +131,37 @@ module TasksUsers
             end.to change(second_lesson_user, :status).from('locked').to('unlocked')
           end
         end
+
+        context 'if all lessons_user done' do
+          let(:course) { create(:course) }
+          let(:lesson_first) { create(:lesson, course: course) }
+          let(:lesson_second) { create(:lesson, course: course) }
+          let!(:first_lesson_tasks) { create_list(:task, 2, lesson: lesson_first) }
+          let!(:second_lesson_tasks) { create_list(:task, 2, lesson: lesson_second) }
+          let!(:create_course_user) do
+            CoursesUsers::Create.call(course: course, user: student)
+          end
+
+          let!(:first_task_user) do
+            student.tasks_users.where(task: first_lesson_tasks).update_all(status: :accept)
+            student.tasks_users.where(task: second_lesson_tasks).first.update(status: :accept)
+          end
+          let!(:second_lesson_user) { LessonsUser.find_by(student: student, lesson: second_lesson_tasks.first.lesson) }
+          let!(:first_lesson_user) { LessonsUser.find_by(student: student, lesson: first_lesson_tasks.first.lesson) }
+
+          let!(:task_user) { student.tasks_users.where(task: second_lesson_tasks).second }
+
+          let!(:course_user) { CoursesUser.find_by(student: student, course: second_lesson_user.lesson.course) }
+
+          it 'schould make last lesson done and chnage course status to acrhived' do
+            expect do
+              second_lesson_user.update(status: :unlocked)
+              first_lesson_user.update(status: :done)
+              update_task_user
+              course_user.reload
+            end.to change(course_user, :status).from('current').to('archived')
+          end
+        end
       end
     end
   end
