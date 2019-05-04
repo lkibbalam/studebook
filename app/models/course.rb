@@ -6,7 +6,6 @@ class Course < ApplicationRecord
 
   validates :title, presence: true, length: { in: 6..80 }
   validates :author, presence: true, length: { in: 20..250 }
-  validates :team, presence: true
   validates :description, presence: true
 
   has_one_attached :poster
