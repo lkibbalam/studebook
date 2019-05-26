@@ -7,8 +7,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.3'
-gem 'rails', '~> 5.2.1'
+ruby '2.6.3'
+gem 'rails', '~> 5.2.3'
 
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'ancestry'
@@ -28,13 +28,6 @@ gem 'puma'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
 gem 'responders'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
