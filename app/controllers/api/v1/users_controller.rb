@@ -41,7 +41,7 @@ module Api
       def create
         @user = Users::Create.call(params: user_params)
         authorize @user
-        render json: @user
+        render json: @user, status: :created
       end
 
       def update

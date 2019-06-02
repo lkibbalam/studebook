@@ -14,7 +14,10 @@ module Users
           password: Faker::Internet.password(8) }
       end
 
-      it { expect { create_user }.to change(User, :count).by(1) }
+      it 'schould create a user and sends an email' do
+        expect { create_user }.to change(User, :count).by(1)
+                                                      .and change { UserMailer.deliveries.count }.by(1)
+      end
     end
 
     context 'with invalid data' do
@@ -23,7 +26,11 @@ module Users
           password: '' }
       end
 
-      it { expect { create_user }.to change(User, :count).by(0) }
+      it "raise Record Invalid and doesn't send an email" do
+        expect { create_user }
+          .to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Email empty, Password can't be blank")
+          .and change { UserMailer.deliveries.count }.by(0)
+      end
     end
 
     context 'with already exist email' do
@@ -34,7 +41,11 @@ module Users
           password: Faker::Internet.password(8) }
       end
 
-      it { expect { create_user }.to change(User, :count).by(0) }
+      it "raise Record Invalid and doesn't send an email" do
+        expect { create_user }
+          .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Email has already been taken')
+          .and change { UserMailer.deliveries.count }.by(0)
+      end
     end
   end
 end

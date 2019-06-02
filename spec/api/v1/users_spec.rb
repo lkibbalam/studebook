@@ -42,17 +42,35 @@ describe 'users_controller_spec' do
   end
 
   describe 'POST #create' do
+    let(:user_attributes) { attributes_for(:user) }
     context 'non authenticate request' do
-      before { post "/api/v1/teams/#{teams.first.id}/users", params: { user: attributes_for(:user) } }
+      before { post "/api/v1/teams/#{teams.first.id}/users", params: { user: user_attributes } }
       it_behaves_like 'non authenticate request'
     end
 
-    let(:create_user) do
-      post "/api/v1/teams/#{teams.first.id}/users", params: { user: attributes_for(:user) },
-                                                    headers: authenticated_header(admin)
-    end
+    context 'authenticate request' do
+      let(:create_user) do
+        post "/api/v1/teams/#{teams.first.id}/users", params: { user: user_attributes },
+                                                      headers: authenticated_header(admin)
+      end
 
-    it { expect { create_user }.to change(User, :count).by(1) }
+      it { expect { create_user }.to change(User, :count).by(1) }
+
+      context 'response contains' do
+        before { create_user }
+
+        it 'status 201 created' do
+          expect(response).to have_http_status(:created)
+        end
+
+        %w[mentor_id team_id first_name last_name role phone github_url email].each do |attr|
+          it "user with #{attr} " do
+            expect(response.body).to be_json_eql(User.find_by(email: user_attributes[:email])
+              .send(attr.to_sym).to_json).at_path("data/attributes/#{attr.camelize(:lower)}")
+          end
+        end
+      end
+    end
   end
 
   describe 'PATCH #update' do

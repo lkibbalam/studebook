@@ -9,7 +9,11 @@ module Users
     end
 
     def call
-      create_user
+      ActiveRecord::Base.transaction do
+        user = create_user
+        send_welcome
+        user
+      end
     end
 
     private
@@ -17,7 +21,11 @@ module Users
     attr_reader :params
 
     def create_user
-      User.create(params)
+      User.create!(params)
+    end
+
+    def send_welcome
+      UserMailer.with(user_params: params).welcome.deliver_now
     end
   end
 end
