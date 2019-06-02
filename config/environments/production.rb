@@ -84,6 +84,17 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.credentials.smtp.dig(:server),
+    port: 587,
+    domain: 'studybook.ml',
+    user_name: Rails.application.credentials.smtp.dig(:username),
+    password: Rails.application.credentials.smtp.dig(:password),
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 end
 
 Rails.application.routes.default_url_options = { host: 'studypet.herokuapp.com' }
