@@ -41,7 +41,14 @@ module TasksUsers
     context 'mentor' do
       let(:user) { create(:user, :staff) }
       let(:student) { create(:user, :student, mentor: user) }
-      let(:task_user) { create(:tasks_user, :verifying, user: student) }
+      let(:course_with_lessons_with_tasks) { create(:course_with_lessons_with_tasks, lessons_count: 2, tasks_count: 2) }
+      let!(:subscribe_user_to_course) do
+        CoursesUsers::Create.call(course: course_with_lessons_with_tasks, user: student)
+      end
+      let(:task_user) do
+        task_user = TasksUser.find_by(task: course_with_lessons_with_tasks.lessons.first.tasks.first, user: student)
+        task_user.update(status: :verifying) && task_user.reload
+      end
 
       context 'send task to change' do
         let(:params) do
@@ -97,26 +104,26 @@ module TasksUsers
         end
 
         context 'if all lesson`s tasks user accept' do
-          let(:course) { create(:course) }
-          let(:lesson_first) { create(:lesson, course: course) }
-          let(:lesson_second) { create(:lesson, course: course) }
-          let!(:first_lesson_tasks) { create_list(:task, 2, lesson: lesson_first) }
-          let!(:second_lesson_tasks) { create_list(:task, 2, lesson: lesson_second) }
-          let!(:create_course_user) do
-            CoursesUsers::Create.call(course: course, user: student)
+          let(:course_with_lessons_with_tasks) do
+            create(:course_with_lessons_with_tasks, lessons_count: 2, tasks_count: 2)
+          end
+          let!(:subscribe_user_to_course) do
+            CoursesUsers::Create.call(course: course_with_lessons_with_tasks, user: student)
+          end
+          let!(:course_user_lessons) do
+            LessonsUser.where(student: student, lesson: course_with_lessons_with_tasks.lessons)
+          end
+          let!(:done_first_task) do
+            TasksUser.find_by(user: student, task: course_with_lessons_with_tasks.lessons.first.tasks.first)
+                     .update(status: :accept)
+          end
+          let(:task_user) do
+            TasksUser.find_by(user: student, task: course_with_lessons_with_tasks.lessons.first.tasks.second)
           end
 
-          let!(:first_task_user) do
-            student.tasks_users.where(task: first_lesson_tasks).first.update(status: :accept)
-          end
-          let!(:second_lesson_user) { LessonsUser.find_by(student: student, lesson: second_lesson_tasks.first.lesson) }
-
-          let!(:task_user) { student.tasks_users.where(task: first_lesson_tasks).second }
           it 'should unlock next lesson user if accept all tasks user of lesson' do
-            expect do
-              update_task_user
-              second_lesson_user.reload
-            end.to change(second_lesson_user, :status).from('locked').to('unlocked')
+            expect { update_task_user && course_user_lessons.second.reload }
+              .to change(course_user_lessons.second, :status).from('locked').to('unlocked')
           end
         end
       end

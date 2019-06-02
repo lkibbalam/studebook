@@ -10,12 +10,13 @@ FactoryBot.define do
     trait(:published) { status { :published } }
     trait(:unpublished) { status { :unpublished } }
 
-    factory :course_with_lessons do
+    factory :course_with_lessons_with_tasks do
       transient do
-        count { 3 } # TODO: Check how it works
+        lessons_count { 3 } # TODO: Check how it works
+        tasks_count { 3 }
       end
       after(:create) do |course, options|
-        create_list(:lesson, options.count, course: course)
+        create_list(:lesson_with_tasks, options.lessons_count, tasks_count: options.tasks_count, course: course)
       end
     end
   end

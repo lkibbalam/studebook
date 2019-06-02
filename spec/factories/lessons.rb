@@ -7,9 +7,12 @@ FactoryBot.define do
     material { Faker::Lorem.paragraph }
     course
 
-    factory :lesson_with_3_tasks do
-      after(:create) do |lesson|
-        create_list(:task, 3, lesson: lesson)
+    factory :lesson_with_tasks do
+      transient do
+        tasks_count { 3 }
+      end
+      after(:create) do |lesson, options|
+        create_list(:task, options.tasks_count, lesson: lesson)
       end
     end
   end
