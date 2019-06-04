@@ -39,15 +39,13 @@ module Api
       end
 
       def create
-        @user = Users::Create.call(params: user_params)
-        authorize @user
-        render json: @user, status: :created
+        authorize User.new(user_params)
+        render json: Users::Create.call(params: user_params), status: :created
       end
 
       def update
         authorize @user
-        Users::Update.call(user: @user, params: user_params)
-        render json: @user
+        render json: Users::Update.call(user: @user, params: user_params)
       end
 
       def change_password
