@@ -42,8 +42,8 @@ describe 'users_controller_spec' do
   end
 
   describe 'POST #create' do
-    let(:user_attributes) { attributes_for(:user) }
     context 'non authenticate request' do
+      let(:user_attributes) { attributes_for(:user) }
       before { post "/api/v1/teams/#{teams.first.id}/users", params: { user: user_attributes } }
       it_behaves_like 'non authenticate request'
     end
@@ -51,23 +51,52 @@ describe 'users_controller_spec' do
     context 'authenticate request' do
       let(:create_user) do
         post "/api/v1/teams/#{teams.first.id}/users", params: { user: user_attributes },
-                                                      headers: authenticated_header(admin)
+                                                      headers: authenticated_header(user)
       end
+      context 'when admin creates user' do
+        let(:user_attributes) { attributes_for(:user) }
+        let!(:user) { create(:user, :admin) }
+        it { expect { create_user }.to change(User, :count).by(1) }
 
-      it { expect { create_user }.to change(User, :count).by(1) }
+        context 'when valid data' do
+          before { create_user }
 
-      context 'response contains' do
-        before { create_user }
+          it 'should have status 201 created' do
+            expect(response).to have_http_status(:created)
+          end
 
-        it 'status 201 created' do
-          expect(response).to have_http_status(:created)
+          %w[mentor_id team_id first_name last_name role phone github_url email].each do |attr|
+            it "response should have user with #{attr}" do
+              expect(response.body).to be_json_eql(User.find_by(email: user_attributes[:email])
+                .send(attr.to_sym).to_json).at_path("data/attributes/#{attr.camelize(:lower)}")
+            end
+          end
         end
 
-        %w[mentor_id team_id first_name last_name role phone github_url email].each do |attr|
-          it "user with #{attr} " do
-            expect(response.body).to be_json_eql(User.find_by(email: user_attributes[:email])
-              .send(attr.to_sym).to_json).at_path("data/attributes/#{attr.camelize(:lower)}")
+        context 'when invalid data' do
+          let(:user_attributes) { attributes_for(:user, email: ' ', password: '') }
+          let!(:user) { create(:user, :admin) }
+
+          it { expect { create_user }.to_not change(User, :count) }
+
+          it 'schould have status 422 unprocessable_entity' do
+            create_user
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(JSON.parse(response.body)['message'])
+              .to eq("Validation failed: Email empty, Password can't be blank")
           end
+        end
+      end
+      context 'when student creates user' do
+        let(:user_attributes) { attributes_for(:user) }
+        let!(:user) { create(:user, :student) }
+
+        it { expect { create_user }.to_not change(User, :count) }
+
+        it 'schould have status 401 unauthorized' do
+          create_user
+
+          expect(response).to have_http_status(:unauthorized)
         end
       end
     end
