@@ -49,8 +49,9 @@ module Api
       end
 
       def change_password
-        authorize current_user
-        Users::Update.call(user: current_user, params: user_params)
+        @user = current_user
+        authorize @user
+        Users::Update.call(user: @user, params: user_params)
       end
 
       def destroy
