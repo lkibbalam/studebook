@@ -32,21 +32,20 @@ class CoursesUserPolicy < ApplicationPolicy
     end
 
     private
+      def conditions_for(role)
+        {
+          staff: ["student_id IN (?) OR student_id = ?", user.padawans.select(:id), user.id],
+          moder: ["courses.team_id = ? OR student_id = ?", user.team_id, user.id],
+          leader: ["courses.team_id = ? OR student_id = ?", user.team_id, user.id],
+          student: [student: user]
+        }[role]
+      end
 
-    def conditions_for(role)
-      {
-        staff: ['student_id IN (?) OR student_id = ?', user.padawans.select(:id), user.id],
-        moder: ['courses.team_id = ? OR student_id = ?', user.team_id, user.id],
-        leader: ['courses.team_id = ? OR student_id = ?', user.team_id, user.id],
-        student: [student: user]
-      }[role]
-    end
-
-    def joins_for(role)
-      {
-        moder: :course,
-        leader: :course
-      }[role]
-    end
+      def joins_for(role)
+        {
+          moder: :course,
+          leader: :course
+        }[role]
+      end
   end
 end

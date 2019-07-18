@@ -13,17 +13,16 @@ module Teams
     end
 
     private
+      attr_reader :title, :description, :poster
 
-    attr_reader :title, :description, :poster
+      def create_team
+        Team.create(attributes)
+      end
 
-    def create_team
-      Team.create(attributes)
-    end
-
-    def attributes
-      { title: title,
-        description: description,
-        poster: poster }.compact
-    end
+      def attributes
+        { title: title,
+          description: description,
+          poster: poster }.compact
+      end
   end
 end

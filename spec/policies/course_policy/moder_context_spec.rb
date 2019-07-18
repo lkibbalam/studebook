@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe CoursePolicy do
   subject { described_class.new(moder, course) }
@@ -9,13 +9,13 @@ describe CoursePolicy do
     described_class::Scope.new(moder, Course.all).resolve
   end
 
-  context 'moder with active status accessing' do
-    context 'a published' do
+  context "moder with active status accessing" do
+    context "a published" do
       let(:moder) { create(:user, :moder) }
       let(:course) { create(:course, :published) }
 
-      context 'not own team course' do
-        it 'includes in resolved scope' do
+      context "not own team course" do
+        it "includes in resolved scope" do
           expect(resolved_scope).to include(course)
         end
 
@@ -23,10 +23,10 @@ describe CoursePolicy do
         it { is_expected.to forbid_actions(%i[create update destroy]) }
       end
 
-      context 'own team course' do
+      context "own team course" do
         let(:moder) { create(:user, :moder, team: course.team) }
 
-        it 'includes in resolved scope' do
+        it "includes in resolved scope" do
           expect(resolved_scope).to include(course)
         end
 
@@ -35,13 +35,13 @@ describe CoursePolicy do
       end
     end
 
-    context 'an unpublished' do
+    context "an unpublished" do
       let(:course) { create(:course, :unpublished) }
 
-      context 'own team course' do
+      context "own team course" do
         let(:moder) { create(:user, :moder, team: course.team) }
 
-        it 'includes in resolved scope' do
+        it "includes in resolved scope" do
           expect(resolved_scope).to include(course)
         end
 
@@ -49,10 +49,10 @@ describe CoursePolicy do
         it { is_expected.to forbid_actions(%i[create destroy]) }
       end
 
-      context 'not own team course' do
+      context "not own team course" do
         let(:moder) { create(:user, :moder) }
 
-        it 'excludes in resolved scope' do
+        it "excludes in resolved scope" do
           expect(resolved_scope).not_to include(course)
         end
 
@@ -61,11 +61,11 @@ describe CoursePolicy do
     end
   end
 
-  context 'moder with inactive status' do
+  context "moder with inactive status" do
     let(:moder) { create(:user, :moder, status: :inactive) }
     let(:course) { create(:course, :published) }
 
-    context 'accessing a course' do
+    context "accessing a course" do
       it { is_expected.to forbid_actions(%i[show create update destroy]) }
     end
   end

@@ -14,30 +14,29 @@ module Users
     end
 
     private
+      attr_reader :email, :password
 
-    attr_reader :email, :password
+      def authenticate_user
+        user = find_user(email, password)
 
-    def authenticate_user
-      user = find_user(email, password)
+        return { errors: [UserError.new("email or password is invalid")] } unless user
 
-      return { errors: [UserError.new('email or password is invalid')] } unless user
+        token = Knock::AuthToken.new(payload: { sub: user.id }).token
 
-      token = Knock::AuthToken.new(payload: { sub: user.id }).token
+        {
+          token: token,
+          me: user,
+          errors: []
+        }
+      end
 
-      {
-        token: token,
-        me: user,
-        errors: []
-      }
-    end
+      def find_user(email, password)
+        return if email.blank? || password.blank?
 
-    def find_user(email, password)
-      return if email.blank? || password.blank?
+        user = User.find_by(email: email)
+        return unless user&.authenticate(password)
 
-      user = User.find_by(email: email)
-      return unless user&.authenticate(password)
-
-      user
-    end
+        user
+      end
   end
 end

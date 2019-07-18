@@ -14,18 +14,17 @@ module Teams
     end
 
     private
+      attr_reader :team, :title, :description, :poster
 
-    attr_reader :team, :title, :description, :poster
+      def update_team
+        team.update(attributes)
+        team
+      end
 
-    def update_team
-      team.update(attributes)
-      team
-    end
-
-    def attributes
-      { description: description,
-        poster: poster,
-        title: title }
-    end
+      def attributes
+        { description: description,
+          poster: poster,
+          title: title }
+      end
   end
 end

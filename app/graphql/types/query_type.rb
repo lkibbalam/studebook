@@ -8,7 +8,7 @@ module Types
     end
 
     field :user, UserType, null: true do
-      description 'Find a user by ID'
+      description "Find a user by ID"
       argument :id, ID, required: true
     end
     def user(id:)
@@ -21,7 +21,7 @@ module Types
     end
 
     field :team, TeamType, null: true do
-      description 'Find team by ID'
+      description "Find team by ID"
       argument :id, ID, required: true
     end
     def team(id:)
@@ -34,7 +34,7 @@ module Types
     end
 
     field :course, CourseType, null: true do
-      description 'Find course by ID'
+      description "Find course by ID"
       argument :id, ID, required: true
     end
     def course(id:)
@@ -43,7 +43,7 @@ module Types
 
     field :courses, CoursesConnectionType, null: true, connection: true, extras: %i[ast_node]
     def courses(ast_node:)
-      includes = ['lessons'] if ast_node.selections.last.name == 'lessons'
+      includes = ["lessons"] if ast_node.selections.last.name == "lessons"
       Loaders::AttachmentsLoader.load_many(nil, ast_node, includes)
     end
   end

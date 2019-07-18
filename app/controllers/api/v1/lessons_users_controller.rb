@@ -19,14 +19,13 @@ module Api
       end
 
       private
+        def load_lesson_user
+          @lesson_user = LessonsUser.find(params[:id])
+        end
 
-      def load_lesson_user
-        @lesson_user = LessonsUser.find(params[:id])
-      end
-
-      def lesson_user_params
-        params.require(:lesson_user).permit(:status, :mark)
-      end
+        def lesson_user_params
+          params.require(:lesson_user).permit(:status, :mark)
+        end
     end
   end
 end

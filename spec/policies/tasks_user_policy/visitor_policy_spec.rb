@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe TasksUserPolicy do
   subject { described_class.new(visitor, task_user) }
@@ -10,10 +10,10 @@ describe TasksUserPolicy do
     described_class::Scope.new(visitor, TasksUser.all).resolve
   end
 
-  context 'visitor accessing a task user' do
+  context "visitor accessing a task user" do
     let(:task_user) { create(:tasks_user) }
 
-    it 'should be empty' do
+    it "should be empty" do
       expect(resolved_scope).to be_empty
     end
 

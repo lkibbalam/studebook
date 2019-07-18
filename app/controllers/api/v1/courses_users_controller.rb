@@ -35,14 +35,13 @@ module Api
       end
 
       private
+        def load_course
+          @course = Course.find(params[:id])
+        end
 
-      def load_course
-        @course = Course.find(params[:id])
-      end
-
-      def load_padawan
-        @padawan = User.find(params[:id])
-      end
+        def load_padawan
+          @padawan = User.find(params[:id])
+        end
     end
   end
 end

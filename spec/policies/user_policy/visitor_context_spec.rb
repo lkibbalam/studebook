@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe UserPolicy do
   subject { described_class.new(visitor, user) }
@@ -11,10 +11,10 @@ describe UserPolicy do
 
   let(:visitor) { nil }
 
-  context 'visitor accessing a team' do
+  context "visitor accessing a team" do
     let(:user) { create(:user) }
 
-    it 'excludes user from resolved scope' do
+    it "excludes user from resolved scope" do
       expect(resolved_scope).not_to include(user)
     end
 

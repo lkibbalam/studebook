@@ -60,15 +60,14 @@ module Api
       end
 
       private
+        def load_user
+          @user = ::User.find(params[:id])
+        end
 
-      def load_user
-        @user = ::User.find(params[:id])
-      end
-
-      def user_params
-        params.require(:user)
-              .permit(UserPolicy.new(current_user, @user).permitted_attributes)
-      end
+        def user_params
+          params.require(:user)
+                .permit(UserPolicy.new(current_user, @user).permitted_attributes)
+        end
     end
   end
 end

@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :tasks_user do
-    github_url { Faker::Internet.url('github.com') }
+    github_url { Faker::Internet.url("github.com") }
     mark { 0 }
     status { 0 }
     task

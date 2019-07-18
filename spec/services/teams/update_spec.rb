@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Teams
   describe Update do
@@ -10,7 +10,7 @@ module Teams
 
     let(:team) { create(:team) }
 
-    context 'with valid data' do
+    context "with valid data" do
       let(:params) do
         { title: Faker::Lorem.sentence,
           description: Faker::Lorem.paragraph }
@@ -23,10 +23,10 @@ module Teams
       end
     end
 
-    context 'invalid data' do
+    context "invalid data" do
       let(:params) do
-        { title: '',
-          description: '' }
+        { title: "",
+          description: "" }
       end
 
       %w[title description].each do |attribute|

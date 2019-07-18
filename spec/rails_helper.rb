@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
-require 'pundit/rspec'
-require 'pundit/matchers'
-require 'database_cleaner'
+require "spec_helper"
+require "pundit/rspec"
+require "pundit/matchers"
+require "database_cleaner"
 
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../config/environment', __dir__)
+ENV["RAILS_ENV"] ||= "test"
+require File.expand_path("../config/environment", __dir__)
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
@@ -15,10 +15,10 @@ Shoulda::Matchers.configure do |config|
   end
 end
 # Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }
+abort("The Rails environment is running in production mode!") if Rails.env.production?
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
-require 'rspec/rails'
+require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

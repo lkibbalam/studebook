@@ -2,7 +2,7 @@
 
 module Types
   class UserErrorType < GraphQL::Schema::Object
-    graphql_name 'UserError'
+    graphql_name "UserError"
 
     field :message, String, null: false
     field :path, String, null: true

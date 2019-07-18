@@ -13,11 +13,10 @@ module Courses
     end
 
     private
+      attr_reader :course
 
-    attr_reader :course
-
-    def destroy_course
-      course.destroy
-    end
+      def destroy_course
+        course.destroy
+      end
   end
 end

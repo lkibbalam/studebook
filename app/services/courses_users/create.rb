@@ -18,30 +18,29 @@ module CoursesUsers
     end
 
     private
+      attr_reader :course, :user
 
-    attr_reader :course, :user
-
-    def create_course_user
-      CoursesUser.create!(course: course, student: user)
-    end
-
-    def create_lessons_user
-      lessons_user = course.lessons.ids.sort.map { |id| { lesson_id: id, student_id: user.id } }
-      unlock_first_lesson!(lessons_user)
-      LessonsUser.create!(lessons_user)
-    end
-
-    def create_tasks_user
-      tasks_user = []
-      course.lessons.includes(:tasks).each do |lesson|
-        lesson_tasks = lesson.tasks.ids.map { |id| { user_id: user.id, task_id: id } }
-        tasks_user << lesson_tasks
+      def create_course_user
+        CoursesUser.create!(course: course, student: user)
       end
-      TasksUser.create!(tasks_user)
-    end
 
-    def unlock_first_lesson!(lessons_user)
-      lessons_user.first[:status] = :unlocked
-    end
+      def create_lessons_user
+        lessons_user = course.lessons.ids.sort.map { |id| { lesson_id: id, student_id: user.id } }
+        unlock_first_lesson!(lessons_user)
+        LessonsUser.create!(lessons_user)
+      end
+
+      def create_tasks_user
+        tasks_user = []
+        course.lessons.includes(:tasks).each do |lesson|
+          lesson_tasks = lesson.tasks.ids.map { |id| { user_id: user.id, task_id: id } }
+          tasks_user << lesson_tasks
+        end
+        TasksUser.create!(tasks_user)
+      end
+
+      def unlock_first_lesson!(lessons_user)
+        lessons_user.first[:status] = :unlocked
+      end
   end
 end

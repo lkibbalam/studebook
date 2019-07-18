@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe CoursePolicy do
   subject { described_class.new(staff, course) }
@@ -9,11 +9,11 @@ describe CoursePolicy do
     described_class::Scope.new(staff, Course).resolve
   end
 
-  context 'staff accessing a publised course' do
+  context "staff accessing a publised course" do
     let(:staff) { create(:user, :staff) }
     let(:course) { create(:course, status: :published) }
 
-    it 'incudes course in resolved scope' do
+    it "incudes course in resolved scope" do
       expect(resolved_scope).to include(course)
     end
 
@@ -21,22 +21,22 @@ describe CoursePolicy do
     it { is_expected.to forbid_actions(%i[create update destroy]) }
   end
 
-  context 'staff accessing an unpublished course' do
+  context "staff accessing an unpublished course" do
     let(:staff) { create(:user, :staff) }
     let(:course) { create(:course, :unpublished) }
 
-    it 'excludes course in resolved scope' do
+    it "excludes course in resolved scope" do
       expect(resolved_scope).not_to include(course)
     end
 
     it { is_expected.to forbid_actions(%i[show create update destroy]) }
   end
 
-  context 'inactive staff accessing to course' do
+  context "inactive staff accessing to course" do
     let(:staff) { create(:user, :staff, status: :inactive) }
     let(:course) { create(:course, :published) }
 
-    it 'excludes course if resolved scope' do
+    it "excludes course if resolved scope" do
       expect(resolved_scope).not_to include(course)
     end
 

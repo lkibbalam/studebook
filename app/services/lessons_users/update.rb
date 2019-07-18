@@ -14,16 +14,15 @@ module LessonsUsers
     end
 
     private
+      attr_reader :lesson_user, :status, :mark
 
-    attr_reader :lesson_user, :status, :mark
+      def update_lesson_user
+        lesson_user if lesson_user.update(attributes)
+      end
 
-    def update_lesson_user
-      lesson_user if lesson_user.update(attributes)
-    end
-
-    def attributes
-      { mark: mark,
-        status: status }.compact
-    end
+      def attributes
+        { mark: mark,
+          status: status }.compact
+      end
   end
 end

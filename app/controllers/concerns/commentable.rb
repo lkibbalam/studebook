@@ -10,7 +10,7 @@ module Commentable
 
   def create_comment
     @comment = commentable.comments.new(comment_params.merge(user: current_user))
-    @comment.parent_id = @commentable.id if @commentable.class.name == 'Comment'
+    @comment.parent_id = @commentable.id if @commentable.class.name == "Comment"
     render json: @comment if @comment.save
   end
 
@@ -27,12 +27,11 @@ module Commentable
   end
 
   private
+    def commentable
+      controller_path.classify.tr("Api::V1::", "").constantize.find(params[:id])
+    end
 
-  def commentable
-    controller_path.classify.tr('Api::V1::', '').constantize.find(params[:id])
-  end
-
-  def comment_params
-    params.require(:comment).permit(:body)
-  end
+    def comment_params
+      params.require(:comment).permit(:body)
+    end
 end

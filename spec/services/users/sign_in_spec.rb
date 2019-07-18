@@ -2,7 +2,7 @@
 
 # frozent_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Users
   describe SignIn do
@@ -12,7 +12,7 @@ module Users
 
     let(:decode_jwt) { JWT.decode(sign_in_user.dig(:token), key) }
 
-    context 'valid email and password' do
+    context "valid email and password" do
       let(:sign_in_user) do
         described_class.call(email: user.email, password: user.password)
       end
@@ -22,13 +22,13 @@ module Users
       it { expect(sign_in_user.dig(:me)).to eq(user) }
       it { expect(sign_in_user.dig(:token)).to be_kind_of(String) }
 
-      it 'response JWT have correct user id' do
-        expect(decode_jwt.first['sub']).to eq(user.id)
+      it "response JWT have correct user id" do
+        expect(decode_jwt.first["sub"]).to eq(user.id)
       end
     end
 
-    context 'invalid email or password' do
-      context 'email' do
+    context "invalid email or password" do
+      context "email" do
         let(:sign_in_user) do
           described_class.call(email: fake.email, password: user.password)
         end
@@ -37,7 +37,7 @@ module Users
         it { expect(sign_in_user.dig(:errors)).not_to be_empty }
         it { expect(sign_in_user.dig(:me)).to be_nil }
         it { expect(sign_in_user.dig(:token)).to be_nil }
-        it { expect(sign_in_user.dig(:errors).first['message']).to eq('email or password is invalid') }
+        it { expect(sign_in_user.dig(:errors).first["message"]).to eq("email or password is invalid") }
       end
     end
   end

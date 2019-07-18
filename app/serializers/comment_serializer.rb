@@ -8,7 +8,7 @@ class CommentSerializer < ActiveModel::Serializer
   end
 
   def state
-    object.created_at > object.updated_at ? 'created' : 'changed'
+    object.created_at > object.updated_at ? "created" : "changed"
   end
 
   def user_avatar
