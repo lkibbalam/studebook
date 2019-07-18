@@ -13,11 +13,10 @@ module Users
     end
 
     private
+      attr_reader :user
 
-    attr_reader :user
-
-    def destroy_user
-      user.destroy
-    end
+      def destroy_user
+        user.destroy
+      end
   end
 end

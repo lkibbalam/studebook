@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Courses
   describe Update do
@@ -10,7 +10,7 @@ module Courses
 
     let(:course) { create(:course) }
 
-    context 'with valid attributes' do
+    context "with valid attributes" do
       let(:params) do
         { title: Faker::Lorem.sentence,
           description: Faker::Lorem.paragraph,
@@ -24,12 +24,12 @@ module Courses
       end
     end
 
-    context 'invalid data' do
+    context "invalid data" do
       let(:params) do
         {
-          title: '',
-          description: '',
-          team_id: ''
+          title: "",
+          description: "",
+          team_id: ""
         }
       end
 

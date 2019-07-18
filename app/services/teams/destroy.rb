@@ -13,11 +13,10 @@ module Teams
     end
 
     private
+      attr_reader :team
 
-    attr_reader :team
-
-    def destroy_team
-      team.destroy
-    end
+      def destroy_team
+        team.destroy
+      end
   end
 end

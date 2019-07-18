@@ -6,6 +6,6 @@ FactoryBot.define do
     title { Faker::Lorem.word }
     description { Faker::Lorem.sentence }
 
-    trait(:invalid) { description { '' } }
+    trait(:invalid) { description { "" } }
   end
 end

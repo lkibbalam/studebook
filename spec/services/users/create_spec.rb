@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Users
   describe Create do
@@ -8,22 +8,22 @@ module Users
       described_class.call(params: params)
     end
 
-    context 'with valid data' do
+    context "with valid data" do
       let(:params) do
         { email: Faker::Internet.email,
           password: Faker::Internet.password(8) }
       end
 
-      it 'schould create a user and sends an email' do
+      it "schould create a user and sends an email" do
         expect { create_user }.to change(User, :count).by(1)
                                                       .and change { UserMailer.deliveries.count }.by(1)
       end
     end
 
-    context 'with invalid data' do
+    context "with invalid data" do
       let(:params) do
-        { email: '',
-          password: '' }
+        { email: "",
+          password: "" }
       end
 
       it "raise Record Invalid and doesn't send an email" do
@@ -33,7 +33,7 @@ module Users
       end
     end
 
-    context 'with already exist email' do
+    context "with already exist email" do
       let!(:user) { create(:user) }
 
       let(:params) do
@@ -43,7 +43,7 @@ module Users
 
       it "raise Record Invalid and doesn't send an email" do
         expect { create_user }
-          .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Email has already been taken')
+          .to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Email has already been taken")
           .and change { UserMailer.deliveries.count }.by(0)
       end
     end

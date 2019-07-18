@@ -2,7 +2,7 @@
 
 module Types
   class Url < Types::BaseScalar
-    description 'A valid URL, transported as a string'
+    description "A valid URL, transported as a string"
 
     class << self
       def coerce_input(input_value, _context)

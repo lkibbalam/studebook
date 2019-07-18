@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe UserPolicy do
   subject { described_class.new(staff, user) }
@@ -9,13 +9,13 @@ describe UserPolicy do
     described_class::Scope.new(staff, User.all).resolve
   end
 
-  context 'active staff accessing to actions' do
+  context "active staff accessing to actions" do
     let(:staff) { create(:user, :staff) }
 
-    context 'own team user' do
+    context "own team user" do
       let(:user) { create(:user, team: staff.team) }
 
-      it 'includes user in resolved scope' do
+      it "includes user in resolved scope" do
         expect(resolved_scope).to include(user)
       end
 
@@ -23,10 +23,10 @@ describe UserPolicy do
       it { is_expected.to forbid_actions(%i[create update destroy]) }
     end
 
-    context 'own padawans' do
+    context "own padawans" do
       let(:user) { create(:user, mentor: staff) }
 
-      it 'includes user in resolved scope' do
+      it "includes user in resolved scope" do
         expect(resolved_scope).to include(user)
       end
 
@@ -34,10 +34,10 @@ describe UserPolicy do
       it { is_expected.to forbid_actions(%i[create update destroy]) }
     end
 
-    context 'users from foreign team' do
+    context "users from foreign team" do
       let(:user) { create(:user) }
 
-      it 'exludes user in resolved scope' do
+      it "exludes user in resolved scope" do
         expect(resolved_scope).not_to include(user)
       end
 
@@ -45,18 +45,18 @@ describe UserPolicy do
     end
   end
 
-  context 'inactive staff accessing to actions' do
+  context "inactive staff accessing to actions" do
     let(:staff) { create(:user, :staff, :inactive) }
     let(:user) { create(:user) }
 
-    it 'excludes user in resolved scope' do
+    it "excludes user in resolved scope" do
       expect(resolved_scope).not_to include(user)
     end
 
     it { is_expected.to forbid_actions(%i[show current create update destroy change_password]) }
   end
 
-  describe 'permitted attributes for staff own record' do
+  describe "permitted attributes for staff own record" do
     let(:staff) { create(:user, :staff) }
     let(:user) { staff }
 

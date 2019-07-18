@@ -22,13 +22,13 @@ module Loaders
     end
 
     def collect_fields(ast_node)
-      return ast_node.selections.map(&:name) if ast_node.selections.first.name != 'edges'
+      return ast_node.selections.map(&:name) if ast_node.selections.first.name != "edges"
 
       ast_node.selections.first.selections.first.selections.map(&:name)
     end
 
     def to_class(string)
-      string.singularize.titleize.delete(' ').constantize
+      string.singularize.titleize.delete(" ").constantize
     end
   end
 end

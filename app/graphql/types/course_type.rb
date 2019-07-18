@@ -27,7 +27,7 @@ module Types
     end
 
     def lessons(ast_node:)
-      includes = ['tasks'] if ast_node.selections.last.name == 'tasks'
+      includes = ["tasks"] if ast_node.selections.last.name == "tasks"
       Loaders::AttachmentsLoader.load_many(object, ast_node, includes)
     end
   end

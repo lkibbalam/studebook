@@ -39,18 +39,17 @@ module Api
       end
 
       private
+        def load_course
+          @course = Course.find(params[:id])
+        end
 
-      def load_course
-        @course = Course.find(params[:id])
-      end
+        def load_team
+          @team = Team.find(params[:team_id])
+        end
 
-      def load_team
-        @team = Team.find(params[:team_id])
-      end
-
-      def course_params
-        params.require(:course).permit(:title, :description, :poster, :team_id, :status)
-      end
+        def course_params
+          params.require(:course).permit(:title, :description, :poster, :team_id, :status)
+        end
     end
   end
 end

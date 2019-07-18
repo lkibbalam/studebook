@@ -35,18 +35,17 @@ module Api
       end
 
       private
+        def load_lesson
+          @lesson = Lesson.find(params[:id])
+        end
 
-      def load_lesson
-        @lesson = Lesson.find(params[:id])
-      end
+        def load_course
+          @course = Course.find(params[:course_id])
+        end
 
-      def load_course
-        @course = Course.find(params[:course_id])
-      end
-
-      def lesson_params
-        params.require(:lesson).permit(:title, :description, :material, :poster, :video)
-      end
+        def lesson_params
+          params.require(:lesson).permit(:title, :description, :material, :poster, :video)
+        end
     end
   end
 end

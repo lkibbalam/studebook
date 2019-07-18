@@ -13,11 +13,10 @@ module Courses
     end
 
     private
+      attr_reader :params
 
-    attr_reader :params
-
-    def create_course
-      Course.create(params)
-    end
+      def create_course
+        Course.create(params)
+      end
   end
 end

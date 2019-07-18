@@ -28,18 +28,17 @@ module Api
       end
 
       private
+        def load_task
+          @task = Task.find(params[:id])
+        end
 
-      def load_task
-        @task = Task.find(params[:id])
-      end
+        def load_task_user
+          @task_user = TasksUser.find(params[:id])
+        end
 
-      def load_task_user
-        @task_user = TasksUser.find(params[:id])
-      end
-
-      def task_user_params
-        params.require(:task).permit(:github_url, :status, :comment)
-      end
+        def task_user_params
+          params.require(:task).permit(:github_url, :status, :comment)
+        end
     end
   end
 end

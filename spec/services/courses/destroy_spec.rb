@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 module Courses
   describe Destroy do
@@ -10,8 +10,8 @@ module Courses
 
     let!(:course) { create(:course) }
 
-    context 'when delete course' do
-      it 'should change courses count by -1' do
+    context "when delete course" do
+      it "should change courses count by -1" do
         expect { delete_course }.to change(Course, :count).by(-1)
       end
     end

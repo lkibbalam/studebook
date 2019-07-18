@@ -14,12 +14,11 @@ module Courses
     end
 
     private
+      attr_reader :course, :params
 
-    attr_reader :course, :params
-
-    def update_course
-      course.update(params)
-      course
-    end
+      def update_course
+        course.update(params)
+        course
+      end
   end
 end

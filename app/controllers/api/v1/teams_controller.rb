@@ -33,14 +33,13 @@ module Api
       end
 
       private
+        def team_params
+          params.require(:team).permit(:title, :description, :poster)
+        end
 
-      def team_params
-        params.require(:team).permit(:title, :description, :poster)
-      end
-
-      def load_team
-        @team = Team.find(params[:id])
-      end
+        def load_team
+          @team = Team.find(params[:id])
+        end
     end
   end
 end

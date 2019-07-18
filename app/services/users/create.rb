@@ -17,15 +17,14 @@ module Users
     end
 
     private
+      attr_reader :params
 
-    attr_reader :params
+      def create_user
+        User.create!(params)
+      end
 
-    def create_user
-      User.create!(params)
-    end
-
-    def send_welcome
-      UserMailer.with(user_params: params).welcome.deliver_now
-    end
+      def send_welcome
+        UserMailer.with(user_params: params).welcome.deliver_now
+      end
   end
 end
