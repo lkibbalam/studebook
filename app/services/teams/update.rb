@@ -6,7 +6,7 @@ module Teams
 
     def initialize(team:, params:)
       @team = team
-      params.each { |key, value| instance_variable_set("@#{key}", value) }
+      @params = params
     end
 
     def call
@@ -14,17 +14,11 @@ module Teams
     end
 
     private
-      attr_reader :team, :title, :description, :poster
+      attr_reader :team, :params
 
       def update_team
-        team.update(attributes)
+        team.update(params)
         team
-      end
-
-      def attributes
-        { description: description,
-          poster: poster,
-          title: title }
       end
   end
 end

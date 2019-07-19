@@ -6,7 +6,7 @@ module LessonsUsers
 
     def initialize(lesson_user:, params:)
       @lesson_user = lesson_user
-      params.each { |key, value| instance_variable_set("@#{key}", value) }
+      @params = params
     end
 
     def call
@@ -14,15 +14,10 @@ module LessonsUsers
     end
 
     private
-      attr_reader :lesson_user, :status, :mark
+      attr_reader :lesson_user, :params
 
       def update_lesson_user
-        lesson_user if lesson_user.update(attributes)
-      end
-
-      def attributes
-        { mark: mark,
-          status: status }.compact
+        lesson_user if lesson_user.update(params)
       end
   end
 end

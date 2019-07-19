@@ -5,7 +5,7 @@ module Teams
     include Callable
 
     def initialize(params:)
-      params.each { |key, value| instance_variable_set("@#{key}", value) }
+      @params = params
     end
 
     def call
@@ -13,16 +13,10 @@ module Teams
     end
 
     private
-      attr_reader :title, :description, :poster
+      attr_reader :params
 
       def create_team
-        Team.create(attributes)
-      end
-
-      def attributes
-        { title: title,
-          description: description,
-          poster: poster }.compact
+        Team.create(params)
       end
   end
 end

@@ -6,7 +6,7 @@ module Users
 
     def initialize(user:, params:)
       @user = user
-      params.each { |key, value| instance_variable_set("@#{key}", value) }
+      @params = params
     end
 
     def call
@@ -14,36 +14,25 @@ module Users
     end
 
     private
-      attr_reader :user, :email, :password, :first_name, :last_name, :nickname,
-                  :phone, :role, :avatar, :github_url, :mentor_id, :status,
-                  :team_id, :current_password, :new_password, :password_confirmation
+      attr_reader :user, :params
 
       def update_user
-        if password_attributes.any? && password_confirmed?
-          user.update(attributes.merge(password: password_attributes.dig(:new_password)))
+        if password_confirmed?
+          user.update(params.except(*password_attributes).merge(password: params.dig(:new_password)))
         else
-          user.update(attributes)
+          user.update(params.except(*password_attributes))
         end
         user
       end
 
       def password_confirmed?
-        return unless user.authenticate(password_attributes.dig(:current_password))
+        return unless user.authenticate(params.dig(:current_password))
 
-        password_attributes.dig(:new_password) == password_attributes.dig(:password_confirmation)
-      end
-
-      def attributes
-        { email: email, password: password, team_id: team_id, phone: phone,
-          first_name: first_name, last_name: last_name, role: role,
-          nickname: nickname, avatar: avatar, github_url: github_url,
-          mentor_id: mentor_id, status: status }.compact
+        params.dig(:new_password) == params.dig(:password_confirmation)
       end
 
       def password_attributes
-        { password_confirmation: password_confirmation,
-          current_password: current_password,
-          new_password: new_password }.compact
+        [ :password_confirmation, :current_password, :new_password ]
       end
   end
 end
