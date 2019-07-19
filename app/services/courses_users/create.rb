@@ -33,8 +33,7 @@ module CoursesUsers
       def create_tasks_user
         tasks_user = []
         course.lessons.includes(:tasks).each do |lesson|
-          lesson_tasks = lesson.tasks.ids.map { |id| { user_id: user.id, task_id: id } }
-          tasks_user << lesson_tasks
+          tasks_user << lesson.tasks.ids.map { |id| { user_id: user.id, task_id: id } }
         end
         TasksUser.create!(tasks_user)
       end

@@ -7,7 +7,7 @@ module TasksUsers
     def initialize(task_user:, current_user:, params:)
       @task_user = task_user
       @current_user = current_user
-      params.each { |key, value| instance_variable_set("@#{key}", value) }
+      @params = params
     end
 
     def call
@@ -21,7 +21,7 @@ module TasksUsers
     end
 
     private
-      attr_reader :task_user, :current_user, :status, :github_url, :comment
+      attr_reader :task_user, :current_user, :params
 
       def update_task_user
         task_user.update!(task_user_attributes)
@@ -67,19 +67,19 @@ module TasksUsers
           verifying: { user: task_user.user.mentor, tasks_user: task_user },
           change: { user: task_user.user, tasks_user: task_user },
           accept: { user: task_user.user, tasks_user: task_user }
-        }[status.to_sym]
+        }[params[:status].to_sym]
       end
 
       def task_user_attributes
         {
-          status: status,
-          github_url: github_url
+          status: params[:status],
+          github_url: params[:github_url]
         }.compact
       end
 
       def comment_attributes
         {
-          body: comment,
+          body: params[:comment],
           user: current_user,
           commentable: task_user
         }.compact
