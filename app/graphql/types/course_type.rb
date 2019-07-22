@@ -2,7 +2,7 @@
 
 module Types
   class CourseType < BaseObject
-    guard ->(course, _args, ctx) { CoursePolicy.new(ctx[:me], course).show? }
+    guard ->(course, _args, ctx) { CoursePolicy.new(ctx[:me], course.object).show? }
     field :id, ID, null: false
     field :title, String, null: false
     field :description, String, null: false
