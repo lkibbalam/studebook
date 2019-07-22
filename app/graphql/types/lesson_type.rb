@@ -19,7 +19,7 @@ module Types
       current_user = context[:me]
       return false unless current_user
 
-      current_user.lessons_users.find_by_lesson_id(object.id)
+      current_user.lessons_users.find_by(lesson_id: object.id)
     end
 
     def poster
