@@ -1,18 +1,19 @@
-FROM ruby:2.6.3-slim-stretch
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs 
-# Set an environment variable where the Rails app is installed to inside of Docker image
-ENV RAILS_ROOT /var/www/studybook-api
-RUN mkdir -p $RAILS_ROOT 
-# Set working directory
-WORKDIR $RAILS_ROOT
-# Setting env up
-ENV RAILS_ENV='production'
-ENV RACK_ENV='production' 
-# Adding gems
-COPY Gemfile Gemfile
-RUN bundle install --jobs 20 --retry 5 --without development test 
-# Adding project files
+FROM ruby:2.6.3-alpine3.9
+
+RUN apk update \
+  && apk add --virtual build-dependencies \
+  imagemagick \
+  gcc \
+  wget \
+  git \
+  && apk add \
+  build-base postgresql-dev tzdata \
+  bash
+
+RUN gem install rails
+
+WORKDIR /var/www/studybook-api
+COPY Gemfile* ./
+RUN bundle install
 COPY . .
-RUN bundle exec rake assets:precompile
-EXPOSE 3000
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["sh", "./bin/start.sh"]
