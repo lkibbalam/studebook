@@ -4,7 +4,7 @@ volumes:
 services:  
   app:    
     build:      
-      context: ./studybook-api
+      context: .
       dockerfile: ./docker/app/DockerFile    
     depends_on:      
       - db
@@ -19,7 +19,7 @@ services:
   web:
     restart: always    
     build:      
-      context: ./nginx
+      context: .
       dockerfile: ./docker/web/DockerFile    
     depends_on:      
       - app    
