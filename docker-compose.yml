@@ -4,19 +4,24 @@ volumes:
 services:  
   app:    
     build:      
-      context: .      
+      context: ./studybook-api
       dockerfile: ./docker/app/DockerFile    
     depends_on:      
-      - db  
+      - db
+    volumes:
+      - ./studybook-api:/app
+    stdin_open: true
+    tty: true
   db:    
     image: postgres    
     volumes:      
       - postgres_data:/var/lib/postgresql/data  
-  web:    
+  web:
+    restart: always    
     build:      
-      context: .      
+      context: ./nginx
       dockerfile: ./docker/web/DockerFile    
     depends_on:      
       - app    
     ports:      
-      - 80:80
+      - "80:80"
