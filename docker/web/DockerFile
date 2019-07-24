@@ -1,2 +1,4 @@
+# Base image
 FROM nginx
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+COPY docker/web/nginx.conf /tmp/docker.nginx
+RUN envsubst /var/www/studybook-api < /tmp/docker.nginx > /etc/nginx/conf.d/default.conf
