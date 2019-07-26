@@ -1,0 +1,19 @@
+FROM ruby:2.6.3-alpine3.9
+
+RUN apk update \
+  && apk add --virtual build-dependencies \
+  imagemagick \
+  gcc \
+  wget \
+  git \
+  && apk add \
+  build-base postgresql-dev tzdata \
+  bash
+
+RUN gem install rails
+
+WORKDIR /var/www/studybook-api
+COPY Gemfile* ./
+RUN bundle install
+COPY . .
+CMD ["sh", "./bin/start.sh"]
