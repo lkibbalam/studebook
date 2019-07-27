@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: postgres
+  password:
+  pool: 5
+  host: db
+  
+development: 
+  <<: *default
+  database: studybook-api-dev-db
+
+test:
+  <<: *default
+  database: studybook-api-test-db
+
+production:  
+  <<: *default  
+  database: studybook-api-production-db
+  

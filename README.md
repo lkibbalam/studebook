@@ -1,24 +1,29 @@
-# README
+Run the project localy
+1) docker-compose build
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+2)  docker-compose run bundle exec rake db:create
+    docker-compose run bundle exec rake db:migrate
+    docker-compose run bundle exec rake db:seed
 
-Things you may want to cover:
+3) if you need debugger, pry .etc
+    docker-compose up -d && docker attach $(docker-compose ps -q app) or
+    docker-compose run --service-ports app or 
+    docker-compose up and docker attach $(docker-compose ps -q app) in another tab
 
-* Ruby version
+  if you dont need any debuggers just
+    docker-compose up
 
-* System dependencies
+open localhost:3001 in browser
+open localhost:3001/graphiql (GrapqhQL shema docs and you can test sime requests here)
+graphql query example
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+query {
+  courses {
+    edges {
+      node {
+        id
+        title
+      }
+    }
+  }
+}
