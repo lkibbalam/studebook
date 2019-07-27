@@ -10,7 +10,7 @@ module Mutations
     field :errors, [Types::UserErrorType], null: true
 
     def resolve(email:, password:)
-      Users::SignInUser.call(email: email, password: password)
+      Users::SignIn.call(email: email, password: password)
     end
   end
 end

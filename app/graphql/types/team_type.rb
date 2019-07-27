@@ -2,7 +2,7 @@
 
 module Types
   class TeamType < BaseObject
-    guard ->(team, _args, ctx) { TeamPolicy.new(ctx[:me], team).show? }
+    guard ->(team, _args, ctx) { TeamPolicy.new(ctx[:me], team.object).show? }
     field :id, ID, null: false
     field :poster, String, null: true
     field :title, String, null: false

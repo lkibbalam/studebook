@@ -2,6 +2,7 @@
 
 module Types
   class CourseUserType < BaseObject
+    guard ->(course_user, _args, ctx) { CoursesUserPolicy.new(ctx[:me], course_user.object).show? }
     field :id, ID, null: false
     field :student, UserType, null: false
     field :course, CourseType, null: false
