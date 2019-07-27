@@ -1,4 +1,4 @@
-FROM ruby:2.6.3-alpine3.9
+FROM ruby:2.6.3-alpine3.10
 
 RUN apk update \
   && apk add --virtual build-dependencies \
@@ -12,8 +12,14 @@ RUN apk update \
 
 RUN gem install rails
 
-WORKDIR /var/www/studybook-api
+ENV RAILS_ROOT /var/www/studybook-api
+RUN mkdir -p $RAILS_ROOT
+WORKDIR $RAILS_ROOT
+
+ENV RAILS_ENV='production'
+ENV RACK_ENV='production' 
 COPY Gemfile* ./
-RUN bundle install
+RUN bundle install --jobs 20 --retry 5 --without development test 
 COPY . .
-CMD ["sh", "./bin/start.sh"]
+EXPOSE 3000
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
