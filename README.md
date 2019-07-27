@@ -27,3 +27,25 @@ query {
     }
   }
 }
+
+Production environment
+
+just need to add -f docker-compose.production.yml to each comand
+
+example:
+
+build images
+1) docker-compose -f docker-compose.production.yml build
+
+create db and make migrations and seeds
+2)  docker-compose run bundle exec rake db:create RAILS_ENV=production
+    docker-compose run bundle exec rake db:migrate RAILS_ENV=production
+    docker-compose run bundle exec rake db:seed RAILS_ENV=production
+
+run app environmant on background
+3)docker-compose -f docker-compose.production.yml up -d
+  
+.....
+wellcome now you can call api
+
+study.ruby.nixdev.co
