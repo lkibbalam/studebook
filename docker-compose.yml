@@ -1,23 +1,23 @@
 version: '3'
 volumes:  
   postgres_data: {} 
-services:  
+services:
   app:
     stdin_open: true
     tty: true
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"      
     build:
       context: .
       dockerfile: ./docker/app/DockerFile    
     depends_on:      
       - db
     volumes:
-      - ./studybook-api:/app
+      - .:/studybook-api
     ports:      
-      - "3000:3000"
+      - "3001:3001"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"  
   db:    
-    image: postgres    
-    volumes:      
+    image: postgres:11.4-alpine  
+    volumes:
       - postgres_data:/var/lib/postgresql/data  
     ports:
       - "5431:5432"

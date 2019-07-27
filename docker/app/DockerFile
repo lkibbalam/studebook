@@ -1,16 +1,19 @@
-FROM ruby:2.6.3
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
-RUN mkdir /studybook-api
+FROM ruby:2.6.3-alpine3.10
+
+RUN apk update \
+  && apk add --virtual build-dependencies \
+  imagemagick \
+  gcc \
+  wget \
+  git \
+  && apk add \
+  build-base postgresql-dev tzdata \
+  bash
+
+RUN gem install rails
+
 WORKDIR /studybook-api
-COPY Gemfile /studybook-api/Gemfile
+COPY Gemfile* ./
 RUN bundle install
-COPY . /studybook-api
-
-# Add a script to be executed every time the container starts.
-COPY bin/entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
-EXPOSE 3000
-
-# Start the main process.
-CMD ["rails", "server", "-b", "0.0.0.0"]
+COPY . .
+CMD ["bundle", "exec", "puma", "-C", "/app/config/puma.rb"]
