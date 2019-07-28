@@ -1,11 +1,12 @@
 Run the project localy
-1) docker-compose build
+1) cp config/database.sample.yml config/database.yml
+2) docker-compose build
 
-2)  docker-compose run bundle exec rake db:create
+3)  docker-compose run bundle exec rake db:create
     docker-compose run bundle exec rake db:migrate
     docker-compose run bundle exec rake db:seed
 
-3) if you need debugger, pry .etc
+4) if you need debugger, pry .etc
     docker-compose up -d && docker attach $(docker-compose ps -q app) or
     docker-compose run --service-ports app or 
     docker-compose up and docker attach $(docker-compose ps -q app) in another tab
@@ -35,15 +36,16 @@ just need to add -f docker-compose.production.yml to each comand
 example:
 
 build images
-1) docker-compose -f docker-compose.production.yml build
+1) cp config/database.sample.yml config/database.yml
+2) docker-compose -f docker-compose.production.yml build
 
 create db and make migrations and seeds
-2)  docker-compose run app bundle exec rake db:create RAILS_ENV=production
+3)  docker-compose run app bundle exec rake db:create RAILS_ENV=production
     docker-compose run app bundle exec rake db:migrate RAILS_ENV=production
     docker-compose run app bundle exec rake db:seed RAILS_ENV=production
 
 run app environmant on background
-3)docker-compose -f docker-compose.production.yml up -d
+4)docker-compose -f docker-compose.production.yml up -d
   
 .....
 wellcome now you can call api
