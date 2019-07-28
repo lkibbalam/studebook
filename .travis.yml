@@ -1,0 +1,16 @@
+require: sudo
+
+env:
+  - RAILS_ENV=test
+
+services:
+  - docker
+
+before_install:
+  - docker-compose build
+
+script:
+  - docker-compose run --rm bundle exec rake db:create
+  - docker-compose run --rm bundle exec rake db:migrate
+  - docker-compose run --rm app rubocop
+  - docker-compose run --rm app rspec

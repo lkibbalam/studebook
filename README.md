@@ -49,3 +49,13 @@ run app environmant on background
 wellcome now you can call api
 
 study.ruby.nixdev.co
+
+
+Restore DB
+
+1)copy db file to remote server
+scp latest.dump dev@study.ruby.nixdev.co:~/var/www/studybook-api/latest.dump
+
+2) restore db from app's folder on remote
+cat latest.dump | docker exec -i $(docker-compose ps -q db) pg_restore --no-owner -U postgres -d studybook-api-production-db -1 --clean
+
