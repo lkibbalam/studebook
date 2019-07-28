@@ -6,7 +6,7 @@ require "rails_helper"
 
 module Users
   describe SignIn do
-    let(:key) { Rails.application.credentials.dig(:secret_key_base) }
+    let(:key) { "2cb6a3bd9f6fbdd7d47dcb369ea25b229e47052c5aa82fde3f3" }
     let(:user) { create(:user) }
     let(:fake) { create(:user) }
 
