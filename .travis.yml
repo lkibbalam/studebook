@@ -11,7 +11,7 @@ before_install:
   - docker-compose build
 
 script:
-  - docker-compose run --rm bundle exec rake db:create
-  - docker-compose run --rm bundle exec rake db:migrate
-  - docker-compose run --rm app rubocop
-  - docker-compose run --rm app rspec
+  - docker-compose run app bundle exec rake db:create --rm 
+  - docker-compose run app bundle exec rake db:migrate --rm 
+  - docker-compose run app bundle exec rubocop --rm
+  - docker-compose run app bundle exec rspec  --rm 
