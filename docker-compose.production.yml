@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 volumes:  
   postgres_data: {} 
 services: 
@@ -11,6 +11,8 @@ services:
       - app    
     ports:      
       - "80:80"
+    networks:
+      - studybook
   app:    
     build:      
       context: .
@@ -22,8 +24,15 @@ services:
     ports:      
       - "3001:3001"
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
+    networks:
+      - studybook
   db:    
     image: postgres:11.4-alpine      
     volumes:      
-      - postgres_data:/var/lib/postgresql/data  
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - studybook
+networks:
+  studybook:
+    name: studybook
  
