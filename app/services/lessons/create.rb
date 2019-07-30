@@ -2,7 +2,7 @@ module Lessons
   class Create
     include Callable
 
-    def inizialize(course:, params:)
+    def initialize(course:, params:)
       @course = course
       @params = params
     end
