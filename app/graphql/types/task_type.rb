@@ -2,6 +2,7 @@
 
 module Types
   class TaskType < BaseObject
+    guard ->(task, _args, ctx) { TaskPolicy.new(ctx[:me], task.object).show? }
     field :id, ID, null: false
     field :title, String, null: false
     field :description, String, null: false

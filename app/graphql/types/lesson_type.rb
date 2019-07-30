@@ -2,6 +2,7 @@
 
 module Types
   class LessonType < BaseObject
+    guard ->(lesson, _args, ctx) { LessonPolicy.new(ctx[:me], lesson.object).show? }
     field :id, ID, null: false
     field :title, String, null: false
     field :material, String, null: true

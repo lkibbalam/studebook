@@ -2,6 +2,7 @@
 
 module Types
   class CommentType < BaseObject
+    guard ->(comment, _args, ctx) { CommentPolicy.new(ctx[:me], comment.object).show? }
     field :id, ID, null: false
     field :body, String, null: false
     field :user, UserType, null: false
