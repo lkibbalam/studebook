@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_09_170454) do
+ActiveRecord::Schema.define(version: 2019_07_30_141241) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,7 +91,7 @@ ActiveRecord::Schema.define(version: 2018_11_09_170454) do
     t.text "description"
     t.text "material"
     t.string "title"
-    t.integer "order_number"
+    t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_lessons_on_course_id"
@@ -122,7 +121,7 @@ ActiveRecord::Schema.define(version: 2018_11_09_170454) do
     t.bigint "lesson_id"
     t.string "title"
     t.text "description"
-    t.integer "order_number"
+    t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lesson_id"], name: "index_tasks_on_lesson_id"
@@ -167,4 +166,5 @@ ActiveRecord::Schema.define(version: 2018_11_09_170454) do
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
     t.index ["team_id"], name: "index_users_on_team_id"
   end
+
 end

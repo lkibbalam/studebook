@@ -28,6 +28,7 @@ gem "puma"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "responders"
+gem "acts_as_list"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
