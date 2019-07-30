@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Lessons
   class Create
     include Callable
