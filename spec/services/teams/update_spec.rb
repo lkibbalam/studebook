@@ -12,7 +12,7 @@ module Teams
 
     context "with valid data" do
       let(:params) do
-        { title: Faker::Lorem.sentence,
+        { title: Faker::Lorem.sentence(2),
           description: Faker::Lorem.paragraph }
       end
 

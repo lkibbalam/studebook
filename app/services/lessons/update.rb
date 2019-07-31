@@ -17,8 +17,8 @@ module Lessons
       attr_reader :lesson, :params
 
       def update_lesson
-        lesson.update(params.except(:position))
-        change_position if params[:position]
+        lesson.update(params.except(:position)) &&
+          change_position if params[:position]
         lesson
       end
 
