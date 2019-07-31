@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
-  validates :title, presence: true, length: { in: 3..80 }
-  validates :description, presence: true, length: { minimum: 10 }
+  validates :title, presence: true, length: { in: 1..30 }
+  validates :description, presence: true, length: { minimum: 5 }
   validates :position, uniqueness: { scope: :lesson,
     message: "Each lesson schould have tasks only with uniq position" }
 

@@ -2,9 +2,9 @@ Run the project localy
 1) cp config/database.sample.yml config/database.yml
 2) docker-compose build
 
-3)  docker-compose run bundle exec rake db:create
-    docker-compose run bundle exec rake db:migrate
-    docker-compose run bundle exec rake db:seed
+3)  docker-compose run app bundle exec rake db:create
+    docker-compose run app bundle exec rake db:migrate
+    docker-compose run app bundle exec rake db:seed
 
 4) if you need debugger, pry .etc
     docker-compose up -d && docker attach $(docker-compose ps -q app) or

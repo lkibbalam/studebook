@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Lesson < ApplicationRecord
+  validates :title, presence: true, length: { in: 1..30 }
+  validates :description, presence: true, length: { minimum: 5 }
   validates :position, uniqueness: { scope: :course,
     message: "Each course schould have lessons only with uniq position" }
-  validates :title, presence: true, length: { in: 3..80 }
-  validates :description, presence: true, length: { minimum: 10 }
 
 
   has_one_attached :poster

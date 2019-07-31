@@ -17,7 +17,7 @@ module Lessons
 
     context "update with valid attributes" do
       let(:params) do
-        { title: Faker::Lorem.sentence,
+        { title: Faker::Lorem.sentence(2),
           description: Faker::Lorem.paragraph,
           material: Faker::Lorem.paragraph,
           position:  2 }
@@ -25,7 +25,7 @@ module Lessons
 
       %w[title description material position].each do |attribute|
         it "should update #{attribute} lesson" do
-          expect(update_lesson.send(attribute)).to eq(params.dig(attribute.to_sym))
+          expect(update_lesson.reload.send(attribute)).to eq(params.dig(attribute.to_sym))
         end
       end
 

@@ -8,25 +8,32 @@ module Lessons
       described_class.call(course: course, params: params)
     end
     let(:course) { create(:course) }
+    let(:lesson) { course.lessons.create(params) }
 
-    context "create lesson with pavild data" do
+    context "create lesson with valid data" do
       let(:params) do
         {
-          title: Faker::Lorem.sentence,
+          title: Faker::Lorem.sentence(2),
           description: Faker::Lorem.paragraph,
           material: Faker::Lorem.paragraph
         }
       end
 
-      it "expect to change course count in db" do
-        expect { create_lesson }.to change(course.lessons, :count).by(1)
+      it "expect to change lesson count in db" do
+        expect { create_lesson }.to change { course.lessons.count }.by(1)
       end
+
       it "expect to have position 1" do
         expect(create_lesson.position).to eq(1)
       end
+
+      it "second created lesson expect to have position 2" do
+        lesson
+        expect(create_lesson.position).to eq(2)
+      end
     end
 
-    context "create course with invalid data" do
+    context "create lesson with invalid data" do
       let(:params) do
         {
           title: "",
@@ -35,7 +42,7 @@ module Lessons
         }
       end
 
-      it "expect to not hange course count in db" do
+      it "expect to not сhange lesson count in db" do
         expect { create_lesson }.to change(course.lessons, :count).by(0)
       end
     end

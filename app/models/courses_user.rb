@@ -9,7 +9,7 @@ class CoursesUser < ApplicationRecord
 
   enum status: { current: 0, archived: 1 }
 
-  after_update :full_progress!, if: :course_status_from_current_to_archived?
+  after_update :full_progress!, if: :course_status_from_current_to_archived? # TODO: Cut out this hook
 
   private
     def course_status_from_current_to_archived?

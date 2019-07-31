@@ -8,7 +8,7 @@ module Courses
       described_class.call(params: params)
     end
 
-    context "create course with pavild data" do
+    context "create course with valid data" do
       let(:params) do
         {
           title: Faker::Lorem.sentence,
