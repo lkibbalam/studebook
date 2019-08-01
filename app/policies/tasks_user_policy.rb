@@ -3,7 +3,7 @@
 class TasksUserPolicy < ApplicationPolicy
   def show?
     return unless user&.active?
-    return true if user == record.user.mentor || user == record.user
+    return true if user.mentor_of?(record.user) || user == record.user
     return true if (user.leader? || user.moder?) && record.task.lesson.course.team == user.team
 
     user.admin?
@@ -11,7 +11,7 @@ class TasksUserPolicy < ApplicationPolicy
 
   def update?
     return unless user&.active?
-    return true if user == record.user.mentor || user == record.user
+    return true if user.mentor_of?(record.user) || user == record.user
     return true if (user.leader? || user.moder?) && record.task.lesson.course.team == user.team
 
     user.admin?

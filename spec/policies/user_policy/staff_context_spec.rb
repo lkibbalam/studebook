@@ -13,7 +13,7 @@ describe UserPolicy do
     let(:staff) { create(:user, :staff) }
 
     context "own team user" do
-      let(:user) { create(:user, team: staff.team) }
+      let!(:user) { create(:user, team: staff.team) }
 
       it "includes user in resolved scope" do
         expect(resolved_scope).to include(user)
@@ -24,7 +24,7 @@ describe UserPolicy do
     end
 
     context "own padawans" do
-      let(:user) { create(:user, mentor: staff) }
+      let!(:user) { create(:user, mentors: [staff]) }
 
       it "includes user in resolved scope" do
         expect(resolved_scope).to include(user)

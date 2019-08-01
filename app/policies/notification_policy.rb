@@ -4,7 +4,7 @@ class NotificationPolicy < ApplicationPolicy
   def update?
     return unless user&.active?
     return true if user == record.user
-    return true if user.staff? && record.tasks_user.user.mentor == user
+    return true if user.staff? && user.mentor_of?(record.tasks_user.user)
 
     user.admin?
   end

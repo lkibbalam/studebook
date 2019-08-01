@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "notifications_controller_spec" do
   let(:admin) { create(:user, :admin) }
-  let(:student) { create(:student, mentor: create(:mentor, :staff)) }
+  let(:student) { create(:student, mentors: create_list(:mentor, 1, :staff)) }
   let(:tasks_user) { create(:tasks_user, user: student) }
   let(:notification) { create(:notification, tasks_user: tasks_user) }
 

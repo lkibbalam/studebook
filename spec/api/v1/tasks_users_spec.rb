@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "tasks_users_controller" do
   let(:mentor) { create(:mentor, :staff) }
-  let(:padawan) { create(:student, mentor: mentor) }
+  let(:padawan) { create(:student, mentors: [mentor]) }
   let(:task_user) { create(:tasks_user, user: padawan) }
 
   describe "GET #padawan_tasks" do

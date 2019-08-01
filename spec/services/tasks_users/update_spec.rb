@@ -10,7 +10,7 @@ module TasksUsers
 
     context "student send task to verify" do
       let(:mentor) { create(:user, :staff) }
-      let(:user) { create(:user, :student, mentor: mentor) }
+      let(:user) { create(:user, :student, mentors: [mentor]) }
       let(:task_user) { create(:tasks_user, :undone, user: user) }
       let(:params) do
         { status: "verifying",
@@ -40,7 +40,7 @@ module TasksUsers
 
     context "mentor" do
       let(:user) { create(:user, :staff) }
-      let(:student) { create(:user, :student, mentor: user) }
+      let(:student) { create(:user, :student, mentors: [user]) }
       let(:course_with_lessons_with_tasks) { create(:course_with_lessons_with_tasks, lessons_count: 2, tasks_count: 2) }
       let!(:subscribe_user_to_course) do
         CoursesUsers::Create.call(course: course_with_lessons_with_tasks, user: student)
