@@ -3,7 +3,7 @@
 module Mutations
   class UpdateTeam < Mutations::Base
     argument :id, ID, required: true
-    argument :title, String, required: true
+    argument :title, String, required: false
     argument :description, String, required: false
 
     field :team, Types::TeamType, null: true

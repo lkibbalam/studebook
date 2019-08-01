@@ -3,8 +3,8 @@
 module Mutations
   class UpdateUser < Mutations::Base
     argument :id, ID, required: true
-    argument :email, String, required: true
-    argument :password, String, required: true
+    argument :email, String, required: false
+    argument :password, String, required: false
     argument :avatar, String, required: false
     argument :first_name, String, required: false
     argument :last_name, String, required: false

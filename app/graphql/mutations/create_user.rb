@@ -23,7 +23,7 @@ module Mutations
 
       {
         user: user,
-        errors: user_errors(course.errors)
+        errors: user_errors(user.errors)
       }
     end
   end

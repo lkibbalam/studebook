@@ -3,7 +3,7 @@
 module Mutations
   class UpdateCourse < Mutations::Base
     argument :team_id, ID, required: true
-    argument :title, String, required: true
+    argument :title, String, required: false
     argument :description, String, required: false
     argument :poster, String, required: false
     argument :team_id, ID, required: false
