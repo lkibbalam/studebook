@@ -64,7 +64,7 @@ module TasksUsers
 
       def notification_attributes
         {
-          verifying: { user: task_user.user.mentor, tasks_user: task_user },
+          verifying: { user: task_user.user.mentors.first, tasks_user: task_user },
           change: { user: task_user.user, tasks_user: task_user },
           accept: { user: task_user.user, tasks_user: task_user }
         }[params[:status].to_sym]

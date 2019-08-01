@@ -35,7 +35,7 @@ describe CoursesUserPolicy do
     end
 
     context "own padawan" do
-      let(:padawan) { create(:user, :student, mentor: staff) }
+      let(:padawan) { create(:user, :student, mentors: [staff]) }
       let(:course_user) { create(:courses_user, student: padawan) }
 
       it "includes course user from resolved scope" do

@@ -24,7 +24,7 @@ describe UserPolicy do
     end
 
     context "own padawans" do
-      let(:user) { create(:user, mentor: moder, team: moder.team) }
+      let(:user) { create(:user, mentors: [moder], team: moder.team) }
 
       it "includes user in resolved scope" do
         expect(resolved_scope).to include(user)

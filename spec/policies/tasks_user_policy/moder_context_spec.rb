@@ -27,7 +27,7 @@ describe TasksUserPolicy do
         create(:task, lesson: create(:lesson, course: create(:course, team: moder.team)))
       end
 
-      let(:padawan) { create(:user, :student, mentor: moder) }
+      let(:padawan) { create(:user, :student, mentors: [moder]) }
       let(:task_user) { create(:tasks_user, task: task) }
 
       it "includes task user in resolved scope" do

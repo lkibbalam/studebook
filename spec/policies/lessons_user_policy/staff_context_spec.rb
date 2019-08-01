@@ -15,7 +15,7 @@ describe LessonsUserPolicy do
     end
 
     context "padawans lessons" do
-      let(:padawan) { create(:user, :student, mentor: staff) }
+      let(:padawan) { create(:user, :student, mentors: [staff]) }
       let(:lesson_user) { create(:lesson_user, user: padawan) }
     end
 

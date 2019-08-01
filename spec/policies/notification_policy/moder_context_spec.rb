@@ -33,7 +33,7 @@ describe NotificationPolicy do
     end
 
     context "own padawan notification" do
-      let(:padawan) { create(:user, :student, mentor: moder) }
+      let(:padawan) { create(:user, :student, mentors: [moder]) }
       let(:notification) { create(:notification, user: padawan) }
 
       it "exclude notification in resolved scope" do

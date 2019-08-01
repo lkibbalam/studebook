@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_30_141241) do
+ActiveRecord::Schema.define(version: 2019_08_05_074543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,15 @@ ActiveRecord::Schema.define(version: 2019_07_30_141241) do
     t.index ["student_id", "lesson_id"], name: "index_lessons_users_on_student_id_and_lesson_id", unique: true
   end
 
+  create_table "mentorships", force: :cascade do |t|
+    t.bigint "mentor_id"
+    t.bigint "padawan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mentor_id"], name: "index_mentorships_on_mentor_id"
+    t.index ["padawan_id"], name: "index_mentorships_on_padawan_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "tasks_user_id"
@@ -167,4 +176,6 @@ ActiveRecord::Schema.define(version: 2019_07_30_141241) do
     t.index ["team_id"], name: "index_users_on_team_id"
   end
 
+  add_foreign_key "mentorships", "users", column: "mentor_id"
+  add_foreign_key "mentorships", "users", column: "padawan_id"
 end

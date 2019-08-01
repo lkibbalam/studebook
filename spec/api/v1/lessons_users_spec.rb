@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "lessons_users_spec" do
   let(:mentor) { create(:user, :staff) }
-  let(:student) { create(:user, :student, mentor: mentor) }
+  let(:student) { create(:user, :student, mentors: [mentor]) }
   let(:lessons_user) { create(:lessons_user, student: student, lesson: create(:lesson)) }
 
   describe "PATCH #approve_lesson" do

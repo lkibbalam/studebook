@@ -23,7 +23,7 @@ describe TasksUserPolicy do
     end
 
     context "own padawan task user" do
-      let(:padawan) { create(:user, :student, mentor: staff) }
+      let(:padawan) { create(:user, :student, mentors: [staff]) }
       let(:task_user) { create(:tasks_user, user: padawan) }
 
       it "includes task user in resolved scope" do

@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class NotificationSerializer < ActiveModel::Serializer
-  attributes %i[status tasks_user student task created_at user_avatar lessons_user mentor mentor_avatar lesson course]
+  attributes %i[status tasks_user student task created_at user_avatar lessons_user mentors mentor_avatar lesson course]
 
   def tasks_user
     object.tasks_user
   end
 
-  def mentor
-    student.mentor
+  def mentors
+    student.mentors
   end
 
   def student
@@ -32,7 +32,7 @@ class NotificationSerializer < ActiveModel::Serializer
   end
 
   def mentor_avatar
-    Rails.application.routes.url_helpers.rails_blob_url(mentor.avatar) if mentor.avatar.attached?
+    Rails.application.routes.url_helpers.rails_blob_url(mentors.first.avatar) if mentors.first.avatar.attached?
   end
 
   def user_avatar
