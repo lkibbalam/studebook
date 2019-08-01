@@ -6,7 +6,6 @@ module Mutations
     argument :password, String, required: true
 
     field :token, String, null: true
-    field :me, Types::UserType, null: true
     field :errors, [Types::UserErrorType], null: true
 
     def resolve(email:, password:)

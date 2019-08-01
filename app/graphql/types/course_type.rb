@@ -7,6 +7,7 @@ module Types
     field :title, String, null: false
     field :description, String, null: false
     field :poster, String, null: true
+    field :slug, String, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :team, TeamType, null: true

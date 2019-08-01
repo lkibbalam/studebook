@@ -25,7 +25,6 @@ module Users
 
         {
           token: token,
-          me: user,
           errors: []
         }
       end
