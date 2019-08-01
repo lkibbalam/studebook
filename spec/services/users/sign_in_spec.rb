@@ -17,9 +17,8 @@ module Users
         described_class.call(email: user.email, password: user.password)
       end
 
-      it { expect(sign_in_user).to include(:errors, :me, :token) }
+      it { expect(sign_in_user).to include(:errors, :token) }
       it { expect(sign_in_user.dig(:errors)).to be_empty }
-      it { expect(sign_in_user.dig(:me)).to eq(user) }
       it { expect(sign_in_user.dig(:token)).to be_kind_of(String) }
 
       it "response JWT have correct user id" do
@@ -35,7 +34,6 @@ module Users
 
         it { expect(sign_in_user).to include(:errors) }
         it { expect(sign_in_user.dig(:errors)).not_to be_empty }
-        it { expect(sign_in_user.dig(:me)).to be_nil }
         it { expect(sign_in_user.dig(:token)).to be_nil }
         it { expect(sign_in_user.dig(:errors).first["message"]).to eq("email or password is invalid") }
       end

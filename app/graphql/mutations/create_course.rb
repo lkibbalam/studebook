@@ -2,18 +2,17 @@
 
 module Mutations
   class CreateCourse < Mutations::Base
-    argument :team_id, ID, required: true
     argument :title, String, required: true
-    argument :description, String, required: false
+    argument :description, String, required: true
     argument :poster, String, required: false
     argument :team_id, ID, required: false
-    argument :author_id, ID, required: false
 
     field :course, Types::CourseType, null: true
     field :errors, [Types::UserErrorType], null: true
 
     def resolve(**params)
-      course = Courses::Create.call(params: params)
+      author_id = context[:me].id
+      course = Courses::Create.call(params: params.merge(author_id: author_id))
 
       {
         course: course,

@@ -6,7 +6,7 @@ module Mutations
     argument :title, String, required: true
     argument :description, String, required: true
 
-    field :task, Types::LessonType, null: true
+    field :task, Types::TaskType, null: true
     field :errors, [Types::UserErrorType], null: true
 
     def resolve(**params)
