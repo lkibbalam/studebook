@@ -8,4 +8,6 @@ class LessonsUser < ApplicationRecord
   validates :student, uniqueness: { scope: :lesson }
 
   enum status: { unlocked: 2, done: 1, locked: 0 }
+  alias_method :unlock!, :unlocked!
+  alias_method :lock!, :locked!
 end
