@@ -31,14 +31,20 @@ module TasksUsers
       end
 
       def create_notifications
-        receivers.each do |receiver|
+        receivers[params[:status]].each do |receiver|
           task_user.notifications.create!(user: receiver)
+          send_email(receiver)
         end
+      end
+
+      def send_email(receiver)
+        return unless receivers.key?(params[:status])
+        NotificationMailer.send_user_task_notification(receiver: receiver, task_user: task_user)
       end
 
       def create_comment
         Comment.create!(comment_attributes)
-      end
+        end
 
       def unlock_next_lesson!
         next_lesson = course.next_lesson(lesson)
@@ -52,7 +58,7 @@ module TasksUsers
           verifying: mentors,
           change: [user],
           accept: [user]
-        }[params[:status].to_sym]
+        }.with_indifferent_access
       end
 
       def task_user_attributes
