@@ -11,6 +11,10 @@ class CoursesUser < ApplicationRecord
 
   after_update :full_progress!, if: :course_status_from_current_to_archived? # TODO: Cut out this hook
 
+  def update_progress
+    increment(:progress, course.lesson_value)
+  end
+
   private
     def course_status_from_current_to_archived?
       saved_change_to_status?(from: "current", to: "archived")

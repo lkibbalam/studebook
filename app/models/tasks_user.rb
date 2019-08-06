@@ -7,4 +7,7 @@ class TasksUser < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
 
   enum status: { undone: 0, verifying: 1, change: 2, accept: 3 }
+
+  delegate :course, to: :task
+  delegate :mentors, to: :user
 end

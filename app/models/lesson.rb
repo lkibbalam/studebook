@@ -15,4 +15,9 @@ class Lesson < ApplicationRecord
   has_many :students, through: :lessons_users
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :tasks, dependent: :destroy
+  has_many :tasks_users, through: :tasks
+
+  def accepted_for?(user)
+    tasks_users.where(user: user).all?(&:accept?)
+  end
 end

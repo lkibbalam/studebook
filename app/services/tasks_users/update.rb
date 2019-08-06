@@ -3,6 +3,8 @@
 module TasksUsers
   class Update
     include Callable
+    delegate :user, :mentors, :course, :task, to: :task_user
+    delegate :lesson, :lesson_accepted_for?, to: :task
 
     def initialize(task_user:, current_user:, params:)
       @task_user = task_user
@@ -13,9 +15,10 @@ module TasksUsers
     def call
       ActiveRecord::Base.transaction do
         update_task_user
-        create_notification
+        create_notifications
         create_comment
-        unlock_next_lesson! if all_lesson_tasks_user_accept?
+        user.done_lesson(lesson)
+        unlock_next_lesson! if lesson_accepted_for?(user)
         task_user
       end
     end
@@ -27,46 +30,28 @@ module TasksUsers
         task_user.update!(task_user_attributes)
       end
 
-      def create_notification
-        Notification.create!(notification_attributes)
+      def create_notifications
+        receivers.each do |receiver|
+          task_user.notifications.create!(user: receiver)
+        end
       end
 
       def create_comment
         Comment.create!(comment_attributes)
       end
 
-      def all_lesson_tasks_user_accept?
-        TasksUser.where(user: task_user.user, task: task_user.task.lesson.tasks).all?(&:accept?)
-      end
-
       def unlock_next_lesson!
-        course_lessons = task_user.task.lesson.course.lessons.sort
-        lesson_index = course_lessons.index(task_user.task.lesson)
-
-        lesson_done!(course_lessons[lesson_index])
-
-        next_lesson = course_lessons[lesson_index + 1]
-        lesson_user = task_user.user.lessons_users.find_by(lesson: next_lesson)
-        lesson_user.update!(status: :unlocked) if lesson_user&.locked?
+        next_lesson = course.next_lesson(lesson)
+        return unless next_lesson
+        next_user_lesson = user.lessons_users.find_by(lesson: next_lesson)
+        next_user_lesson.unlock! if next_user_lesson.locked?
       end
 
-      def lesson_done!(lesson)
-        lesson_user = task_user.user.lessons_users.find_by(lesson: lesson)
-        lesson_user.update!(status: :done) if lesson_user&.unlocked?
-        change_course_progress
-      end
-
-      def change_course_progress
-        course = task_user.task.lesson.course
-        course_user = task_user.user.courses_users.find_by(course: course)
-        course_user.update(progress: course_user.progress + course.lesson_value)
-      end
-
-      def notification_attributes
+      def receivers
         {
-          verifying: { user: task_user.user.mentors.first, tasks_user: task_user },
-          change: { user: task_user.user, tasks_user: task_user },
-          accept: { user: task_user.user, tasks_user: task_user }
+          verifying: mentors,
+          change: [user],
+          accept: [user]
         }[params[:status].to_sym]
       end
 

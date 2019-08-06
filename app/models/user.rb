@@ -34,4 +34,11 @@ class User < ApplicationRecord
   def mentor_of?(padawan)
     in?(padawan.mentors)
   end
+
+  def done_lesson(lesson)
+    lesson_user = lessons_users.find_by(lesson: lesson)
+    return unless lesson_user
+    lesson_user.done! if lesson_user.unlocked?
+    courses_users.find_by(course: lesson.course).update_progress
+  end
 end

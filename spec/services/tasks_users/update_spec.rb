@@ -4,13 +4,14 @@ require "rails_helper"
 
 module TasksUsers
   describe Update do
+    let(:mentor) { create(:user, :staff) }
+    let(:second_mentor) { create(:user, :staff) }
     let(:update_task_user) do
       described_class.call(task_user: task_user, current_user: user, params: params)
     end
 
     context "student send task to verify" do
-      let(:mentor) { create(:user, :staff) }
-      let(:user) { create(:user, :student, mentors: [mentor]) }
+      let(:user) { create(:user, :student, mentors: [mentor, second_mentor]) }
       let(:task_user) { create(:tasks_user, :undone, user: user) }
       let(:params) do
         { status: "verifying",
@@ -24,8 +25,11 @@ module TasksUsers
         end
       end
 
-      it "mentor should have notification" do
-        expect { update_task_user }.to change(mentor.notifications, :count).by(1)
+      it "mentors should have notifications" do
+        expect do
+          update_task_user
+        end.to change(mentor.notifications, :count).by(1)
+        .and change(second_mentor.notifications, :count).by(1)
       end
 
       it "should add comment" do
@@ -40,7 +44,7 @@ module TasksUsers
 
     context "mentor" do
       let(:user) { create(:user, :staff) }
-      let(:student) { create(:user, :student, mentors: [user]) }
+      let(:student) { create(:user, :student, mentors: [user, second_mentor]) }
       let(:course_with_lessons_with_tasks) { create(:course_with_lessons_with_tasks, lessons_count: 2, tasks_count: 2) }
       let!(:subscribe_user_to_course) do
         CoursesUsers::Create.call(course: course_with_lessons_with_tasks, user: student)
@@ -63,7 +67,7 @@ module TasksUsers
           end
         end
 
-        it "mentor should have notification" do
+        it "student should have notification" do
           expect { update_task_user }.to change(student.notifications, :count).by(1)
         end
 
