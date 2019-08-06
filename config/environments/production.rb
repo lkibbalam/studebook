@@ -98,3 +98,7 @@ Rails.application.configure do
 end
 
 Rails.application.routes.default_url_options = { host: "study.ruby.nixdev.co" }
+
+Raven.configure do |config|
+  config.dsn = Rails.application.credentials.sentry_dsn
+end
