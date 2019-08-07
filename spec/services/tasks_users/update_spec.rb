@@ -32,6 +32,12 @@ module TasksUsers
         .and change(second_mentor.notifications, :count).by(1)
       end
 
+      it "sends emails to mentors" do
+        expect do
+          update_task_user
+        end.to have_enqueued_job.exactly(user.mentors.count).on_queue("mailers")
+      end
+
       it "should add comment" do
         expect { update_task_user }.to change(user.comments, :count).by(1)
       end
@@ -71,6 +77,10 @@ module TasksUsers
           expect { update_task_user }.to change(student.notifications, :count).by(1)
         end
 
+        it "sends email to student" do
+          expect { update_task_user }.to have_enqueued_job.on_queue("mailers")
+        end
+
         it "should add comment" do
           expect { update_task_user }.to change(user.comments, :count).by(1)
         end
@@ -96,6 +106,10 @@ module TasksUsers
 
         it "student should have notification" do
           expect { update_task_user }.to change(student.notifications, :count).by(1)
+        end
+
+        it "sends email to student" do
+          expect { update_task_user }.to have_enqueued_job.on_queue("mailers")
         end
 
         it "should add comment" do
