@@ -140,8 +140,8 @@ module TasksUsers
           end
 
           it "should unlock next lesson user if accept all tasks user of lesson" do
-            expect { update_task_user && course_user_lessons.second.reload }
-              .to change(course_user_lessons.second, :status).from("locked").to("unlocked")
+            expect { update_task_user }
+              .to change { course_user_lessons.second.reload.status }.from("locked").to("unlocked")
           end
         end
       end

@@ -20,4 +20,8 @@ class Lesson < ApplicationRecord
   def accepted_for?(user)
     tasks_users.where(user: user).all?(&:accept?)
   end
+
+  def next
+    course.lessons.find_by(position: position + 1)
+  end
 end

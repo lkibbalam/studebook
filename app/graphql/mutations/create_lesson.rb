@@ -12,8 +12,7 @@ module Mutations
     field :errors, [Types::UserErrorType], null: true
 
     def resolve(**params)
-      lesson = Lessons::Create.call(params: params)
-
+      lesson = Lesson.create(params)
       {
         lesson: lesson,
         errors: user_errors(lesson.errors)

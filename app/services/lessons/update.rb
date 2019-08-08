@@ -17,13 +17,17 @@ module Lessons
       attr_reader :lesson, :params
 
       def update_lesson
-        lesson.update(params.except(:position)) &&
-          change_position if params[:position]
+        lesson.update(params.except(:position))
+        change_position if params[:position]
         lesson
       end
 
       def change_position
-        lesson.insert_at(params[:position])
+        lesson.insert_at(params[:position].to_i)
+      rescue ArgumentError => e
+        if e.message.match?("position cannot be lower than top")
+          lesson.errors.add(:position, :invalid, message: e.message)
+        end
       end
   end
 end

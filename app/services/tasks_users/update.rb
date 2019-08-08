@@ -3,9 +3,8 @@
 module TasksUsers
   class Update
     include Callable
-    delegate :user, :course, :task, to: :task_user
+    delegate :user, :mentors, :course, :task, to: :task_user
     delegate :lesson, :lesson_accepted_for?, to: :task
-    delegate :mentors, to: :user
 
     def initialize(task_user:, current_user:, params:)
       @task_user = task_user
@@ -52,9 +51,8 @@ module TasksUsers
 
       def unlock_next_lesson!
         user.done_lesson(lesson)
-        next_lesson = course.next_lesson(lesson)
-        return unless next_lesson
-        next_user_lesson = user.lessons_users.find_by(lesson: next_lesson)
+        next_user_lesson = user.lessons_users.find_by(lesson: lesson.next)
+        return unless next_user_lesson
         next_user_lesson.unlock! if next_user_lesson.locked?
       end
 

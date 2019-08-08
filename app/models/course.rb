@@ -25,10 +25,4 @@ class Course < ApplicationRecord
   def lesson_value
     (100 / lessons.count.to_f).round(2) # 100 mean 100%, full bar of progress
   end
-
-  def next_lesson(lesson)
-    course_lessons = lessons.sort
-    lesson_index = course_lessons.index(lesson)
-    course_lessons[lesson_index + 1]
-  end
 end
