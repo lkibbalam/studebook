@@ -14,7 +14,7 @@ describe NotificationMailer, type: :mailer do
         expect_any_instance_of(ActionMailer::Parameterized::Mailer).to(
           receive(:method_missing).with(:verifying_email).and_call_original
         )
-        described_class.send_user_task_notification(receiver: mentor, task_user: task_user)
+        described_class.send_user_task_notification(receiver: mentor, task_user: task_user, github_url: task_user.github_url)
       end
 
       it "sends change email to student" do
@@ -22,7 +22,7 @@ describe NotificationMailer, type: :mailer do
         expect_any_instance_of(ActionMailer::Parameterized::Mailer).to(
           receive(:method_missing).with(:change_email).and_call_original
         )
-        described_class.send_user_task_notification(receiver: user, task_user: task_user)
+        described_class.send_user_task_notification(receiver: mentor, task_user: task_user, github_url: task_user.github_url)
       end
 
       it "sends accept email to student" do
@@ -30,7 +30,7 @@ describe NotificationMailer, type: :mailer do
         expect_any_instance_of(ActionMailer::Parameterized::Mailer).to(
           receive(:method_missing).with(:accept_email).and_call_original
         )
-        described_class.send_user_task_notification(receiver: user, task_user: task_user)
+        described_class.send_user_task_notification(receiver: mentor, task_user: task_user, github_url: task_user.github_url)
       end
 
       it "does not send email if email is not defined" do
@@ -38,18 +38,18 @@ describe NotificationMailer, type: :mailer do
         expect_any_instance_of(ActionMailer::Parameterized::Mailer).not_to(
           receive(:method_missing).with(:undefined_email)
         )
-        described_class.send_user_task_notification(receiver: user, task_user: task_user)
+        described_class.send_user_task_notification(receiver: mentor, task_user: task_user, github_url: task_user.github_url)
       end
     end
 
     describe "#verifying_email" do
-      let(:mail) { NotificationMailer.with(receiver: user, task: task_user).verifying_email }
+      let(:mail) { NotificationMailer.with(receiver: user, task: task_user, github_url: task_user.github_url).verifying_email }
 
       it "renders the headers" do
         expect(mail.subject)
           .to eq("Your padawan #{task_user.user.first_name} #{task_user.user.last_name} waiting for task approve")
         expect(mail.to).to eq([user.email])
-        expect(mail.from).to eq(["notifications@example.com"])
+        expect(mail.from).to eq(["no-reply@study.ruby.nixdev.co"])
       end
 
       it "renders the body" do
@@ -58,13 +58,13 @@ describe NotificationMailer, type: :mailer do
     end
 
     describe "#change_email" do
-      let(:mail) { NotificationMailer.with(receiver: user, task: task_user).change_email }
+      let(:mail) { NotificationMailer.with(receiver: user, task: task_user, github_url: task_user.github_url).change_email }
 
       it "renders the headers" do
         expect(mail.subject)
           .to eq("Your are requested for the task changing")
         expect(mail.to).to eq([user.email])
-        expect(mail.from).to eq(["notifications@example.com"])
+        expect(mail.from).to eq(["no-reply@study.ruby.nixdev.co"])
       end
 
       it "renders the body" do
@@ -73,13 +73,13 @@ describe NotificationMailer, type: :mailer do
     end
 
     describe "#accept_email" do
-      let(:mail) { NotificationMailer.with(receiver: user, task: task_user).accept_email }
+      let(:mail) { NotificationMailer.with(receiver: user, task: task_user, github_url: task_user.github_url).accept_email }
 
       it "renders the headers" do
         expect(mail.subject)
           .to eq("Congratulations! Your task has been approved!")
         expect(mail.to).to eq([user.email])
-        expect(mail.from).to eq(["notifications@example.com"])
+        expect(mail.from).to eq(["no-reply@study.ruby.nixdev.co"])
       end
 
       it "renders the body" do
