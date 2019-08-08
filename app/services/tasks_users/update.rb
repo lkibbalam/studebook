@@ -40,7 +40,11 @@ module TasksUsers
 
       def send_email(receiver)
         return unless receivers.key?(params[:status])
-        NotificationMailer.send_user_task_notification(receiver: receiver, task_user: task_user)
+        NotificationMailer.send_user_task_notification(
+          receiver: receiver,
+          task_user: task_user,
+          github_url: task_user.github_url
+        )
       end
 
       def create_comment
