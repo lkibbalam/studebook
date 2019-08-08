@@ -7,6 +7,7 @@ module Mutations
     argument :description, String, required: false
     argument :poster, String, required: false
     argument :video, String, required: false
+    argument :position, String, required: false
 
     field :lesson, Types::LessonType, null: true
     field :errors, [Types::UserErrorType], null: true

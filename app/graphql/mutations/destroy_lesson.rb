@@ -9,11 +9,15 @@ module Mutations
 
     def resolve(id:)
       lesson = Lesson.find(id)
-      Lessons::Destroy.call(lesson: lesson)
-
+      lesson.destroy
       {
         deleted: lesson.destroyed?,
         errors: user_errors(lesson.errors)
+      }
+    rescue ActiveRecord::RecordNotFound => e
+      {
+        deleted: false,
+        errors: [UserError.new(e)]
       }
     end
   end
