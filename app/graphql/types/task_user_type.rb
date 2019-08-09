@@ -5,7 +5,7 @@ module Types
     guard ->(task_user, _args, ctx) { TasksUserPolicy.new(ctx[:me], task_user.object).show? }
     field :id, ID, null: false
     field :status, String, null: false
-    field :taks, TaskType, null: false
+    field :task, TaskType, null: false
     field :user, UserType, null: false
     field :github_url, String, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false

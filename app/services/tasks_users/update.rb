@@ -57,11 +57,13 @@ module TasksUsers
       end
 
       def receivers
-        {
-          verifying: mentors,
-          change: [user],
-          accept: [user]
-        }.with_indifferent_access
+        Hash.new([])
+            .merge!(
+              verifying: mentors,
+              change: [user],
+              accept: [user]
+            )
+            .with_indifferent_access
       end
 
       def task_user_attributes

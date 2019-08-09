@@ -61,7 +61,7 @@ module Types
       guard ->(lesson_user, _args, ctx) { LessonsUserPolicy.new(ctx[:me], lesson_user.object).update? }
     end
     field :update_task_user, mutation: Mutations::UpdateTaskUser, null: false do
-      guard ->(task_user, _args, ctx) { TasksUserPolicy.new(ctx[:me], task_user.object).update? }
+      guard ->(_obj, args, ctx) { TasksUserPolicy.new(ctx[:me], TasksUser.find(args[:id])).update? }
     end
   end
 end
