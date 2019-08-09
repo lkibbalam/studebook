@@ -17,7 +17,6 @@ module TasksUsers
         update_task_user
         create_notifications
         create_comment
-        user.done_lesson(lesson)
         unlock_next_lesson! if lesson_accepted_for?(user)
         task_user
       end
@@ -47,6 +46,7 @@ module TasksUsers
         end
 
       def unlock_next_lesson!
+        user.done_lesson(lesson)
         next_lesson = course.next_lesson(lesson)
         return unless next_lesson
         next_user_lesson = user.lessons_users.find_by(lesson: next_lesson)
