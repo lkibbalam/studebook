@@ -3,8 +3,9 @@
 module TasksUsers
   class Update
     include Callable
-    delegate :user, :mentors, :course, :task, to: :task_user
+    delegate :user, :course, :task, to: :task_user
     delegate :lesson, :lesson_accepted_for?, to: :task
+    delegate :mentors, to: :user
 
     def initialize(task_user:, current_user:, params:)
       @task_user = task_user
@@ -38,7 +39,11 @@ module TasksUsers
 
       def send_email(receiver)
         return unless receivers.key?(params[:status])
-        NotificationMailer.send_user_task_notification(receiver: receiver, task_user: task_user)
+        NotificationMailer.send_user_task_notification(
+          receiver: receiver,
+          task_user: task_user,
+          github_url: task_user.github_url
+        )
       end
 
       def create_comment

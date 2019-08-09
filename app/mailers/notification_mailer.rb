@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class NotificationMailer < ApplicationMailer
-  default from: "notifications@example.com"
+  default from: "no-reply@study.ruby.nixdev.co"
   before_action :set_instance_variables
 
-  def self.send_user_task_notification(receiver:, task_user:)
+  def self.send_user_task_notification(receiver:, task_user:, github_url:)
     return unless self.new.respond_to?("#{task_user.status}_email")
-    with(receiver: receiver, task: task_user)
+    with(receiver: receiver, task: task_user, github_url: github_url)
       .public_send("#{task_user.status}_email")
       .deliver_later
   end
@@ -35,7 +35,7 @@ class NotificationMailer < ApplicationMailer
   private
     def set_instance_variables
       @receiver = params[:receiver]
-      @task = params[:task]
+      @github_url = params[:github_url]
       @user = UserDecorator.new(params[:task].user)
     end
 end
